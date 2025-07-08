@@ -24,7 +24,7 @@ export interface Price {
 
 export interface MerchantOffering {
   /** URL to purchase the product */
-  url: string;
+  url?: string;
   /** Name of the merchant */
   merchant_name: string;
   /** Price information */
@@ -58,7 +58,7 @@ export interface Product {
   /** Available purchase options */
   offers: MerchantOffering[];
   /** Related family products */
-  family: FamilyMember[];
+  family?: FamilyMember[];
 }
 
 export interface ProductDetail {
@@ -75,13 +75,13 @@ export interface ProductDetail {
   /** List of merchant offerings */
   merchant_offerings: MerchantOffering[];
   /** Target gender */
-  gender: 'na' | 'men' | 'women';
+  gender?: 'na' | 'men' | 'women';
   /** List of materials */
   materials?: string[] | null;
   /** List of key product features */
-  key_features: string[];
+  key_features?: string[];
   /** Related family products */
-  family_members: FamilyMember[];
+  family_members?: FamilyMember[];
 }
 
 export interface SearchFilterPrice {
@@ -110,7 +110,7 @@ export interface SearchRequest {
   /** Base64-encoded image for visual search */
   base64_image?: string | null;
   /** Search filters */
-  filters: SearchFilters;
+  filters?: SearchFilters;
   /** Maximum number of results to return */
   limit?: number | null;
 }
