@@ -3,14 +3,14 @@
  */
 
 export enum AvailabilityStatus {
-  InStock = "InStock",
-  OutOfStock = "OutOfStock",
-  PreOrder = "PreOrder",
-  LimitedAvailability = "LimitedAvailability",
-  BackOrder = "BackOrder",
-  Discontinued = "Discontinued",
-  SoldOut = "SoldOut",
-  Unknown = "Unknown",
+  InStock = 'InStock',
+  OutOfStock = 'OutOfStock',
+  PreOrder = 'PreOrder',
+  LimitedAvailability = 'LimitedAvailability',
+  BackOrder = 'BackOrder',
+  Discontinued = 'Discontinued',
+  SoldOut = 'SoldOut',
+  Unknown = 'Unknown',
 }
 
 export interface Price {
@@ -75,7 +75,7 @@ export interface ProductDetail {
   /** List of merchant offerings */
   merchant_offerings: MerchantOffering[];
   /** Target gender */
-  gender: "na" | "men" | "women";
+  gender: 'na' | 'men' | 'women';
   /** List of materials */
   materials?: string[] | null;
   /** List of key product features */
@@ -84,15 +84,22 @@ export interface ProductDetail {
   family_members: FamilyMember[];
 }
 
-export interface SearchFilters {
-  /** List of colors to filter by */
-  colors?: string[] | null;
-  /** List of materials to filter by */
-  materials?: string[] | null;
+export interface SearchFilterPrice {
   /** Minimum price filter */
   min_price?: number | null;
   /** Maximum price filter */
   max_price?: number | null;
+}
+
+export interface SearchFilters {
+  /** List of brands to filter by */
+  brands?: string[] | null;
+  /** Gender to filter by */
+  gender?: 'male' | 'female' | 'unisex' | null;
+  /** Price range to filter by */
+  price?: SearchFilterPrice | null;
+  /** Availability status to filter by */
+  availability?: AvailabilityStatus | null;
 }
 
 export interface SearchRequest {
@@ -103,7 +110,7 @@ export interface SearchRequest {
   /** Base64-encoded image for visual search */
   base64_image?: string | null;
   /** Search filters */
-  filters?: SearchFilters | null;
+  filters: SearchFilters;
   /** Maximum number of results to return */
   limit?: number | null;
 }
@@ -117,6 +124,24 @@ export interface Channel3ClientConfig {
   timeout?: number;
 }
 
+export interface SearchFilterPriceOptions {
+  /** Minimum price filter */
+  minPrice?: number;
+  /** Maximum price filter */
+  maxPrice?: number;
+}
+
+export interface SearchFiltersOptions {
+  /** List of brands to filter by */
+  brands?: string[];
+  /** Gender to filter by */
+  gender?: 'male' | 'female' | 'unisex';
+  /** Price range to filter by */
+  price?: SearchFilterPriceOptions;
+  /** Availability status to filter by */
+  availability?: AvailabilityStatus;
+}
+
 export interface SearchOptions {
   /** Text search query */
   query?: string;
@@ -125,7 +150,7 @@ export interface SearchOptions {
   /** Base64-encoded image for visual search */
   base64Image?: string;
   /** Search filters */
-  filters?: SearchFilters;
+  filters?: SearchFiltersOptions;
   /** Maximum number of results to return (default: 20) */
   limit?: number;
-} 
+}
