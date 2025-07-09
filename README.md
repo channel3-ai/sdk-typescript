@@ -30,15 +30,31 @@ const products = await client.search({ query: "blue denim jacket" });
 for (const product of products) {
   console.log(`Product: ${product.title}`);
   console.log(`Brand: ${product.brand_name}`);
-  console.log(`Price: $${product.offers[0].price.price}`);
+  console.log(`Price: ${product.price.currency} ${product.price.price}`);
+  console.log(`Availability: ${product.availability}`);
   console.log("---");
 }
 
 // Get detailed product information
 const productDetail = await client.getProduct("prod_123456");
 console.log(`Detailed info for: ${productDetail.title}`);
-console.log(`Materials: ${productDetail.materials}`);
-console.log(`Key features: ${productDetail.key_features}`);
+console.log(`Brand: ${productDetail.brand_name}`);
+if (productDetail.key_features) {
+  console.log(`Key features: ${productDetail.key_features}`);
+}
+
+// Get all brands
+const brands = await client.getBrands();
+for (const brand of brands) {
+  console.log(`Brand: ${brand.name}`);
+  if (brand.description) {
+    console.log(`Description: ${brand.description}`);
+  }
+}
+
+// Get specific brand details
+const brand = await client.getBrand("brand_123");
+console.log(`Brand: ${brand.name}`);
 ```
 
 ### CommonJS / Node.js
@@ -58,13 +74,18 @@ async function main() {
   for (const product of products) {
     console.log(`Product: ${product.title}`);
     console.log(`Score: ${product.score}`);
+    console.log(`Price: ${product.price.currency} ${product.price.price}`);
   }
   
   // Get detailed product information
   if (products.length > 0) {
     const productDetail = await client.getProduct(products[0].id);
-    console.log(`Gender: ${productDetail.gender}`);
+    console.log(`Availability: ${productDetail.availability}`);
   }
+
+  // Get brands
+  const brands = await client.getBrands();
+  console.log(`Found ${brands.length} brands`);
 }
 
 main().catch(console.error);
@@ -102,14 +123,17 @@ const products = await client.search({
 ### Search with Filters
 
 ```typescript
-import { SearchFilters } from 'channel3-sdk';
+import { SearchFiltersOptions, AvailabilityStatus } from 'channel3-sdk';
 
 // Create search filters
-const filters: SearchFilters = {
-  colors: ["blue", "navy"],
-  materials: ["cotton", "denim"],
-  min_price: 50.0,
-  max_price: 200.0
+const filters: SearchFiltersOptions = {
+  brandIds: ["brand_123", "brand_456"],
+  gender: "male",
+  availability: [AvailabilityStatus.IN_STOCK],
+  price: {
+    minPrice: 50.0,
+    maxPrice: 200.0
+  }
 };
 
 // Search with filters
@@ -118,6 +142,21 @@ const products = await client.search({
   filters: filters,
   limit: 10
 });
+```
+
+### Brand Management
+
+```typescript
+// Get all brands with pagination
+const brands = await client.getBrands({ page: 1, size: 50 });
+
+// Search for specific brands
+const nikeBrands = await client.getBrands({ query: "nike" });
+
+// Get detailed brand information
+const brandDetail = await client.getBrand("brand_123");
+console.log(`Brand: ${brandDetail.name}`);
+console.log(`Logo: ${brandDetail.logo_url}`);
 ```
 
 ### Environment Variable Configuration
@@ -158,6 +197,8 @@ interface Channel3ClientConfig {
 **Methods:**
 - `search(options: SearchOptions): Promise<Product[]>` - Search for products
 - `getProduct(productId: string): Promise<ProductDetail>` - Get product details
+- `getBrands(options?: BrandSearchOptions): Promise<Brand[]>` - Get brands
+- `getBrand(brandId: string): Promise<Brand>` - Get brand details
 
 ### Search Options
 
@@ -166,8 +207,14 @@ interface SearchOptions {
   query?: string; // Text search query
   imageUrl?: string; // URL of image for visual search
   base64Image?: string; // Base64-encoded image for visual search
-  filters?: SearchFilters; // Search filters
+  filters?: SearchFiltersOptions; // Search filters
   limit?: number; // Maximum number of results (default: 20)
+}
+
+interface BrandSearchOptions {
+  query?: string; // Text query to filter brands
+  page?: number; // Page number for pagination (default: 1)
+  size?: number; // Number of brands per page (default: 100)
 }
 ```
 
@@ -178,48 +225,65 @@ interface SearchOptions {
 interface Product {
   id: string; // Unique product identifier
   score: number; // Search relevance score
-  brand_name: string; // Brand name
   title: string; // Product title
-  description: string; // Product description
+  description?: string; // Product description
+  brand_name: string; // Brand name
   image_url: string; // Main product image URL
-  offers: MerchantOffering[]; // Available purchase options
-  family: FamilyMember[]; // Related products
+  price: Price; // Price information
+  availability: AvailabilityStatus; // Availability status
+  variants: Variant[]; // Product variants
 }
 ```
 
 #### `ProductDetail`
 ```typescript
 interface ProductDetail {
-  brand_id: string; // Brand identifier
-  brand_name: string; // Brand name
   title: string; // Product title
-  description: string; // Product description
-  image_urls: string[]; // Product image URLs
-  merchant_offerings: MerchantOffering[]; // Purchase options
-  gender: "na" | "men" | "women"; // Target gender
-  materials?: string[] | null; // Product materials
-  key_features: string[]; // Key product features
-  family_members: FamilyMember[]; // Related products
-}
-```
-
-#### `SearchFilters`
-```typescript
-interface SearchFilters {
-  colors?: string[] | null; // Color filters
-  materials?: string[] | null; // Material filters
-  min_price?: number | null; // Minimum price
-  max_price?: number | null; // Maximum price
-}
-```
-
-#### `MerchantOffering`
-```typescript
-interface MerchantOffering {
-  url: string; // Purchase URL
-  merchant_name: string; // Merchant name
+  description?: string; // Product description
+  brand_id?: string; // Brand identifier
+  brand_name?: string; // Brand name
+  image_urls?: string[]; // Product image URLs
   price: Price; // Price information
   availability: AvailabilityStatus; // Availability status
+  key_features?: string[]; // Key product features
+  variants: Variant[]; // Product variants
+}
+```
+
+#### `Brand`
+```typescript
+interface Brand {
+  id: string; // Unique brand identifier
+  name: string; // Brand name
+  logo_url?: string; // Brand logo URL
+  description?: string; // Brand description
+}
+```
+
+#### `Variant`
+```typescript
+interface Variant {
+  product_id: string; // Associated product identifier
+  title: string; // Variant title
+  image_url: string; // Variant image URL
+}
+```
+
+#### `SearchFiltersOptions`
+```typescript
+interface SearchFiltersOptions {
+  brandIds?: string[]; // Brand ID filters
+  gender?: "male" | "female" | "unisex"; // Gender filter
+  price?: SearchFilterPrice; // Price range filter
+  availability?: AvailabilityStatus[]; // Availability filters
+}
+```
+
+#### `SearchFilterPrice`
+```typescript
+interface SearchFilterPrice {
+  minPrice?: number; // Minimum price
+  maxPrice?: number; // Maximum price
 }
 ```
 
@@ -227,8 +291,22 @@ interface MerchantOffering {
 ```typescript
 interface Price {
   price: number; // Current price
-  compare_at_price?: number | null; // Original price (if discounted)
+  compare_at_price?: number; // Original price (if discounted)
   currency: string; // Currency code
+}
+```
+
+#### `AvailabilityStatus`
+```typescript
+enum AvailabilityStatus {
+  IN_STOCK = "InStock",
+  OUT_OF_STOCK = "OutOfStock",
+  PRE_ORDER = "PreOrder",
+  LIMITED_AVAILABILITY = "LimitedAvailability",
+  BACK_ORDER = "BackOrder",
+  DISCONTINUED = "Discontinued",
+  SOLD_OUT = "SoldOut",
+  UNKNOWN = "Unknown"
 }
 ```
 

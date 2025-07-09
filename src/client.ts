@@ -6,6 +6,7 @@ import {
   Channel3ClientConfig,
   SearchRequest,
   SearchFilters,
+  Brand,
 } from './types';
 import {
   Channel3Error,
@@ -69,7 +70,7 @@ export class Channel3Client {
 
     if (options.filters) {
       apiFilters = {
-        brands: options.filters.brands,
+        brand_ids: options.filters.brandIds,
         gender: options.filters.gender,
         availability: options.filters.availability,
         price: options.filters.price
@@ -85,8 +86,8 @@ export class Channel3Client {
       query: options.query || null,
       image_url: options.imageUrl || null,
       base64_image: options.base64Image || null,
-      filters: apiFilters,
       limit: options.limit || 20,
+      filters: apiFilters,
     };
   }
 
@@ -170,6 +171,103 @@ export class Channel3Client {
       }
 
       return responseData as ProductDetail;
+    } catch (error) {
+      if (error instanceof Channel3Error) {
+        throw error;
+      }
+
+      if (error instanceof Error) {
+        if (error.name === 'AbortError') {
+          throw new Channel3ConnectionError('Request timed out');
+        }
+        throw new Channel3ConnectionError(`Request failed: ${error.message}`);
+      }
+
+      throw new Channel3Error(`Unexpected error: ${error}`);
+    }
+  }
+
+  async getBrands(query?: string, page: number = 1, size: number = 100): Promise<Brand[]> {
+    const url = `${this.baseUrl}/brands`;
+    const params = new URLSearchParams();
+
+    if (query !== undefined) {
+      params.append('query', query);
+    }
+    if (page !== 1) {
+      params.append('page', page.toString());
+    }
+    if (size !== 100) {
+      params.append('size', size.toString());
+    }
+
+    const urlWithParams = params.toString() ? `${url}?${params.toString()}` : url;
+
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), this.timeout);
+
+      const response = await fetch(urlWithParams, {
+        method: 'GET',
+        headers: this.headers,
+        signal: controller.signal,
+      });
+
+      clearTimeout(timeoutId);
+
+      const responseData = await response.json();
+
+      if (!response.ok) {
+        this.handleErrorResponse(response.status, responseData, urlWithParams);
+      }
+
+      if (!Array.isArray(responseData)) {
+        throw new Channel3Error('Invalid response format: expected array');
+      }
+
+      return responseData as Brand[];
+    } catch (error) {
+      if (error instanceof Channel3Error) {
+        throw error;
+      }
+
+      if (error instanceof Error) {
+        if (error.name === 'AbortError') {
+          throw new Channel3ConnectionError('Request timed out');
+        }
+        throw new Channel3ConnectionError(`Request failed: ${error.message}`);
+      }
+
+      throw new Channel3Error(`Unexpected error: ${error}`);
+    }
+  }
+
+  async getBrand(brandId: string): Promise<Brand> {
+    if (!brandId || !brandId.trim()) {
+      throw new Error('brandId cannot be empty');
+    }
+
+    const url = `${this.baseUrl}/brands/${brandId}`;
+
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), this.timeout);
+
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: this.headers,
+        signal: controller.signal,
+      });
+
+      clearTimeout(timeoutId);
+
+      const responseData = await response.json();
+
+      if (!response.ok) {
+        this.handleErrorResponse(response.status, responseData, url);
+      }
+
+      return responseData as Brand;
     } catch (error) {
       if (error instanceof Channel3Error) {
         throw error;
