@@ -3,14 +3,14 @@
  */
 
 export enum AvailabilityStatus {
-  InStock = 'InStock',
-  OutOfStock = 'OutOfStock',
-  PreOrder = 'PreOrder',
-  LimitedAvailability = 'LimitedAvailability',
-  BackOrder = 'BackOrder',
-  Discontinued = 'Discontinued',
-  SoldOut = 'SoldOut',
-  Unknown = 'Unknown',
+  IN_STOCK = 'InStock',
+  OUT_OF_STOCK = 'OutOfStock',
+  PRE_ORDER = 'PreOrder',
+  LIMITED_AVAILABILITY = 'LimitedAvailability',
+  BACK_ORDER = 'BackOrder',
+  DISCONTINUED = 'Discontinued',
+  SOLD_OUT = 'SoldOut',
+  UNKNOWN = 'Unknown',
 }
 
 export interface Price {
@@ -60,7 +60,7 @@ export interface Product {
   /** Product availability status */
   availability: AvailabilityStatus;
   /** Product variants */
-  variants?: Variant[];
+  variants: Variant[];
 }
 
 export interface ProductDetail {
@@ -81,7 +81,7 @@ export interface ProductDetail {
   /** List of key product features */
   key_features?: string[] | null;
   /** Product variants */
-  variants?: Variant[];
+  variants: Variant[];
 }
 
 export interface SearchFilterPrice {
@@ -153,4 +153,13 @@ export interface SearchOptions {
   filters?: SearchFiltersOptions;
   /** Maximum number of results to return (default: 20) */
   limit?: number;
+}
+
+export interface BrandSearchOptions {
+  /** Text query to filter brands */
+  query?: string;
+  /** Page number for pagination (default: 1) */
+  page?: number;
+  /** Number of brands per page (default: 100) */
+  size?: number;
 }
