@@ -76,6 +76,8 @@ export interface ProductDetail {
   image_urls?: string[] | null;
   /** Price information */
   price: Price;
+  /** Gender of the product */
+  gender?: 'unisex' | 'men' | 'women' | null;
   /** Product availability status */
   availability: AvailabilityStatus;
   /** List of key product features */
