@@ -45,6 +45,8 @@ export interface Variant {
 export interface Product {
   /** Unique identifier for the product */
   id: string;
+  /** URL for the product */
+  url: string;
   /** Relevance score for the search query */
   score: number;
   /** Product title */
@@ -64,6 +66,12 @@ export interface Product {
 }
 
 export interface ProductDetail {
+  /** Unique identifier for the product */
+  id: string;
+  /** URL for the product */
+  url: string;
+  /** Relevance score for the search query */
+  score: number;
   /** Product title */
   title: string;
   /** Product description */
