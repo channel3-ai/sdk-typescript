@@ -157,22 +157,6 @@ export class Channel3Client {
       path: `/brands/${brandId}`,
     });
   }
-
-  async getSimilarProducts(productId: string, limit: number = 20): Promise<Product[]> {
-    return this._request<Product[]>({
-      method: 'GET',
-      path: `/products/${productId}/similar`,
-      params: { limit },
-    });
-  }
-
-  async getVisualSearchResults(imageUrl: string, limit: number = 20): Promise<Product[]> {
-    return this._request<Product[]>({
-      method: 'POST',
-      path: `/search/visual`,
-      body: { imageUrl, limit },
-    });
-  }
 }
 
 // Alias for backwards compatibility
