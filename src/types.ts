@@ -17,7 +17,7 @@ export interface Price {
   /** The current price of the product, including any discounts */
   price: number;
   /** The original price of the product before any discounts */
-  compare_at_price?: number | null;
+  compareAtPrice?: number | null;
   /** The currency code of the product */
   currency: string;
 }
@@ -28,18 +28,18 @@ export interface Brand {
   /** Name of the brand */
   name: string;
   /** Logo URL for the brand */
-  logo_url?: string | null;
+  logoUrl?: string | null;
   /** Description of the brand */
   description?: string | null;
 }
 
 export interface Variant {
   /** Unique identifier for the product */
-  product_id: string;
+  productId: string;
   /** Title of the variant */
   title: string;
   /** Image URL for the variant */
-  image_url: string;
+  imageUrl: string;
 }
 
 export interface Product {
@@ -54,9 +54,9 @@ export interface Product {
   /** Product description */
   description?: string | null;
   /** Brand name of the product */
-  brand_name: string;
+  brandName: string;
   /** Main product image URL */
-  image_url: string;
+  imageUrl: string;
   /** Price information */
   price: Price;
   /** Product availability status */
@@ -77,11 +77,11 @@ export interface ProductDetail {
   /** Product description */
   description?: string | null;
   /** Unique identifier for the brand */
-  brand_id?: string | null;
+  brandId?: string | null;
   /** Brand name of the product */
-  brand_name?: string | null;
+  brandName?: string | null;
   /** List of product image URLs */
-  image_urls?: string[] | null;
+  imageUrls?: string[] | null;
   /** Price information */
   price: Price;
   /** Gender of the product */
@@ -89,40 +89,9 @@ export interface ProductDetail {
   /** Product availability status */
   availability: AvailabilityStatus;
   /** List of key product features */
-  key_features?: string[] | null;
+  keyFeatures?: string[] | null;
   /** Product variants */
   variants: Variant[];
-}
-
-export interface SearchFilterPrice {
-  /** Minimum price filter */
-  min_price?: number | null;
-  /** Maximum price filter */
-  max_price?: number | null;
-}
-
-export interface SearchFilters {
-  /** List of brand IDs to filter by */
-  brand_ids?: string[] | null;
-  /** Gender to filter by */
-  gender?: 'male' | 'female' | 'unisex' | null;
-  /** Price range to filter by */
-  price?: SearchFilterPrice | null;
-  /** Availability statuses to filter by */
-  availability?: AvailabilityStatus[] | null;
-}
-
-export interface SearchRequest {
-  /** Text search query */
-  query?: string | null;
-  /** URL of image for visual search */
-  image_url?: string | null;
-  /** Base64-encoded image for visual search */
-  base64_image?: string | null;
-  /** Maximum number of results to return */
-  limit?: number | null;
-  /** Search filters */
-  filters?: SearchFilters;
 }
 
 export interface Channel3ClientConfig {
