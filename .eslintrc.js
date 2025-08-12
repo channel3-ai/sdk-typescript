@@ -4,20 +4,18 @@ module.exports = {
     ecmaVersion: 2020,
     sourceType: 'module',
   },
-  extends: [
-    '@typescript-eslint/recommended',
-    'prettier',
-  ],
-  plugins: ['@typescript-eslint', 'prettier'],
+  extends: ['eslint:recommended'],
+  plugins: ['@typescript-eslint'],
   rules: {
-    'prettier/prettier': 'error',
     '@typescript-eslint/no-unused-vars': 'error',
     '@typescript-eslint/no-explicit-any': 'warn',
-    '@typescript-eslint/explicit-function-return-type': 'off',
-    '@typescript-eslint/explicit-module-boundary-types': 'off',
+    'no-console': 'off',
+    'no-unused-vars': 'off', // Use TypeScript version instead
   },
   env: {
     node: true,
     jest: true,
+    es2020: true,
   },
-}; 
+  ignorePatterns: ['dist/', 'src/generated/', '*.js', '*.mjs'],
+};

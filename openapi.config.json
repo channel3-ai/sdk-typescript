@@ -1,0 +1,16 @@
+{
+  "generatorName": "typescript-fetch",
+  "inputSpec": "http://localhost:8000/openapi.json",
+  "outputDir": "src/generated",
+  "skipValidateSpec": true,
+  "supportsES6": true,
+  "additionalProperties": {
+    "typescriptThreePlus": true,
+    "useSingleRequestParameter": true,
+    "withInterfaces": true,
+    "enumPropertyNaming": "original",
+    "modelPropertyNaming": "original",
+    "useTaggedUnions": true,
+    "nullSafeAdditionalProperties": true
+  }
+}

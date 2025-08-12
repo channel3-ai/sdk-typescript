@@ -1,12 +1,12 @@
 import fetch from 'cross-fetch';
-import {
+import type {
   Product,
   ProductDetail,
-  SearchOptions,
-  Channel3ClientConfig,
   Brand,
-  BrandSearchOptions,
-} from './types';
+  SearchRequest,
+  PaginatedResponseBrand,
+} from './generated/models';
+import type { GetBrandsV0BrandsGetRequest } from './generated/apis/Channel3ApiApi';
 import {
   Channel3Error,
   Channel3AuthenticationError,
@@ -15,22 +15,17 @@ import {
   Channel3ServerError,
   Channel3ConnectionError,
 } from './exceptions';
-import { toCamelCase, toSnakeCase } from './utils';
+import { Channel3ApiApi, Configuration } from './generated';
+import type { InitOverrideFunction } from './generated/runtime';
 
-type HttpMethod = 'GET' | 'POST';
-
-interface RequestOptions {
-  method: HttpMethod;
-  path: string;
-  body?: unknown;
-  params?: Record<string, string | number | undefined>;
+export interface Channel3ClientConfig {
+  apiKey: string;
 }
 
 export class Channel3Client {
   private readonly apiKey: string;
-  private readonly baseUrl: string;
-  private readonly timeout: number;
-  private readonly headers: Record<string, string>;
+  private readonly timeoutMs: number = 30000;
+  private readonly api: Channel3ApiApi;
 
   constructor(config: Channel3ClientConfig) {
     if (!config.apiKey) {
@@ -45,119 +40,138 @@ export class Channel3Client {
       this.apiKey = config.apiKey;
     }
 
-    this.baseUrl = config.baseUrl || 'https://api.trychannel3.com/v0';
-    this.timeout = config.timeout || 30000;
-    this.headers = {
-      'x-api-key': this.apiKey,
-      'Content-Type': 'application/json',
-    };
-  }
-
-  private async _request<T>(options: RequestOptions): Promise<T> {
-    const { method, path, body, params } = options;
-    const url = new URL(`${this.baseUrl}${path}`);
-
-    if (params) {
-      Object.entries(params).forEach(([key, value]) => {
-        if (value !== undefined && value !== null) {
-          url.searchParams.append(key, String(value));
-        }
-      });
-    }
-
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), this.timeout);
-
-    try {
-      const response = await fetch(url.toString(), {
-        method,
-        headers: this.headers,
-        body: body ? JSON.stringify(toSnakeCase(body)) : undefined,
-        signal: controller.signal,
-      });
-
-      clearTimeout(timeoutId);
-
-      const responseData = await response.json().catch(() => null);
-
-      if (!response.ok) {
-        this.handleErrorResponse(response.status, responseData, url.toString());
-      }
-
-      return toCamelCase(responseData) as T;
-    } catch (error) {
-      if (error instanceof Channel3Error) {
-        throw error;
-      }
-
-      if (error instanceof Error) {
-        if (error.name === 'AbortError') {
-          throw new Channel3ConnectionError('Request timed out');
-        }
-        throw new Channel3ConnectionError(`Request failed: ${error.message}`);
-      }
-
-      throw new Channel3Error(`Unexpected error: ${error}`);
-    }
-  }
-
-  private handleErrorResponse(status: number, responseData: any, url: string): never {
-    const errorMessage = responseData?.detail || `Request failed with status ${status}`;
-
-    switch (status) {
-      case 401:
-        throw new Channel3AuthenticationError('Invalid or missing API key', status, responseData);
-      case 404:
-        throw new Channel3NotFoundError(errorMessage, status, responseData);
-      case 422:
-        throw new Channel3ValidationError(
-          `Validation error: ${errorMessage}`,
-          status,
-          responseData
-        );
-      case 500:
-        throw new Channel3ServerError('Internal server error', status, responseData);
-      default:
-        throw new Channel3Error(`Request to ${url} failed: ${errorMessage}`, status, responseData);
-    }
-  }
-
-  async search(options: SearchOptions = {}): Promise<Product[]> {
-    return this._request<Product[]>({
-      method: 'POST',
-      path: '/search',
-      body: options,
+    const configuration = new Configuration({
+      basePath:
+        (typeof process !== 'undefined' && process.env && process.env.CHANNEL3_BASE_PATH) ||
+        'https://api.trychannel3.com',
+      apiKey: async () => this.apiKey,
+      fetchApi: fetch as any,
     });
+
+    this.api = new Channel3ApiApi(configuration);
+  }
+
+  private createTimeoutOverride(): { initOverride: InitOverrideFunction; clear: () => void } {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), this.timeoutMs);
+    const initOverride: InitOverrideFunction = async ({ init }) => ({
+      ...init,
+      signal: controller.signal,
+    });
+    const clear = () => clearTimeout(timeoutId);
+    return { initOverride, clear };
+  }
+
+  private async handleGeneratedCall<T>(
+    fn: (initOverride: InitOverrideFunction) => Promise<T>
+  ): Promise<T> {
+    const { initOverride, clear } = this.createTimeoutOverride();
+    try {
+      const result = await fn(initOverride);
+      clear();
+      return result;
+    } catch (error: any) {
+      clear();
+      await this.rethrowAsChannel3Error(error);
+      throw error;
+    }
+  }
+
+  private async rethrowAsChannel3Error(error: unknown): Promise<never> {
+    if (error && typeof error === 'object' && 'name' in error) {
+      const err = error as any;
+      if (err.name === 'ResponseError' && err.response) {
+        const status = err.response.status as number;
+        let responseData: any = null;
+        try {
+          responseData = await err.response.clone().json();
+        } catch {
+          try {
+            const text = await err.response.clone().text();
+            responseData = { detail: text };
+          } catch {
+            responseData = null;
+          }
+        }
+        const url = err.response.url as string;
+        const errorMessage = responseData?.detail || `Request failed with status ${status}`;
+        switch (status) {
+          case 401:
+            throw new Channel3AuthenticationError(
+              'Invalid or missing API key',
+              status,
+              responseData
+            );
+          case 404:
+            throw new Channel3NotFoundError(errorMessage, status, responseData);
+          case 422:
+            throw new Channel3ValidationError(
+              `Validation error: ${errorMessage}`,
+              status,
+              responseData
+            );
+          case 500:
+            throw new Channel3ServerError('Internal server error', status, responseData);
+          default:
+            throw new Channel3Error(
+              `Request to ${url} failed: ${errorMessage}`,
+              status,
+              responseData
+            );
+        }
+      }
+      if (err.name === 'FetchError') {
+        throw new Channel3ConnectionError(`Request failed: ${err.message}`);
+      }
+      if (err.name === 'AbortError') {
+        throw new Channel3ConnectionError('Request timed out');
+      }
+    }
+    if (error instanceof Channel3Error) {
+      throw error;
+    }
+    if (error instanceof Error) {
+      throw new Channel3ConnectionError(`Request failed: ${error.message}`);
+    }
+    throw new Channel3Error(`Unexpected error: ${String(error)}`);
+  }
+
+  async search(options: SearchRequest = {}): Promise<Product[]> {
+    const products = await this.handleGeneratedCall((initOverride) =>
+      this.api.searchV0SearchPost({ searchRequest: options }, initOverride)
+    );
+    return products;
   }
 
   async getProduct(productId: string): Promise<ProductDetail> {
     if (!productId || !productId.trim()) {
       throw new Error('productId cannot be empty');
     }
-    return this._request<ProductDetail>({
-      method: 'GET',
-      path: `/products/${productId}`,
-    });
+    const product = await this.handleGeneratedCall((initOverride) =>
+      this.api.getProductDetailV0ProductsProductIdGet({ productId }, initOverride)
+    );
+    return product;
   }
 
-  async getBrands(options: BrandSearchOptions = {}): Promise<Brand[]> {
-    return this._request<Brand[]>({
-      method: 'GET',
-      path: '/brands',
-      params: options as Record<string, string | number | undefined>,
-    });
+  async getBrands(options: GetBrandsV0BrandsGetRequest = {}): Promise<PaginatedResponseBrand> {
+    const result = await this.handleGeneratedCall((initOverride) =>
+      this.api.getBrandsV0BrandsGet(
+        { query: options.query, page: options.page, size: options.size },
+        initOverride
+      )
+    );
+    return result;
   }
 
   async getBrand(brandId: string): Promise<Brand> {
     if (!brandId || !brandId.trim()) {
       throw new Error('brandId cannot be empty');
     }
-    return this._request<Brand>({
-      method: 'GET',
-      path: `/brands/${brandId}`,
-    });
+    const brand = await this.handleGeneratedCall((initOverride) =>
+      this.api.getBrandDetailV0BrandsBrandIdGet({ brandId }, initOverride)
+    );
+    return brand;
   }
 }
 
-// Alias for backwards compatibility
 export { Channel3Client as AsyncChannel3Client };

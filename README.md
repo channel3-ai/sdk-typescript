@@ -1,8 +1,24 @@
 # Channel3 TypeScript/JavaScript SDK
 
-The official TypeScript/JavaScript SDK for the [Channel3](https://trychannel3.com) AI Shopping API.
+[![npm version](https://badge.fury.io/js/channel3-sdk.svg)](https://badge.fury.io/js/channel3-sdk)
+[![TypeScript](https://img.shields.io/badge/%3C%2F%3E-TypeScript-%230074c1.svg)](http://www.typescriptlang.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Node.js](https://img.shields.io/badge/Node.js-16%2B-green)](https://nodejs.org/)
 
-## Installation
+The official TypeScript/JavaScript SDK for the [Channel3](https://trychannel3.com) AI Shopping API. Search for products using text, images, and advanced filters with AI-powered semantic search.
+
+## 🚀 Features
+
+- **🔍 Text Search**: Natural language product search
+- **🖼️ Visual Search**: Search by image URL or base64 data
+- **🎯 Advanced Filters**: Filter by brand, price, gender, availability
+- **⚙️ Search Configuration**: Control query enrichment and semantic search
+- **🔧 TypeScript First**: Full type safety with auto-generated types from OpenAPI
+- **🌐 Cross-Platform**: Works in Node.js and modern browsers
+- **⚡ Modern**: ESM and CommonJS support, AbortController for timeouts
+- **🛡️ Robust Error Handling**: Detailed error types for different scenarios
+
+## 📦 Installation
 
 ```bash
 npm install channel3-sdk
@@ -12,352 +28,210 @@ yarn add channel3-sdk
 pnpm add channel3-sdk
 ```
 
-## Quick Start
+## 🏃‍♂️ Quick Start
 
-### ES Modules / TypeScript
+### Basic Usage
 
 ```typescript
 import { Channel3Client } from 'channel3-sdk';
 
-// Initialize the client
 const client = new Channel3Client({
-  apiKey: "your_api_key_here"
+  apiKey: process.env.CHANNEL3_API_KEY!,
 });
 
 // Search for products
-const products = await client.search({ query: "blue denim jacket" });
+const products = await client.search({
+  query: 'blue denim jacket',
+});
 
-for (const product of products) {
-  console.log(`Product: ${product.title}`);
-  console.log(`Brand: ${product.brand_name}`);
-  console.log(`Price: ${product.price.currency} ${product.price.price}`);
-  console.log(`Availability: ${product.availability}`);
-  console.log("---");
-}
-
-// Get detailed product information
-const productDetail = await client.getProduct("prod_123456");
-console.log(`Detailed info for: ${productDetail.title}`);
-console.log(`Brand: ${productDetail.brand_name}`);
-if (productDetail.key_features) {
-  console.log(`Key features: ${productDetail.key_features}`);
-}
-
-// Get all brands
-const brands = await client.getBrands();
-for (const brand of brands) {
-  console.log(`Brand: ${brand.name}`);
-  if (brand.description) {
-    console.log(`Description: ${brand.description}`);
-  }
-}
-
-// Get specific brand details
-const brand = await client.getBrand("brand_123");
-console.log(`Brand: ${brand.name}`);
+console.log(`Found ${products.length} products`);
+products.forEach((product) => {
+  console.log(`${product.title} - $${product.price.price} ${product.price.currency}`);
+});
 ```
 
-### CommonJS / Node.js
+### Advanced Search with Configuration
 
-```javascript
-const { Channel3Client } = require('channel3-sdk');
-
-async function main() {
-  // Initialize the client
-  const client = new Channel3Client({
-    apiKey: "your_api_key_here"
-  });
-  
-  // Search for products
-  const products = await client.search({ query: "running shoes" });
-  
-  for (const product of products) {
-    console.log(`Product: ${product.title}`);
-    console.log(`Score: ${product.score}`);
-    console.log(`Price: ${product.price.currency} ${product.price.price}`);
-  }
-  
-  // Get detailed product information
-  if (products.length > 0) {
-    const productDetail = await client.getProduct(products[0].id);
-    console.log(`Availability: ${productDetail.availability}`);
-  }
-
-  // Get brands
-  const brands = await client.getBrands();
-  console.log(`Found ${brands.length} brands`);
-}
-
-main().catch(console.error);
+```typescript
+// Search with custom configuration and context
+const results = await client.search({
+  query: 'running shoes',
+  config: {
+    enrich_query: true, // Enable query enrichment
+    semantic_search: true, // Enable semantic search
+  },
+  context: 'Looking for athletic footwear for marathon training',
+  filters: {
+    price: { min_price: 50, max_price: 200 },
+    gender: 'male',
+    brand_ids: ['nike-id', 'adidas-id'],
+  },
+  limit: 10,
+});
 ```
-
-## Advanced Usage
 
 ### Visual Search
 
 ```typescript
 // Search by image URL
-const products = await client.search({ 
-  imageUrl: "https://example.com/image.jpg" 
+const imageResults = await client.search({
+  image_url: 'https://example.com/product-image.jpg',
 });
 
 // Search by base64 image
-const fs = require('fs');
-const imageBuffer = fs.readFileSync('image.jpg');
-const base64Image = imageBuffer.toString('base64');
-const products2 = await client.search({ 
-  base64Image: base64Image 
+const base64Results = await client.search({
+  base64_image: 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQ...',
 });
 ```
 
-### Multimodal Search
+## 📚 API Reference
 
-```typescript
-// Combine text and image search
-const products = await client.search({
-  query: "blue denim jacket",
-  imageUrl: "https://example.com/jacket.jpg"
-});
-```
+### Client Configuration
 
-### Search with Filters
-
-```typescript
-import { SearchFiltersOptions, AvailabilityStatus } from 'channel3-sdk';
-
-// Create search filters
-const filters: SearchFiltersOptions = {
-  brandIds: ["brand_123", "brand_456"],
-  gender: "male",
-  availability: [AvailabilityStatus.IN_STOCK],
-  price: {
-    minPrice: 50.0,
-    maxPrice: 200.0
-  }
-};
-
-// Search with filters
-const products = await client.search({
-  query: "jacket",
-  filters: filters,
-  limit: 10
-});
-```
-
-### Brand Management
-
-```typescript
-// Get all brands with pagination
-const brands = await client.getBrands({ page: 1, size: 50 });
-
-// Search for specific brands
-const nikeBrands = await client.getBrands({ query: "nike" });
-
-// Get detailed brand information
-const brandDetail = await client.getBrand("brand_123");
-console.log(`Brand: ${brandDetail.name}`);
-console.log(`Logo: ${brandDetail.logo_url}`);
-```
-
-### Environment Variable Configuration
-
-```typescript
-// Set CHANNEL3_API_KEY environment variable
-process.env.CHANNEL3_API_KEY = "your_api_key_here";
-
-// Client will automatically use the environment variable
-const client = new Channel3Client({});
-```
-
-### Custom Configuration
-
-```typescript
-const client = new Channel3Client({
-  apiKey: "your_api_key_here",
-  baseUrl: "https://api.trychannel3.com/v0", // Custom base URL
-  timeout: 60000, // 60 second timeout
-});
-```
-
-## API Reference
-
-### Client Class
-
-#### `Channel3Client`
-
-**Constructor Options:**
 ```typescript
 interface Channel3ClientConfig {
   apiKey: string; // Your Channel3 API key
-  baseUrl?: string; // Base URL (default: https://api.trychannel3.com/v0)
-  timeout?: number; // Timeout in milliseconds (default: 30000)
 }
 ```
 
-**Methods:**
-- `search(options: SearchOptions): Promise<Product[]>` - Search for products
-- `getProduct(productId: string): Promise<ProductDetail>` - Get product details
-- `getBrands(options?: BrandSearchOptions): Promise<Brand[]>` - Get brands
-- `getBrand(brandId: string): Promise<Brand>` - Get brand details
+### Methods
 
-### Search Options
+#### `search(options: SearchRequest): Promise<Product[]>`
+
+Search for products with various options.
+
+**Parameters:**
+
+- `query?: string` - Text search query
+- `image_url?: string` - URL of image for visual search
+- `base64_image?: string` - Base64-encoded image for visual search
+- `config?: SearchConfig` - Search configuration options
+- `context?: string` - Additional context for the search
+- `filters?: SearchFilters` - Advanced filtering options
+- `limit?: number` - Maximum results to return (default: 20)
+
+#### `getProduct(productId: string): Promise<ProductDetail>`
+
+Get detailed information about a specific product.
+
+#### `getBrands(options?: GetBrandsV0BrandsGetRequest): Promise<PaginatedResponseBrand>`
+
+Get list of available brands with pagination.
+
+#### `getBrand(brandId: string): Promise<Brand>`
+
+Get detailed information about a specific brand.
+
+## 🔧 Configuration Options
+
+### Search Configuration
 
 ```typescript
-interface SearchOptions {
-  query?: string; // Text search query
-  imageUrl?: string; // URL of image for visual search
-  base64Image?: string; // Base64-encoded image for visual search
-  filters?: SearchFiltersOptions; // Search filters
-  limit?: number; // Maximum number of results (default: 20)
-}
-
-interface BrandSearchOptions {
-  query?: string; // Text query to filter brands
-  page?: number; // Page number for pagination (default: 1)
-  size?: number; // Number of brands per page (default: 100)
+interface SearchConfig {
+  enrich_query?: boolean; // Enable AI query enrichment (default: true)
+  semantic_search?: boolean; // Enable semantic search (default: true)
 }
 ```
 
-### Type Definitions
+### Search Filters
 
-#### `Product`
 ```typescript
-interface Product {
-  id: string; // Unique product identifier
-  score: number; // Search relevance score
-  title: string; // Product title
-  description?: string; // Product description
-  brand_name: string; // Brand name
-  image_url: string; // Main product image URL
-  price: Price; // Price information
-  availability: AvailabilityStatus; // Availability status
-  variants: Variant[]; // Product variants
+interface SearchFilters {
+  brand_ids?: string[]; // Filter by specific brand IDs
+  gender?: 'male' | 'female' | 'unisex'; // Gender filter
+  price?: {
+    // Price range filter
+    min_price?: number;
+    max_price?: number;
+  };
+  availability?: AvailabilityStatus[]; // Availability filter
 }
 ```
 
-#### `ProductDetail`
-```typescript
-interface ProductDetail {
-  title: string; // Product title
-  description?: string; // Product description
-  brand_id?: string; // Brand identifier
-  brand_name?: string; // Brand name
-  image_urls?: string[]; // Product image URLs
-  price: Price; // Price information
-  availability: AvailabilityStatus; // Availability status
-  key_features?: string[]; // Key product features
-  variants: Variant[]; // Product variants
-}
+## 🌍 Environment Variables
+
+- `CHANNEL3_API_KEY` - Your Channel3 API key (required)
+- `CHANNEL3_BASE_PATH` - Custom API base path (optional, for local development)
+
+## 🛠️ Local Development & Testing
+
+For local development against your own backend:
+
+```bash
+# Set environment variables
+export CHANNEL3_BASE_PATH="http://localhost:8000"
+export CHANNEL3_API_KEY="your_dev_key"
+
+# Create test script
+cat > test-local.mjs << 'EOF'
+import { Channel3Client } from 'channel3-sdk';
+
+const client = new Channel3Client({ apiKey: process.env.CHANNEL3_API_KEY });
+const products = await client.search({ query: 't-shirt' });
+console.log(`Found ${products.length} products`);
+EOF
+
+# Run test
+node test-local.mjs
 ```
 
-#### `Brand`
-```typescript
-interface Brand {
-  id: string; // Unique brand identifier
-  name: string; // Brand name
-  logo_url?: string; // Brand logo URL
-  description?: string; // Brand description
-}
-```
+## 🚨 Error Handling
 
-#### `Variant`
-```typescript
-interface Variant {
-  product_id: string; // Associated product identifier
-  title: string; // Variant title
-  image_url: string; // Variant image URL
-}
-```
-
-#### `SearchFiltersOptions`
-```typescript
-interface SearchFiltersOptions {
-  brandIds?: string[]; // Brand ID filters
-  gender?: "male" | "female" | "unisex"; // Gender filter
-  price?: SearchFilterPrice; // Price range filter
-  availability?: AvailabilityStatus[]; // Availability filters
-}
-```
-
-#### `SearchFilterPrice`
-```typescript
-interface SearchFilterPrice {
-  minPrice?: number; // Minimum price
-  maxPrice?: number; // Maximum price
-}
-```
-
-#### `Price`
-```typescript
-interface Price {
-  price: number; // Current price
-  compare_at_price?: number; // Original price (if discounted)
-  currency: string; // Currency code
-}
-```
-
-#### `AvailabilityStatus`
-```typescript
-enum AvailabilityStatus {
-  IN_STOCK = "InStock",
-  OUT_OF_STOCK = "OutOfStock",
-  PRE_ORDER = "PreOrder",
-  LIMITED_AVAILABILITY = "LimitedAvailability",
-  BACK_ORDER = "BackOrder",
-  DISCONTINUED = "Discontinued",
-  SOLD_OUT = "SoldOut",
-  UNKNOWN = "Unknown"
-}
-```
-
-## Error Handling
-
-The SDK provides specific exception types for different error conditions:
+The SDK provides specific error types for different scenarios:
 
 ```typescript
 import {
-  Channel3AuthenticationError,
-  Channel3ValidationError,
-  Channel3NotFoundError,
-  Channel3ServerError,
-  Channel3ConnectionError
+  Channel3AuthenticationError, // 401 - Invalid API key
+  Channel3ValidationError, // 422 - Invalid request data
+  Channel3NotFoundError, // 404 - Resource not found
+  Channel3ServerError, // 500 - Server error
+  Channel3ConnectionError, // Network/timeout errors
 } from 'channel3-sdk';
 
 try {
-  const products = await client.search({ query: "shoes" });
+  const products = await client.search({ query: 'shoes' });
 } catch (error) {
   if (error instanceof Channel3AuthenticationError) {
-    console.error("Invalid API key");
+    console.error('Invalid API key');
   } else if (error instanceof Channel3ValidationError) {
-    console.error("Invalid request:", error.message);
-  } else if (error instanceof Channel3NotFoundError) {
-    console.error("Resource not found");
-  } else if (error instanceof Channel3ServerError) {
-    console.error("Server error - please try again later");
+    console.error('Invalid request:', error.message);
   } else if (error instanceof Channel3ConnectionError) {
-    console.error("Connection error - check your internet connection");
+    console.error('Network error:', error.message);
   }
 }
 ```
 
-## Browser Support
+## 🔄 Staying in Sync
 
-This SDK works in both Node.js and modern browsers that support:
+This SDK is automatically generated from the Channel3 OpenAPI specification. To regenerate types after API updates:
+
+```bash
+npm run openapi:generate
+```
+
+## 🌐 Browser Support
+
+Works in modern browsers that support:
+
 - ES2018+
 - Fetch API (or polyfill)
 - AbortController (or polyfill)
 
-For older browsers, you may need polyfills for `fetch` and `AbortController`.
+## 📋 Requirements
 
-## Environment Variables
+- Node.js 16+
+- TypeScript 4.5+ (for TypeScript projects)
 
-- `CHANNEL3_API_KEY` - Your Channel3 API key
+## 📝 License
 
-## Requirements
+MIT License - see [LICENSE](LICENSE) file for details.
 
-- Node.js 16+ (for Node.js environments)
-- Modern browser with ES2018+ support
+## 🤝 Support
 
-## License
+- 📧 Email: [alex@trychannel3.com](mailto:alex@trychannel3.com)
+- 🐛 Issues: [GitHub Issues](https://github.com/channel3/sdk-typescript/issues)
+- 🌐 Website: [https://trychannel3.com](https://trychannel3.com)
 
-MIT License
+---
+
+Made with ❤️ by the Channel3 team
