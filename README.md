@@ -14,8 +14,6 @@ The official TypeScript/JavaScript SDK for the [Channel3](https://trychannel3.co
 - **🎯 Advanced Filters**: Filter by brand, price, gender, availability
 - **⚙️ Search Configuration**: Control query enrichment and semantic search
 - **🔧 TypeScript First**: Full type safety with auto-generated types from OpenAPI
-- **🌐 Cross-Platform**: Works in Node.js and modern browsers
-- **⚡ Modern**: ESM and CommonJS support, AbortController for timeouts
 - **🛡️ Robust Error Handling**: Detailed error types for different scenarios
 
 ## 📦 Installation
@@ -151,29 +149,6 @@ interface SearchFilters {
 ## 🌍 Environment Variables
 
 - `CHANNEL3_API_KEY` - Your Channel3 API key (required)
-- `CHANNEL3_BASE_PATH` - Custom API base path (optional, for local development)
-
-## 🛠️ Local Development & Testing
-
-For local development against your own backend:
-
-```bash
-# Set environment variables
-export CHANNEL3_BASE_PATH="http://localhost:8000"
-export CHANNEL3_API_KEY="your_dev_key"
-
-# Create test script
-cat > test-local.mjs << 'EOF'
-import { Channel3Client } from 'channel3-sdk';
-
-const client = new Channel3Client({ apiKey: process.env.CHANNEL3_API_KEY });
-const products = await client.search({ query: 't-shirt' });
-console.log(`Found ${products.length} products`);
-EOF
-
-# Run test
-node test-local.mjs
-```
 
 ## 🚨 Error Handling
 
@@ -201,37 +176,15 @@ try {
 }
 ```
 
-## 🔄 Staying in Sync
-
-This SDK is automatically generated from the Channel3 OpenAPI specification. To regenerate types after API updates:
-
-```bash
-npm run openapi:generate
-```
-
-## 🌐 Browser Support
-
-Works in modern browsers that support:
-
-- ES2018+
-- Fetch API (or polyfill)
-- AbortController (or polyfill)
-
-## 📋 Requirements
-
-- Node.js 16+
-- TypeScript 4.5+ (for TypeScript projects)
-
 ## 📝 License
 
 MIT License - see [LICENSE](LICENSE) file for details.
 
 ## 🤝 Support
 
-- 📧 Email: [alex@trychannel3.com](mailto:alex@trychannel3.com)
-- 🐛 Issues: [GitHub Issues](https://github.com/channel3/sdk-typescript/issues)
+- 📧 Email: [founders@trychannel3.com](mailto:founders@trychannel3.com)
 - 🌐 Website: [https://trychannel3.com](https://trychannel3.com)
 
 ---
 
-Made with ❤️ by the Channel3 team
+Made with ❤️ by Channel3
