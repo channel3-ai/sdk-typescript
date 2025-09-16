@@ -1,8 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import PublicSDK from 'public-sdk';
+import Channel3 from '@channel3/sdk';
 
-const client = new PublicSDK({
+const client = new Channel3({
   apiKey: 'My API Key',
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });

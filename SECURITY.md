@@ -16,7 +16,11 @@ before making any information public.
 ## Reporting Non-SDK Related Security Issues
 
 If you encounter security issues that are not directly related to SDKs but pertain to the services
-or products provided by Public SDK, please follow the respective company's security reporting guidelines.
+or products provided by Channel3, please follow the respective company's security reporting guidelines.
+
+### Channel3 Terms and Policies
+
+Please contact founders@trychannel3.com for any questions or concerns regarding the security of our services.
 
 ---
 

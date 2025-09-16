@@ -1,4 +1,4 @@
-# PublicSDK
+# Channel3
 
 Types:
 

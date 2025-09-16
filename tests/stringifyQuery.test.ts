@@ -1,8 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { PublicSDK } from 'public-sdk';
+import { Channel3 } from '@channel3/sdk';
 
-const { stringifyQuery } = PublicSDK.prototype as any;
+const { stringifyQuery } = Channel3.prototype as any;
 
 describe(stringifyQuery, () => {
   for (const [input, expected] of [

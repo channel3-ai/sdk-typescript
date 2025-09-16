@@ -1,8 +1,8 @@
-# Public SDK TypeScript API Library
+# Channel3 TypeScript API Library
 
-[![NPM version](<https://img.shields.io/npm/v/public-sdk.svg?label=npm%20(stable)>)](https://npmjs.org/package/public-sdk) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/public-sdk)
+[![NPM version](<https://img.shields.io/npm/v/@channel3/sdk.svg?label=npm%20(stable)>)](https://npmjs.org/package/@channel3/sdk) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/@channel3/sdk)
 
-This library provides convenient access to the Public SDK REST API from server-side TypeScript or JavaScript.
+This library provides convenient access to the Channel3 REST API from server-side TypeScript or JavaScript.
 
 The full API of this library can be found in [api.md](api.md).
 
@@ -11,11 +11,11 @@ It is generated with [Stainless](https://www.stainless.com/).
 ## Installation
 
 ```sh
-npm install git+ssh://git@github.com:channel3-ai/sdk-typescript.git
+npm install git+ssh://git@github.com:stainless-sdks/public-sdk-typescript.git
 ```
 
 > [!NOTE]
-> Once this package is [published to npm](https://www.stainless.com/docs/guides/publish), this will become: `npm install public-sdk`
+> Once this package is [published to npm](https://www.stainless.com/docs/guides/publish), this will become: `npm install @channel3/sdk`
 
 ## Usage
 
@@ -23,10 +23,11 @@ The full API of this library can be found in [api.md](api.md).
 
 <!-- prettier-ignore -->
 ```js
-import PublicSDK from 'public-sdk';
+import Channel3 from '@channel3/sdk';
 
-const client = new PublicSDK({
-  apiKey: process.env['PUBLIC_SDK_API_KEY'], // This is the default and can be omitted
+const client = new Channel3({
+  apiKey: process.env['CHANNEL3_API_KEY'], // This is the default and can be omitted
+  environment: 'development', // defaults to 'production'
 });
 
 const response = await client.search.perform();
@@ -38,13 +39,14 @@ This library includes TypeScript definitions for all request params and response
 
 <!-- prettier-ignore -->
 ```ts
-import PublicSDK from 'public-sdk';
+import Channel3 from '@channel3/sdk';
 
-const client = new PublicSDK({
-  apiKey: process.env['PUBLIC_SDK_API_KEY'], // This is the default and can be omitted
+const client = new Channel3({
+  apiKey: process.env['CHANNEL3_API_KEY'], // This is the default and can be omitted
+  environment: 'development', // defaults to 'production'
 });
 
-const response: PublicSDK.SearchPerformResponse = await client.search.perform();
+const response: Channel3.SearchPerformResponse = await client.search.perform();
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -58,7 +60,7 @@ a subclass of `APIError` will be thrown:
 <!-- prettier-ignore -->
 ```ts
 const response = await client.search.perform().catch(async (err) => {
-  if (err instanceof PublicSDK.APIError) {
+  if (err instanceof Channel3.APIError) {
     console.log(err.status); // 400
     console.log(err.name); // BadRequestError
     console.log(err.headers); // {server: 'nginx', ...}
@@ -92,7 +94,7 @@ You can use the `maxRetries` option to configure or disable this:
 <!-- prettier-ignore -->
 ```js
 // Configure the default for all requests:
-const client = new PublicSDK({
+const client = new Channel3({
   maxRetries: 0, // default is 2
 });
 
@@ -109,7 +111,7 @@ Requests time out after 1 minute by default. You can configure this with a `time
 <!-- prettier-ignore -->
 ```ts
 // Configure the default for all requests:
-const client = new PublicSDK({
+const client = new Channel3({
   timeout: 20 * 1000, // 20 seconds (default is 1 minute)
 });
 
@@ -135,7 +137,7 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 
 <!-- prettier-ignore -->
 ```ts
-const client = new PublicSDK();
+const client = new Channel3();
 
 const response = await client.search.perform().asResponse();
 console.log(response.headers.get('X-My-Header'));
@@ -156,13 +158,13 @@ console.log(response);
 
 The log level can be configured in two ways:
 
-1. Via the `PUBLIC_SDK_LOG` environment variable
+1. Via the `CHANNEL3_LOG` environment variable
 2. Using the `logLevel` client option (overrides the environment variable if set)
 
 ```ts
-import PublicSDK from 'public-sdk';
+import Channel3 from '@channel3/sdk';
 
-const client = new PublicSDK({
+const client = new Channel3({
   logLevel: 'debug', // Show all log messages
 });
 ```
@@ -188,13 +190,13 @@ When providing a custom logger, the `logLevel` option still controls which messa
 below the configured level will not be sent to your logger.
 
 ```ts
-import PublicSDK from 'public-sdk';
+import Channel3 from '@channel3/sdk';
 import pino from 'pino';
 
 const logger = pino();
 
-const client = new PublicSDK({
-  logger: logger.child({ name: 'PublicSDK' }),
+const client = new Channel3({
+  logger: logger.child({ name: 'Channel3' }),
   logLevel: 'debug', // Send all messages to pino, allowing it to filter
 });
 ```
@@ -257,10 +259,10 @@ globalThis.fetch = fetch;
 Or pass it to the client:
 
 ```ts
-import PublicSDK from 'public-sdk';
+import Channel3 from '@channel3/sdk';
 import fetch from 'my-fetch';
 
-const client = new PublicSDK({ fetch });
+const client = new Channel3({ fetch });
 ```
 
 ### Fetch options
@@ -268,9 +270,9 @@ const client = new PublicSDK({ fetch });
 If you want to set custom `fetch` options without overriding the `fetch` function, you can provide a `fetchOptions` object when instantiating the client or making a request. (Request-specific options override client options.)
 
 ```ts
-import PublicSDK from 'public-sdk';
+import Channel3 from '@channel3/sdk';
 
-const client = new PublicSDK({
+const client = new Channel3({
   fetchOptions: {
     // `RequestInit` options
   },
@@ -285,11 +287,11 @@ options to requests:
 <img src="https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/node.svg" align="top" width="18" height="21"> **Node** <sup>[[docs](https://github.com/nodejs/undici/blob/main/docs/docs/api/ProxyAgent.md#example---proxyagent-with-fetch)]</sup>
 
 ```ts
-import PublicSDK from 'public-sdk';
+import Channel3 from '@channel3/sdk';
 import * as undici from 'undici';
 
 const proxyAgent = new undici.ProxyAgent('http://localhost:8888');
-const client = new PublicSDK({
+const client = new Channel3({
   fetchOptions: {
     dispatcher: proxyAgent,
   },
@@ -299,9 +301,9 @@ const client = new PublicSDK({
 <img src="https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/bun.svg" align="top" width="18" height="21"> **Bun** <sup>[[docs](https://bun.sh/guides/http/proxy)]</sup>
 
 ```ts
-import PublicSDK from 'public-sdk';
+import Channel3 from '@channel3/sdk';
 
-const client = new PublicSDK({
+const client = new Channel3({
   fetchOptions: {
     proxy: 'http://localhost:8888',
   },
@@ -311,10 +313,10 @@ const client = new PublicSDK({
 <img src="https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/deno.svg" align="top" width="18" height="21"> **Deno** <sup>[[docs](https://docs.deno.com/api/deno/~/Deno.createHttpClient)]</sup>
 
 ```ts
-import PublicSDK from 'npm:public-sdk';
+import Channel3 from 'npm:@channel3/sdk';
 
 const httpClient = Deno.createHttpClient({ proxy: { url: 'http://localhost:8888' } });
-const client = new PublicSDK({
+const client = new Channel3({
   fetchOptions: {
     client: httpClient,
   },
@@ -333,7 +335,7 @@ This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) con
 
 We take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.
 
-We are keen for your feedback; please open an [issue](https://www.github.com/channel3-ai/sdk-typescript/issues) with questions, bugs, or suggestions.
+We are keen for your feedback; please open an [issue](https://www.github.com/stainless-sdks/public-sdk-typescript/issues) with questions, bugs, or suggestions.
 
 ## Requirements
 

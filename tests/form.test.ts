@@ -1,5 +1,5 @@
-import { multipartFormRequestOptions, createForm } from 'public-sdk/internal/uploads';
-import { toFile } from 'public-sdk/core/uploads';
+import { multipartFormRequestOptions, createForm } from '@channel3/sdk/internal/uploads';
+import { toFile } from '@channel3/sdk/core/uploads';
 
 describe('form data validation', () => {
   test('valid values do not error', async () => {
