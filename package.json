@@ -1,6 +1,6 @@
 {
   "name": "public-sdk",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "The official TypeScript library for the Public SDK API",
   "author": "Public SDK <>",
   "types": "dist/index.d.ts",
