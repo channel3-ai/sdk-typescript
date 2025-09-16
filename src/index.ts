@@ -1,12 +1,22 @@
-/**
- * Channel3 SDK for TypeScript/JavaScript
- * Official SDK for the Channel3 AI Shopping API
- */
+// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-export { Channel3Client, AsyncChannel3Client } from './client';
-export * from './exceptions';
-export * from './generated/models';
-export type { Channel3ClientConfig } from './client';
+export { PublicSDK as default } from './client';
 
-// Default export for convenience
-export { Channel3Client as default } from './client';
+export { type Uploadable, toFile } from './core/uploads';
+export { APIPromise } from './core/api-promise';
+export { PublicSDK, type ClientOptions } from './client';
+export {
+  PublicSDKError,
+  APIError,
+  APIConnectionError,
+  APIConnectionTimeoutError,
+  APIUserAbortError,
+  NotFoundError,
+  ConflictError,
+  RateLimitError,
+  BadRequestError,
+  AuthenticationError,
+  InternalServerError,
+  PermissionDeniedError,
+  UnprocessableEntityError,
+} from './core/error';
