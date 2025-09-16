@@ -24,7 +24,6 @@ import Channel3 from '@channel3/sdk';
 
 const client = new Channel3({
   apiKey: process.env['CHANNEL3_API_KEY'], // This is the default and can be omitted
-  environment: 'development', // defaults to 'production'
 });
 
 const response = await client.search.perform();
@@ -40,7 +39,6 @@ import Channel3 from '@channel3/sdk';
 
 const client = new Channel3({
   apiKey: process.env['CHANNEL3_API_KEY'], // This is the default and can be omitted
-  environment: 'development', // defaults to 'production'
 });
 
 const response: Channel3.SearchPerformResponse = await client.search.perform();
