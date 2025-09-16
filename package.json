@@ -1,6 +1,6 @@
 {
   "name": "@channel3/sdk",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "The official TypeScript library for the Channel3 API",
   "author": "Channel3 <founders@trychannel3.com>",
   "types": "dist/index.d.ts",
