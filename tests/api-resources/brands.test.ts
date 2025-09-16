@@ -1,8 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import PublicSDK from 'public-sdk';
+import Channel3 from '@channel3/sdk';
 
-const client = new PublicSDK({
+const client = new Channel3({
   apiKey: 'My API Key',
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
@@ -37,6 +37,6 @@ describe('resource brands', () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.brands.list({ page: 0, query: 'query', size: 0 }, { path: '/_stainless_unknown_path' }),
-    ).rejects.toThrow(PublicSDK.NotFoundError);
+    ).rejects.toThrow(Channel3.NotFoundError);
   });
 });

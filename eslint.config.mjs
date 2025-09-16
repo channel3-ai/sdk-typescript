@@ -25,7 +25,7 @@ export default tseslint.config(
         {
           patterns: [
             {
-              regex: '^public-sdk(/.*)?',
+              regex: '^@channel3/sdk(/.*)?',
               message: 'Use a relative import, not a package import.',
             },
           ],

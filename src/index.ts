@@ -1,12 +1,12 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-export { PublicSDK as default } from './client';
+export { Channel3 as default } from './client';
 
 export { type Uploadable, toFile } from './core/uploads';
 export { APIPromise } from './core/api-promise';
-export { PublicSDK, type ClientOptions } from './client';
+export { Channel3, type ClientOptions } from './client';
 export {
-  PublicSDKError,
+  Channel3Error,
   APIError,
   APIConnectionError,
   APIConnectionTimeoutError,

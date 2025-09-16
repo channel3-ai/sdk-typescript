@@ -34,16 +34,31 @@ import {
 } from './internal/utils/log';
 import { isEmptyObj } from './internal/utils/values';
 
+const environments = {
+  production: 'https://api.trychannel3.com',
+  development: 'https://localhost:8000',
+};
+type Environment = keyof typeof environments;
+
 export interface ClientOptions {
   /**
-   * Defaults to process.env['PUBLIC_SDK_API_KEY'].
+   * Defaults to process.env['CHANNEL3_API_KEY'].
    */
   apiKey?: string | undefined;
 
   /**
+   * Specifies the environment to use for the API.
+   *
+   * Each environment maps to a different base URL:
+   * - `production` corresponds to `https://api.trychannel3.com`
+   * - `development` corresponds to `https://localhost:8000`
+   */
+  environment?: Environment | undefined;
+
+  /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
    *
-   * Defaults to process.env['PUBLIC_SDK_BASE_URL'].
+   * Defaults to process.env['CHANNEL3_BASE_URL'].
    */
   baseURL?: string | null | undefined;
 
@@ -97,7 +112,7 @@ export interface ClientOptions {
   /**
    * Set the log level.
    *
-   * Defaults to process.env['PUBLIC_SDK_LOG'] or 'warn' if it isn't set.
+   * Defaults to process.env['CHANNEL3_LOG'] or 'warn' if it isn't set.
    */
   logLevel?: LogLevel | undefined;
 
@@ -110,9 +125,9 @@ export interface ClientOptions {
 }
 
 /**
- * API Client for interfacing with the Public SDK API.
+ * API Client for interfacing with the Channel3 API.
  */
-export class PublicSDK {
+export class Channel3 {
   apiKey: string;
 
   baseURL: string;
@@ -128,10 +143,11 @@ export class PublicSDK {
   private _options: ClientOptions;
 
   /**
-   * API Client for interfacing with the Public SDK API.
+   * API Client for interfacing with the Channel3 API.
    *
-   * @param {string | undefined} [opts.apiKey=process.env['PUBLIC_SDK_API_KEY'] ?? undefined]
-   * @param {string} [opts.baseURL=process.env['PUBLIC_SDK_BASE_URL'] ?? https://api.trychannel3.com] - Override the default base URL for the API.
+   * @param {string | undefined} [opts.apiKey=process.env['CHANNEL3_API_KEY'] ?? undefined]
+   * @param {Environment} [opts.environment=production] - Specifies the environment URL to use for the API.
+   * @param {string} [opts.baseURL=process.env['CHANNEL3_BASE_URL'] ?? https://api.trychannel3.com] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
    * @param {Fetch} [opts.fetch] - Specify a custom `fetch` function implementation.
@@ -140,31 +156,38 @@ export class PublicSDK {
    * @param {Record<string, string | undefined>} opts.defaultQuery - Default query parameters to include with every request to the API.
    */
   constructor({
-    baseURL = readEnv('PUBLIC_SDK_BASE_URL'),
-    apiKey = readEnv('PUBLIC_SDK_API_KEY'),
+    baseURL = readEnv('CHANNEL3_BASE_URL'),
+    apiKey = readEnv('CHANNEL3_API_KEY'),
     ...opts
   }: ClientOptions = {}) {
     if (apiKey === undefined) {
-      throw new Errors.PublicSDKError(
-        "The PUBLIC_SDK_API_KEY environment variable is missing or empty; either provide it, or instantiate the PublicSDK client with an apiKey option, like new PublicSDK({ apiKey: 'My API Key' }).",
+      throw new Errors.Channel3Error(
+        "The CHANNEL3_API_KEY environment variable is missing or empty; either provide it, or instantiate the Channel3 client with an apiKey option, like new Channel3({ apiKey: 'My API Key' }).",
       );
     }
 
     const options: ClientOptions = {
       apiKey,
       ...opts,
-      baseURL: baseURL || `https://api.trychannel3.com`,
+      baseURL,
+      environment: opts.environment ?? 'production',
     };
 
-    this.baseURL = options.baseURL!;
-    this.timeout = options.timeout ?? PublicSDK.DEFAULT_TIMEOUT /* 1 minute */;
+    if (baseURL && opts.environment) {
+      throw new Errors.Channel3Error(
+        'Ambiguous URL; The `baseURL` option (or CHANNEL3_BASE_URL env var) and the `environment` option are given. If you want to use the environment you must pass baseURL: null',
+      );
+    }
+
+    this.baseURL = options.baseURL || environments[options.environment || 'production'];
+    this.timeout = options.timeout ?? Channel3.DEFAULT_TIMEOUT /* 1 minute */;
     this.logger = options.logger ?? console;
     const defaultLogLevel = 'warn';
     // Set default logLevel early so that we can log a warning in parseLogLevel.
     this.logLevel = defaultLogLevel;
     this.logLevel =
       parseLogLevel(options.logLevel, 'ClientOptions.logLevel', this) ??
-      parseLogLevel(readEnv('PUBLIC_SDK_LOG'), "process.env['PUBLIC_SDK_LOG']", this) ??
+      parseLogLevel(readEnv('CHANNEL3_LOG'), "process.env['CHANNEL3_LOG']", this) ??
       defaultLogLevel;
     this.fetchOptions = options.fetchOptions;
     this.maxRetries = options.maxRetries ?? 2;
@@ -182,7 +205,8 @@ export class PublicSDK {
   withOptions(options: Partial<ClientOptions>): this {
     const client = new (this.constructor as any as new (props: ClientOptions) => typeof this)({
       ...this._options,
-      baseURL: this.baseURL,
+      environment: options.environment ? options.environment : undefined,
+      baseURL: options.environment ? undefined : this.baseURL,
       maxRetries: this.maxRetries,
       timeout: this.timeout,
       logger: this.logger,
@@ -199,7 +223,7 @@ export class PublicSDK {
    * Check whether the base URL is set to its default.
    */
   #baseURLOverridden(): boolean {
-    return this.baseURL !== 'https://api.trychannel3.com';
+    return this.baseURL !== environments[this._options.environment || 'production'];
   }
 
   /**
@@ -234,7 +258,7 @@ export class PublicSDK {
         if (value === null) {
           return `${encodeURIComponent(key)}=`;
         }
-        throw new Errors.PublicSDKError(
+        throw new Errors.Channel3Error(
           `Cannot stringify type ${typeof value}; Expected string, number, boolean, or null. If you need to pass nested query parameters, you can manually encode them, e.g. { query: { 'foo[key1]': value1, 'foo[key2]': value2 } }, and please open a GitHub issue requesting better support for your use case.`,
         );
       })
@@ -706,10 +730,10 @@ export class PublicSDK {
     }
   }
 
-  static PublicSDK = this;
+  static Channel3 = this;
   static DEFAULT_TIMEOUT = 60000; // 1 minute
 
-  static PublicSDKError = Errors.PublicSDKError;
+  static Channel3Error = Errors.Channel3Error;
   static APIError = Errors.APIError;
   static APIConnectionError = Errors.APIConnectionError;
   static APIConnectionTimeoutError = Errors.APIConnectionTimeoutError;
@@ -731,12 +755,12 @@ export class PublicSDK {
   enrich: API.Enrich = new API.Enrich(this);
 }
 
-PublicSDK.Search = Search;
-PublicSDK.Products = Products;
-PublicSDK.Brands = Brands;
-PublicSDK.Enrich = Enrich;
+Channel3.Search = Search;
+Channel3.Products = Products;
+Channel3.Brands = Brands;
+Channel3.Enrich = Enrich;
 
-export declare namespace PublicSDK {
+export declare namespace Channel3 {
   export type RequestOptions = Opts.RequestOptions;
 
   export { type RetrieveResponse as RetrieveResponse };

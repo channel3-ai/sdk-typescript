@@ -1,12 +1,12 @@
 {
-  "name": "public-sdk",
+  "name": "@channel3/sdk",
   "version": "0.0.1",
-  "description": "The official TypeScript library for the Public SDK API",
-  "author": "Public SDK <>",
+  "description": "The official TypeScript library for the Channel3 API",
+  "author": "Channel3 <founders@trychannel3.com>",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
   "type": "commonjs",
-  "repository": "github:channel3-ai/sdk-typescript",
+  "repository": "github:stainless-sdks/public-sdk-typescript",
   "license": "Apache-2.0",
   "packageManager": "yarn@1.22.22",
   "files": [
