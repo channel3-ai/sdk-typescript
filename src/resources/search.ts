@@ -104,6 +104,11 @@ export namespace SearchPerformParams {
      */
     brand_ids?: Array<string> | null;
 
+    /**
+     * List of product IDs to exclude
+     */
+    exclude_product_ids?: Array<string> | null;
+
     gender?: 'male' | 'female' | 'unisex' | null;
 
     /**
