@@ -5,8 +5,8 @@
   "compilerOptions": {
     "rootDir": "./dist/src",
     "paths": {
-      "@channel3/sdk/*": ["dist/src/*"],
-      "@channel3/sdk": ["dist/src/index.ts"]
+      "@channel3/sdk/*": ["./dist/src/*"],
+      "@channel3/sdk": ["./dist/src/index.ts"]
     },
     "noEmit": false,
     "declaration": true,

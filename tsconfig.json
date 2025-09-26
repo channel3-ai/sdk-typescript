@@ -7,10 +7,9 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "baseUrl": "./",
     "paths": {
-      "@channel3/sdk/*": ["src/*"],
-      "@channel3/sdk": ["src/index.ts"]
+      "@channel3/sdk/*": ["./src/*"],
+      "@channel3/sdk": ["./src/index.ts"]
     },
     "noEmit": true,
 
