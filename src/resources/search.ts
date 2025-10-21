@@ -87,6 +87,11 @@ export namespace SearchPerformParams {
   export interface Config {
     enrich_query?: boolean;
 
+    /**
+     * Mode for redirecting to a product page
+     */
+    redirect_mode?: 'brand' | 'price' | 'commission' | null;
+
     semantic_search?: boolean;
   }
 
