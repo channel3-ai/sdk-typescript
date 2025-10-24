@@ -88,7 +88,9 @@ export namespace SearchPerformParams {
     enrich_query?: boolean;
 
     /**
-     * Mode for redirecting to a product page
+     * "price" redirects to the product page with the lowest price "commission"
+     * redirects to the product page with the highest commission rate "brand" redirects
+     * to the brand's product page
      */
     redirect_mode?: 'brand' | 'price' | 'commission' | null;
 
