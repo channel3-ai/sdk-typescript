@@ -15,15 +15,29 @@ export class Enrich extends APIResource {
 }
 
 export interface EnrichEnrichURLResponse {
-  main_image_url: string;
+  id: string;
 
-  other_image_urls: Array<string>;
+  availability: ProductsAPI.AvailabilityStatus;
 
   price: ProductsAPI.Price;
 
   title: string;
 
   url: string;
+
+  brand_id?: string | null;
+
+  brand_name?: string | null;
+
+  gender?: 'male' | 'female' | 'unisex' | null;
+
+  image_urls?: Array<string> | null;
+
+  key_features?: Array<string> | null;
+
+  materials?: Array<string> | null;
+
+  variants?: Array<ProductsAPI.Variant>;
 }
 
 export interface EnrichEnrichURLParams {
