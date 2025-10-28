@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.2.0 (2025-10-28)
+
+Full Changelog: [v2.1.1...v2.2.0](https://github.com/channel3-ai/sdk-typescript/compare/v2.1.1...v2.2.0)
+
+### Features
+
+* **api:** api update ([313c32e](https://github.com/channel3-ai/sdk-typescript/commit/313c32e2d93f242a3f722c0cc21722b26c4efbe5))
+* **api:** api update ([44385f6](https://github.com/channel3-ai/sdk-typescript/commit/44385f6c05bc4836228e79bbe39d74da5c13256a))
+* **api:** api update ([3bd00eb](https://github.com/channel3-ai/sdk-typescript/commit/3bd00ebf436c500842a4560c3dbf1a822295bc46))
+
 ## 2.1.1 (2025-10-21)
 
 Full Changelog: [v2.1.0...v2.1.1](https://github.com/channel3-ai/sdk-typescript/compare/v2.1.0...v2.1.1)

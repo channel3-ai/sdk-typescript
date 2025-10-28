@@ -87,6 +87,13 @@ export namespace SearchPerformParams {
   export interface Config {
     enrich_query?: boolean;
 
+    /**
+     * "price" redirects to the product page with the lowest price "commission"
+     * redirects to the product page with the highest commission rate "brand" redirects
+     * to the brand's product page
+     */
+    redirect_mode?: 'brand' | 'price' | 'commission' | null;
+
     semantic_search?: boolean;
   }
 
