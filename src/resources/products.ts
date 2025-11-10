@@ -67,11 +67,13 @@ export interface ProductRetrieveResponse {
 
   brand_name?: string | null;
 
+  categories?: Array<string>;
+
   description?: string | null;
 
   gender?: 'male' | 'female' | 'unisex' | null;
 
-  image_urls?: Array<string> | null;
+  image_urls?: Array<string>;
 
   key_features?: Array<string> | null;
 
