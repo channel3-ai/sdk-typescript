@@ -36,12 +36,10 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/brands.ts">Brand</a></code>
-- <code><a href="./src/resources/brands.ts">BrandListResponse</a></code>
 
 Methods:
 
-- <code title="get /v0/brands/{brand_id}">client.brands.<a href="./src/resources/brands.ts">retrieve</a>(brandID) -> Brand</code>
-- <code title="get /v0/brands">client.brands.<a href="./src/resources/brands.ts">list</a>({ ...params }) -> BrandListResponse</code>
+- <code title="get /v0/brands">client.brands.<a href="./src/resources/brands.ts">list</a>({ ...params }) -> Brand</code>
 
 # Enrich
 

@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-export { Brands, type Brand, type BrandListResponse, type BrandListParams } from './brands';
+export { Brands, type Brand, type BrandListParams } from './brands';
 export { Enrich, type EnrichEnrichURLResponse, type EnrichEnrichURLParams } from './enrich';
 export {
   Products,

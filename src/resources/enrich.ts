@@ -7,7 +7,8 @@ import { RequestOptions } from '../internal/request-options';
 
 export class Enrich extends APIResource {
   /**
-   * Enrich a product URL with additional information.
+   * Search by product URL, get back full product information from Channel3’s product
+   * database.
    */
   enrichURL(body: EnrichEnrichURLParams, options?: RequestOptions): APIPromise<EnrichEnrichURLResponse> {
     return this._client.post('/v0/enrich', { body, ...options });

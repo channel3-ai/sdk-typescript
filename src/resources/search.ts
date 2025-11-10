@@ -37,6 +37,8 @@ export namespace SearchPerformResponse {
 
     url: string;
 
+    categories?: Array<string>;
+
     description?: string | null;
 
     variants?: Array<ProductsAPI.Variant>;
@@ -60,7 +62,8 @@ export interface SearchPerformParams {
   context?: string | null;
 
   /**
-   * Optional filters
+   * Optional filters. Search will only consider products that match all of the
+   * filters.
    */
   filters?: SearchPerformParams.Filters;
 
@@ -85,7 +88,16 @@ export namespace SearchPerformParams {
    * Optional configuration
    */
   export interface Config {
+    /**
+     * If True, search will use AI to enrich the query, for example pulling the gender,
+     * brand, and price range from the query.
+     */
     enrich_query?: boolean;
+
+    /**
+     * If True, search will only consider products that offer commission.
+     */
+    monetizable_only?: boolean;
 
     /**
      * "price" redirects to the product page with the lowest price "commission"
@@ -93,26 +105,37 @@ export namespace SearchPerformParams {
      * to the brand's product page
      */
     redirect_mode?: 'brand' | 'price' | 'commission' | null;
-
-    semantic_search?: boolean;
   }
 
   /**
-   * Optional filters
+   * Optional filters. Search will only consider products that match all of the
+   * filters.
    */
   export interface Filters {
     /**
-     * List of availability statuses
+     * If provided, only products with these availability statuses will be returned
      */
     availability?: Array<ProductsAPI.AvailabilityStatus> | null;
 
     /**
-     * List of brand IDs
+     * If provided, only products from these brands will be returned
      */
     brand_ids?: Array<string> | null;
 
     /**
-     * List of product IDs to exclude
+     * If provided, only products from these categories will be returned
+     */
+    category_ids?: Array<string> | null;
+
+    /**
+     * Filter by product condition. Incubating: condition data is currently incomplete;
+     * products without condition data will be included in all condition filter
+     * results.
+     */
+    condition?: 'new' | 'refurbished' | 'used' | null;
+
+    /**
+     * If provided, products with these IDs will be excluded from the results
      */
     exclude_product_ids?: Array<string> | null;
 
@@ -122,6 +145,11 @@ export namespace SearchPerformParams {
      * Price filter. Values are inclusive.
      */
     price?: Filters.Price | null;
+
+    /**
+     * If provided, only products from these websites will be returned
+     */
+    website_ids?: Array<string> | null;
   }
 
   export namespace Filters {
