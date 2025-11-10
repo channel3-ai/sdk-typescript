@@ -16,7 +16,7 @@ import * as Errors from './core/error';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
-import { Brand, BrandListParams, BrandListResponse, Brands } from './resources/brands';
+import { Brand, BrandListParams, Brands } from './resources/brands';
 import { Enrich, EnrichEnrichURLParams, EnrichEnrichURLResponse } from './resources/enrich';
 import { AvailabilityStatus, Price, ProductRetrieveResponse, Products, Variant } from './resources/products';
 import { Search, SearchPerformParams, SearchPerformResponse } from './resources/search';
@@ -755,12 +755,7 @@ export declare namespace Channel3 {
     type ProductRetrieveResponse as ProductRetrieveResponse,
   };
 
-  export {
-    Brands as Brands,
-    type Brand as Brand,
-    type BrandListResponse as BrandListResponse,
-    type BrandListParams as BrandListParams,
-  };
+  export { Brands as Brands, type Brand as Brand, type BrandListParams as BrandListParams };
 
   export {
     Enrich as Enrich,
