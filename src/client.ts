@@ -16,11 +16,12 @@ import * as Errors from './core/error';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
-import { Brand, BrandListParams, Brands } from './resources/brands';
+import { Brand, BrandFindParams, Brands } from './resources/brands';
 import { Enrich, EnrichEnrichURLParams, EnrichEnrichURLResponse } from './resources/enrich';
 import { AvailabilityStatus, Price, ProductRetrieveResponse, Products, Variant } from './resources/products';
 import { Search, SearchPerformParams, SearchPerformResponse } from './resources/search';
 import { RetrieveResponse } from './resources/top-level';
+import { Website, WebsiteFindParams, Websites } from './resources/websites';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -728,12 +729,14 @@ export class Channel3 {
   search: API.Search = new API.Search(this);
   products: API.Products = new API.Products(this);
   brands: API.Brands = new API.Brands(this);
+  websites: API.Websites = new API.Websites(this);
   enrich: API.Enrich = new API.Enrich(this);
 }
 
 Channel3.Search = Search;
 Channel3.Products = Products;
 Channel3.Brands = Brands;
+Channel3.Websites = Websites;
 Channel3.Enrich = Enrich;
 
 export declare namespace Channel3 {
@@ -755,7 +758,9 @@ export declare namespace Channel3 {
     type ProductRetrieveResponse as ProductRetrieveResponse,
   };
 
-  export { Brands as Brands, type Brand as Brand, type BrandListParams as BrandListParams };
+  export { Brands as Brands, type Brand as Brand, type BrandFindParams as BrandFindParams };
+
+  export { Websites as Websites, type Website as Website, type WebsiteFindParams as WebsiteFindParams };
 
   export {
     Enrich as Enrich,

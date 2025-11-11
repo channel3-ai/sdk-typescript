@@ -95,11 +95,6 @@ export namespace SearchPerformParams {
     enrich_query?: boolean;
 
     /**
-     * If True, search will only consider products that offer commission.
-     */
-    monetizable_only?: boolean;
-
-    /**
      * "price" redirects to the product page with the lowest price "commission"
      * redirects to the product page with the highest commission rate "brand" redirects
      * to the brand's product page

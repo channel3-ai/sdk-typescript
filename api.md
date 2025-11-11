@@ -39,7 +39,17 @@ Types:
 
 Methods:
 
-- <code title="get /v0/brands">client.brands.<a href="./src/resources/brands.ts">list</a>({ ...params }) -> Brand</code>
+- <code title="get /v0/brands">client.brands.<a href="./src/resources/brands.ts">find</a>({ ...params }) -> Brand</code>
+
+# Websites
+
+Types:
+
+- <code><a href="./src/resources/websites.ts">Website</a></code>
+
+Methods:
+
+- <code title="get /v0/websites">client.websites.<a href="./src/resources/websites.ts">find</a>({ ...params }) -> Website | null</code>
 
 # Enrich
 
