@@ -15,6 +15,13 @@ export class Enrich extends APIResource {
   }
 }
 
+export interface EnrichRequest {
+  /**
+   * The URL of the product to enrich
+   */
+  url: string;
+}
+
 export interface EnrichEnrichURLResponse {
   id: string;
 
@@ -50,6 +57,7 @@ export interface EnrichEnrichURLParams {
 
 export declare namespace Enrich {
   export {
+    type EnrichRequest as EnrichRequest,
     type EnrichEnrichURLResponse as EnrichEnrichURLResponse,
     type EnrichEnrichURLParams as EnrichEnrichURLParams,
   };

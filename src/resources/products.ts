@@ -9,7 +9,7 @@ export class Products extends APIResource {
   /**
    * Get detailed information about a specific product by its ID.
    */
-  retrieve(productID: string, options?: RequestOptions): APIPromise<ProductRetrieveResponse> {
+  retrieve(productID: string, options?: RequestOptions): APIPromise<ProductDetail> {
     return this._client.get(path`/v0/products/${productID}`, options);
   }
 }
@@ -41,18 +41,37 @@ export interface Price {
   compare_at_price?: number | null;
 }
 
-export interface Variant {
+/**
+ * A product
+ */
+export interface Product {
+  id: string;
+
+  availability: AvailabilityStatus;
+
+  brand_name: string;
+
   image_url: string;
 
-  product_id: string;
+  price: Price;
+
+  score: number;
 
   title: string;
+
+  url: string;
+
+  categories?: Array<string>;
+
+  description?: string | null;
+
+  variants?: Array<Variant>;
 }
 
 /**
  * A product with detailed information
  */
-export interface ProductRetrieveResponse {
+export interface ProductDetail {
   id: string;
 
   availability: AvailabilityStatus;
@@ -82,11 +101,20 @@ export interface ProductRetrieveResponse {
   variants?: Array<Variant>;
 }
 
+export interface Variant {
+  image_url: string;
+
+  product_id: string;
+
+  title: string;
+}
+
 export declare namespace Products {
   export {
     type AvailabilityStatus as AvailabilityStatus,
     type Price as Price,
+    type Product as Product,
+    type ProductDetail as ProductDetail,
     type Variant as Variant,
-    type ProductRetrieveResponse as ProductRetrieveResponse,
   };
 }
