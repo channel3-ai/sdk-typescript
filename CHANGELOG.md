@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.4.0 (2025-11-12)
+
+Full Changelog: [v2.3.0...v2.4.0](https://github.com/channel3-ai/sdk-typescript/compare/v2.3.0...v2.4.0)
+
+### Features
+
+* Test: Stainless permissions and docs update ([5cf44c0](https://github.com/channel3-ai/sdk-typescript/commit/5cf44c08bdf6f158a228591c8c2391f92a533e54))
+* Updating config ([8bde979](https://github.com/channel3-ai/sdk-typescript/commit/8bde97946627ec1ee42ba54033e8b8bb24256106))
+
 ## 2.3.0 (2025-11-10)
 
 Full Changelog: [v2.2.0...v2.3.0](https://github.com/channel3-ai/sdk-typescript/compare/v2.2.0...v2.3.0)

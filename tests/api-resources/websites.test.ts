@@ -7,10 +7,10 @@ const client = new Channel3({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource brands', () => {
+describe('resource websites', () => {
   // Prism tests are disabled
   test.skip('find: only required params', async () => {
-    const responsePromise = client.brands.find({ query: 'query' });
+    const responsePromise = client.websites.find({ query: 'query' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -22,6 +22,6 @@ describe('resource brands', () => {
 
   // Prism tests are disabled
   test.skip('find: required and optional params', async () => {
-    const response = await client.brands.find({ query: 'query' });
+    const response = await client.websites.find({ query: 'query' });
   });
 });

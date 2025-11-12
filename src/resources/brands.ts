@@ -8,7 +8,7 @@ export class Brands extends APIResource {
   /**
    * Find a brand by name.
    */
-  list(query: BrandListParams, options?: RequestOptions): APIPromise<Brand> {
+  find(query: BrandFindParams, options?: RequestOptions): APIPromise<Brand> {
     return this._client.get('/v0/brands', { query, ...options });
   }
 }
@@ -28,10 +28,10 @@ export interface Brand {
   logo_url?: string | null;
 }
 
-export interface BrandListParams {
+export interface BrandFindParams {
   query: string;
 }
 
 export declare namespace Brands {
-  export { type Brand as Brand, type BrandListParams as BrandListParams };
+  export { type Brand as Brand, type BrandFindParams as BrandFindParams };
 }
