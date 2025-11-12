@@ -17,9 +17,18 @@ import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import { Brand, BrandFindParams, Brands } from './resources/brands';
-import { Enrich, EnrichEnrichURLParams, EnrichEnrichURLResponse } from './resources/enrich';
-import { AvailabilityStatus, Price, ProductRetrieveResponse, Products, Variant } from './resources/products';
-import { Search, SearchPerformParams, SearchPerformResponse } from './resources/search';
+import { Enrich, EnrichEnrichURLParams, EnrichEnrichURLResponse, EnrichRequest } from './resources/enrich';
+import { AvailabilityStatus, Price, Product, ProductDetail, Products, Variant } from './resources/products';
+import {
+  RedirectMode,
+  Search,
+  SearchConfig,
+  SearchFilterPrice,
+  SearchFilters,
+  SearchPerformParams,
+  SearchPerformResponse,
+  SearchRequest,
+} from './resources/search';
 import { RetrieveResponse } from './resources/top-level';
 import { Website, WebsiteFindParams, Websites } from './resources/websites';
 import { type Fetch } from './internal/builtin-types';
@@ -746,6 +755,11 @@ export declare namespace Channel3 {
 
   export {
     Search as Search,
+    type RedirectMode as RedirectMode,
+    type SearchConfig as SearchConfig,
+    type SearchFilterPrice as SearchFilterPrice,
+    type SearchFilters as SearchFilters,
+    type SearchRequest as SearchRequest,
     type SearchPerformResponse as SearchPerformResponse,
     type SearchPerformParams as SearchPerformParams,
   };
@@ -754,8 +768,9 @@ export declare namespace Channel3 {
     Products as Products,
     type AvailabilityStatus as AvailabilityStatus,
     type Price as Price,
+    type Product as Product,
+    type ProductDetail as ProductDetail,
     type Variant as Variant,
-    type ProductRetrieveResponse as ProductRetrieveResponse,
   };
 
   export { Brands as Brands, type Brand as Brand, type BrandFindParams as BrandFindParams };
@@ -764,6 +779,7 @@ export declare namespace Channel3 {
 
   export {
     Enrich as Enrich,
+    type EnrichRequest as EnrichRequest,
     type EnrichEnrichURLResponse as EnrichEnrichURLResponse,
     type EnrichEnrichURLParams as EnrichEnrichURLParams,
   };
