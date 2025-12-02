@@ -21,4 +21,3 @@ export {
   type SearchPerformParams,
 } from './search';
 export { Websites, type Website, type WebsiteFindParams } from './websites';
-export { type RetrieveResponse } from './top-level';
