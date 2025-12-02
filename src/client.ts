@@ -17,7 +17,7 @@ import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import { Brand, BrandFindParams, Brands } from './resources/brands';
-import { Enrich, EnrichEnrichURLParams, EnrichEnrichURLResponse, EnrichRequest } from './resources/enrich';
+import { Enrich, EnrichEnrichURLParams, EnrichRequest } from './resources/enrich';
 import { AvailabilityStatus, Price, Product, ProductDetail, Products, Variant } from './resources/products';
 import {
   RedirectMode,
@@ -128,7 +128,7 @@ export class Channel3 {
   baseURL: string;
   maxRetries: number;
   timeout: number;
-  logger: Logger | undefined;
+  logger: Logger;
   logLevel: LogLevel | undefined;
   fetchOptions: MergedRequestInit | undefined;
 
@@ -780,7 +780,6 @@ export declare namespace Channel3 {
   export {
     Enrich as Enrich,
     type EnrichRequest as EnrichRequest,
-    type EnrichEnrichURLResponse as EnrichEnrichURLResponse,
     type EnrichEnrichURLParams as EnrichEnrichURLParams,
   };
 }

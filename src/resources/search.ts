@@ -56,6 +56,11 @@ export interface SearchFilterPrice {
 
 export interface SearchFilters {
   /**
+   * Filter by age group. Age-agnostic products are treated as adult products.
+   */
+  age?: Array<'newborn' | 'infant' | 'toddler' | 'kids' | 'adult'> | null;
+
+  /**
    * If provided, only products with these availability statuses will be returned
    */
   availability?: Array<ProductsAPI.AvailabilityStatus> | null;

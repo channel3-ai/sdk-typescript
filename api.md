@@ -62,8 +62,7 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/enrich.ts">EnrichRequest</a></code>
-- <code><a href="./src/resources/enrich.ts">EnrichEnrichURLResponse</a></code>
 
 Methods:
 
-- <code title="post /v0/enrich">client.enrich.<a href="./src/resources/enrich.ts">enrichURL</a>({ ...params }) -> EnrichEnrichURLResponse</code>
+- <code title="post /v0/enrich">client.enrich.<a href="./src/resources/enrich.ts">enrichURL</a>({ ...params }) -> ProductDetail</code>
