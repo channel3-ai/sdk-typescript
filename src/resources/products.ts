@@ -42,33 +42,6 @@ export interface Price {
 }
 
 /**
- * A product
- */
-export interface Product {
-  id: string;
-
-  availability: AvailabilityStatus;
-
-  brand_name: string;
-
-  image_url: string;
-
-  price: Price;
-
-  score: number;
-
-  title: string;
-
-  url: string;
-
-  categories?: Array<string>;
-
-  description?: string | null;
-
-  variants?: Array<Variant>;
-}
-
-/**
  * A product with detailed information
  */
 export interface ProductDetail {
@@ -92,13 +65,57 @@ export interface ProductDetail {
 
   gender?: 'male' | 'female' | 'unisex' | null;
 
+  /**
+   * @deprecated List of image URLs (deprecated, use images field)
+   */
   image_urls?: Array<string>;
+
+  images?: Array<ProductDetail.Image>;
 
   key_features?: Array<string> | null;
 
   materials?: Array<string> | null;
 
   variants?: Array<Variant>;
+}
+
+export namespace ProductDetail {
+  /**
+   * Product image with metadata
+   */
+  export interface Image {
+    url: string;
+
+    alt_text?: string | null;
+
+    is_main_image?: boolean;
+
+    /**
+     * Photo quality classification for API responses. Note: This enum is decoupled
+     * from internal ImageIntelligence types as they may diverge.
+     */
+    photo_quality?: 'professional' | 'ugc' | 'poor' | null;
+
+    /**
+     * Product image type classification for API responses. Note: This enum is
+     * decoupled from internal ImageIntelligence types as they may diverge.
+     */
+    shot_type?:
+      | 'hero'
+      | 'lifestyle'
+      | 'on_model'
+      | 'detail'
+      | 'scale_reference'
+      | 'angle_view'
+      | 'flat_lay'
+      | 'in_use'
+      | 'packaging'
+      | 'size_chart'
+      | 'color_swatch'
+      | 'product_information'
+      | 'merchant_information'
+      | null;
+  }
 }
 
 export interface Variant {
@@ -113,7 +130,6 @@ export declare namespace Products {
   export {
     type AvailabilityStatus as AvailabilityStatus,
     type Price as Price,
-    type Product as Product,
     type ProductDetail as ProductDetail,
     type Variant as Variant,
   };
