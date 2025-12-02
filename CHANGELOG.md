@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.7.0 (2025-12-02)
+
+Full Changelog: [v2.6.0...v2.7.0](https://github.com/channel3-ai/sdk-typescript/compare/v2.6.0...v2.7.0)
+
+### Features
+
+* Remove empty get ([760994b](https://github.com/channel3-ai/sdk-typescript/commit/760994b923d1fa93682be543ddd598ee7c6c7274))
+
 ## 2.6.0 (2025-12-02)
 
 Full Changelog: [v2.5.0...v2.6.0](https://github.com/channel3-ai/sdk-typescript/compare/v2.5.0...v2.6.0)
