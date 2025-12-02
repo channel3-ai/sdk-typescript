@@ -1,13 +1,5 @@
 # Channel3
 
-Types:
-
-- <code><a href="./src/resources/top-level.ts">RetrieveResponse</a></code>
-
-Methods:
-
-- <code title="get /">client.<a href="./src/index.ts">retrieve</a>() -> unknown</code>
-
 # Search
 
 Types:

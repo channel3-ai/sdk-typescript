@@ -29,7 +29,6 @@ import {
   SearchPerformResponse,
   SearchRequest,
 } from './resources/search';
-import { RetrieveResponse } from './resources/top-level';
 import { Website, WebsiteFindParams, Websites } from './resources/websites';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
@@ -210,13 +209,6 @@ export class Channel3 {
    */
   #baseURLOverridden(): boolean {
     return this.baseURL !== 'https://api.trychannel3.com';
-  }
-
-  /**
-   * Root
-   */
-  retrieve(options?: RequestOptions): APIPromise<unknown> {
-    return this.get('/', options);
   }
 
   protected defaultQuery(): Record<string, string | undefined> | undefined {
@@ -750,8 +742,6 @@ Channel3.Enrich = Enrich;
 
 export declare namespace Channel3 {
   export type RequestOptions = Opts.RequestOptions;
-
-  export { type RetrieveResponse as RetrieveResponse };
 
   export {
     Search as Search,
