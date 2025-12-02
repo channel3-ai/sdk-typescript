@@ -29,6 +29,7 @@ Types:
 
 - <code><a href="./src/resources/products.ts">AvailabilityStatus</a></code>
 - <code><a href="./src/resources/products.ts">Price</a></code>
+- <code><a href="./src/resources/products.ts">Product</a></code>
 - <code><a href="./src/resources/products.ts">ProductDetail</a></code>
 - <code><a href="./src/resources/products.ts">Variant</a></code>
 

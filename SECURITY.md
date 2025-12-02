@@ -20,7 +20,7 @@ or products provided by Channel3, please follow the respective company's securit
 
 ### Channel3 Terms and Policies
 
-Please contact founders@trychannel3.com for any questions or concerns regarding the security of our services.
+Please contact support@trychannel3.com for any questions or concerns regarding the security of our services.
 
 ---
 
