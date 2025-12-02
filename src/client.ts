@@ -18,7 +18,7 @@ import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import { Brand, BrandFindParams, Brands } from './resources/brands';
 import { Enrich, EnrichEnrichURLParams, EnrichRequest } from './resources/enrich';
-import { AvailabilityStatus, Price, ProductDetail, Products, Variant } from './resources/products';
+import { AvailabilityStatus, Price, Product, ProductDetail, Products, Variant } from './resources/products';
 import {
   RedirectMode,
   Search,
@@ -768,6 +768,7 @@ export declare namespace Channel3 {
     Products as Products,
     type AvailabilityStatus as AvailabilityStatus,
     type Price as Price,
+    type Product as Product,
     type ProductDetail as ProductDetail,
     type Variant as Variant,
   };
