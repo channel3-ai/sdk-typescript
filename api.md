@@ -1,5 +1,3 @@
-# Channel3
-
 # Search
 
 Types:
