@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.6.0 (2025-12-02)
+
+Full Changelog: [v2.5.0...v2.6.0](https://github.com/channel3-ai/sdk-typescript/compare/v2.5.0...v2.6.0)
+
+### Features
+
+* fix/trigger workflow ([a857107](https://github.com/channel3-ai/sdk-typescript/commit/a857107631a02d1bb518fd758762243178568a40))
+
 ## 2.5.0 (2025-12-02)
 
 Full Changelog: [v2.4.0...v2.5.0](https://github.com/channel3-ai/sdk-typescript/compare/v2.4.0...v2.5.0)
