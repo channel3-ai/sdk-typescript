@@ -1,5 +1,19 @@
 # Changelog
 
+## 2.5.0 (2025-12-02)
+
+Full Changelog: [v2.4.0...v2.5.0](https://github.com/channel3-ai/sdk-typescript/compare/v2.4.0...v2.5.0)
+
+### Features
+
+* **api:** manual updates ([446aac6](https://github.com/channel3-ai/sdk-typescript/commit/446aac6922f3e6d9ddef89b79b914a2e9fb05d5c))
+* Use Product-Output schema in Stainless config ([3dd7257](https://github.com/channel3-ai/sdk-typescript/commit/3dd72579696c58bb42bbae6e2a224623c3dc6521))
+
+
+### Chores
+
+* **client:** fix logger property type ([252ec90](https://github.com/channel3-ai/sdk-typescript/commit/252ec900b3a8819a288a58b15bc2df7a94bb0f01))
+
 ## 2.4.0 (2025-11-12)
 
 Full Changelog: [v2.3.0...v2.4.0](https://github.com/channel3-ai/sdk-typescript/compare/v2.3.0...v2.4.0)
