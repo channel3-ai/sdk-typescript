@@ -1,5 +1,18 @@
 # Changelog
 
+## 2.8.0 (2025-12-03)
+
+Full Changelog: [v2.7.0...v2.8.0](https://github.com/channel3-ai/sdk-typescript/compare/v2.7.0...v2.8.0)
+
+### Features
+
+* Price tracking SDK updates ([2813e28](https://github.com/channel3-ai/sdk-typescript/commit/2813e28681e27c3a833c5255ef396896495bb4e4))
+
+
+### Chores
+
+* **internal:** upgrade eslint ([d90635e](https://github.com/channel3-ai/sdk-typescript/commit/d90635e7fe4f87ab71a68baf52cc26be3681ac43))
+
 ## 2.7.0 (2025-12-02)
 
 Full Changelog: [v2.6.0...v2.7.0](https://github.com/channel3-ai/sdk-typescript/compare/v2.6.0...v2.7.0)
