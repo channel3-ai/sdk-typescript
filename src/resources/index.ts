@@ -3,6 +3,16 @@
 export { Brands, type Brand, type BrandFindParams } from './brands';
 export { Enrich, type EnrichRequest, type EnrichEnrichURLParams } from './enrich';
 export {
+  PriceTracking,
+  type PaginatedSubscriptions,
+  type PriceHistory,
+  type Subscription,
+  type PriceTrackingGetHistoryParams,
+  type PriceTrackingListSubscriptionsParams,
+  type PriceTrackingStartParams,
+  type PriceTrackingStopParams,
+} from './price-tracking';
+export {
   Products,
   type AvailabilityStatus,
   type Price,
