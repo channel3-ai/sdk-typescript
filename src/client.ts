@@ -18,6 +18,16 @@ import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import { Brand, BrandFindParams, Brands } from './resources/brands';
 import { Enrich, EnrichEnrichURLParams, EnrichRequest } from './resources/enrich';
+import {
+  PaginatedSubscriptions,
+  PriceHistory,
+  PriceTracking,
+  PriceTrackingGetHistoryParams,
+  PriceTrackingListSubscriptionsParams,
+  PriceTrackingStartParams,
+  PriceTrackingStopParams,
+  Subscription,
+} from './resources/price-tracking';
 import { AvailabilityStatus, Price, Product, ProductDetail, Products, Variant } from './resources/products';
 import {
   RedirectMode,
@@ -732,6 +742,7 @@ export class Channel3 {
   brands: API.Brands = new API.Brands(this);
   websites: API.Websites = new API.Websites(this);
   enrich: API.Enrich = new API.Enrich(this);
+  priceTracking: API.PriceTracking = new API.PriceTracking(this);
 }
 
 Channel3.Search = Search;
@@ -739,6 +750,7 @@ Channel3.Products = Products;
 Channel3.Brands = Brands;
 Channel3.Websites = Websites;
 Channel3.Enrich = Enrich;
+Channel3.PriceTracking = PriceTracking;
 
 export declare namespace Channel3 {
   export type RequestOptions = Opts.RequestOptions;
@@ -771,5 +783,16 @@ export declare namespace Channel3 {
     Enrich as Enrich,
     type EnrichRequest as EnrichRequest,
     type EnrichEnrichURLParams as EnrichEnrichURLParams,
+  };
+
+  export {
+    PriceTracking as PriceTracking,
+    type PaginatedSubscriptions as PaginatedSubscriptions,
+    type PriceHistory as PriceHistory,
+    type Subscription as Subscription,
+    type PriceTrackingGetHistoryParams as PriceTrackingGetHistoryParams,
+    type PriceTrackingListSubscriptionsParams as PriceTrackingListSubscriptionsParams,
+    type PriceTrackingStartParams as PriceTrackingStartParams,
+    type PriceTrackingStopParams as PriceTrackingStopParams,
   };
 }

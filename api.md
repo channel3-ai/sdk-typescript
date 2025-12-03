@@ -56,3 +56,18 @@ Types:
 Methods:
 
 - <code title="post /v0/enrich">client.enrich.<a href="./src/resources/enrich.ts">enrichURL</a>({ ...params }) -> ProductDetail</code>
+
+# PriceTracking
+
+Types:
+
+- <code><a href="./src/resources/price-tracking.ts">PaginatedSubscriptions</a></code>
+- <code><a href="./src/resources/price-tracking.ts">PriceHistory</a></code>
+- <code><a href="./src/resources/price-tracking.ts">Subscription</a></code>
+
+Methods:
+
+- <code title="get /v0/price-tracking/history/{canonical_product_id}">client.priceTracking.<a href="./src/resources/price-tracking.ts">getHistory</a>(canonicalProductID, { ...params }) -> PriceHistory</code>
+- <code title="get /v0/price-tracking/subscriptions">client.priceTracking.<a href="./src/resources/price-tracking.ts">listSubscriptions</a>({ ...params }) -> PaginatedSubscriptions</code>
+- <code title="post /v0/price-tracking/start">client.priceTracking.<a href="./src/resources/price-tracking.ts">start</a>({ ...params }) -> Subscription</code>
+- <code title="post /v0/price-tracking/stop">client.priceTracking.<a href="./src/resources/price-tracking.ts">stop</a>({ ...params }) -> Subscription</code>
