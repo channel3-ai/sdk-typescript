@@ -26,10 +26,10 @@ export type RedirectMode = 'brand' | 'price' | 'commission';
  */
 export interface SearchConfig {
   /**
-   * If True, search will use AI to enrich the query, for example pulling the gender,
-   * brand, and price range from the query.
+   * If True, search will only use keyword search and not vector search. Keyword-only
+   * search is not supported with image input.
    */
-  enrich_query?: boolean;
+  keyword_search_only?: boolean;
 
   /**
    * "price" redirects to the product page with the lowest price "commission"
@@ -128,7 +128,7 @@ export interface SearchRequest {
   image_url?: string | null;
 
   /**
-   * Optional limit on the number of results
+   * Optional limit on the number of results. Default is 20, max is 30.
    */
   limit?: number | null;
 
@@ -168,7 +168,7 @@ export interface SearchPerformParams {
   image_url?: string | null;
 
   /**
-   * Optional limit on the number of results
+   * Optional limit on the number of results. Default is 20, max is 30.
    */
   limit?: number | null;
 
