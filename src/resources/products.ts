@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
+import * as SearchAPI from './search';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
@@ -8,9 +9,23 @@ import { path } from '../internal/utils/path';
 export class Products extends APIResource {
   /**
    * Get detailed information about a specific product by its ID.
+   *
+   * You can optionally pass variant dimension query parameters to select a specific
+   * variant configuration. For example:
+   * `/products/ABC123?dim-color-id=Red&dim-size-id=M`
+   *
+   * The response includes `variant_info` with:
+   *
+   * - `dimensions`: All dimensions this product family varies on
+   * - `selected`: Current selection state (from the product or query params)
+   * - `available`: What values are still available given current selection
    */
-  retrieve(productID: string, options?: RequestOptions): APIPromise<ProductDetail> {
-    return this._client.get(path`/v0/products/${productID}`, options);
+  retrieve(
+    productID: string,
+    query: ProductRetrieveParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<ProductDetail> {
+    return this._client.get(path`/v0/products/${productID}`, { query, ...options });
   }
 }
 
@@ -83,6 +98,10 @@ export interface Product {
 
   materials?: Array<string> | null;
 
+  /**
+   * @deprecated Simple variant list (deprecated, use variant_info for full variant
+   * details)
+   */
   variants?: Array<Variant>;
 }
 
@@ -160,6 +179,10 @@ export interface ProductDetail {
 
   materials?: Array<string> | null;
 
+  /**
+   * @deprecated Simple variant list (deprecated, use variant_info for full variant
+   * details)
+   */
   variants?: Array<Variant>;
 }
 
@@ -210,6 +233,21 @@ export interface Variant {
   title: string;
 }
 
+export interface ProductRetrieveParams {
+  /**
+   * "price" redirects to the product page with the lowest price "commission"
+   * redirects to the product page with the highest commission rate "brand" redirects
+   * to the brand's product page
+   */
+  redirect_mode?: SearchAPI.RedirectMode | null;
+
+  /**
+   * Optional list of website IDs to constrain the buy URL to, relevant if multiple
+   * merchants exist
+   */
+  website_ids?: Array<string> | null;
+}
+
 export declare namespace Products {
   export {
     type AvailabilityStatus as AvailabilityStatus,
@@ -217,5 +255,6 @@ export declare namespace Products {
     type Product as Product,
     type ProductDetail as ProductDetail,
     type Variant as Variant,
+    type ProductRetrieveParams as ProductRetrieveParams,
   };
 }

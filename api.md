@@ -25,7 +25,7 @@ Types:
 
 Methods:
 
-- <code title="get /v0/products/{product_id}">client.products.<a href="./src/resources/products.ts">retrieve</a>(productID) -> ProductDetail</code>
+- <code title="get /v0/products/{product_id}">client.products.<a href="./src/resources/products.ts">retrieve</a>(productID, { ...params }) -> ProductDetail</code>
 
 # Brands
 
