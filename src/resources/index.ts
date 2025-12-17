@@ -19,6 +19,7 @@ export {
   type Product,
   type ProductDetail,
   type Variant,
+  type ProductRetrieveParams,
 } from './products';
 export {
   Search,

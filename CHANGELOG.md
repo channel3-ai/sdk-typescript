@@ -1,5 +1,25 @@
 # Changelog
 
+## 2.9.0 (2025-12-17)
+
+Full Changelog: [v2.8.0...v2.9.0](https://github.com/channel3-ai/sdk-typescript/compare/v2.8.0...v2.9.0)
+
+### Features
+
+* Trigger Stainless ([b41018d](https://github.com/channel3-ai/sdk-typescript/commit/b41018df582a757757ba0cd7f108f36c92719459))
+
+
+### Bug Fixes
+
+* **mcp:** correct code tool API endpoint ([e610d56](https://github.com/channel3-ai/sdk-typescript/commit/e610d56ede53dd54e2dc0031e310f2a1db0ab3c1))
+* **mcp:** return correct lines on typescript errors ([6efa1ec](https://github.com/channel3-ai/sdk-typescript/commit/6efa1ec97e093396ce6121c5ca7faf65d9910580))
+
+
+### Chores
+
+* **internal:** codegen related update ([f936d37](https://github.com/channel3-ai/sdk-typescript/commit/f936d37e0e1e37f705660af6431fcf205958548e))
+* **internal:** codegen related update ([af97bd9](https://github.com/channel3-ai/sdk-typescript/commit/af97bd9978011c5ca12032f5ac7315d1be57a34f))
+
 ## 2.8.0 (2025-12-03)
 
 Full Changelog: [v2.7.0...v2.8.0](https://github.com/channel3-ai/sdk-typescript/compare/v2.7.0...v2.8.0)
