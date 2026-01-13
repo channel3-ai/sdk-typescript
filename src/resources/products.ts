@@ -9,16 +9,6 @@ import { path } from '../internal/utils/path';
 export class Products extends APIResource {
   /**
    * Get detailed information about a specific product by its ID.
-   *
-   * You can optionally pass variant dimension query parameters to select a specific
-   * variant configuration. For example:
-   * `/products/ABC123?dim-color-id=Red&dim-size-id=M`
-   *
-   * The response includes `variant_info` with:
-   *
-   * - `dimensions`: All dimensions this product family varies on
-   * - `selected`: Current selection state (from the product or query params)
-   * - `available`: What values are still available given current selection
    */
   retrieve(
     productID: string,
@@ -117,8 +107,8 @@ export namespace Product {
     is_main_image?: boolean;
 
     /**
-     * Photo quality classification for API responses. Note: This enum is decoupled
-     * from internal ImageIntelligence types as they may diverge.
+     * @deprecated Photo quality classification for API responses. Note: This enum is
+     * decoupled from internal ImageIntelligence types as they may diverge.
      */
     photo_quality?: 'professional' | 'ugc' | 'poor' | null;
 
@@ -198,8 +188,8 @@ export namespace ProductDetail {
     is_main_image?: boolean;
 
     /**
-     * Photo quality classification for API responses. Note: This enum is decoupled
-     * from internal ImageIntelligence types as they may diverge.
+     * @deprecated Photo quality classification for API responses. Note: This enum is
+     * decoupled from internal ImageIntelligence types as they may diverge.
      */
     photo_quality?: 'professional' | 'ugc' | 'poor' | null;
 
