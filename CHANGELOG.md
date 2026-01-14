@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.11.0 (2026-01-14)
+
+Full Changelog: [v2.10.0...v2.11.0](https://github.com/channel3-ai/sdk-typescript/compare/v2.10.0...v2.11.0)
+
+### Features
+
+* **api:** api update ([fac9dbf](https://github.com/channel3-ai/sdk-typescript/commit/fac9dbf68457542782ec88be895dc7738d548898))
+
 ## 2.10.0 (2026-01-14)
 
 Full Changelog: [v2.9.0...v2.10.0](https://github.com/channel3-ai/sdk-typescript/compare/v2.9.0...v2.10.0)
