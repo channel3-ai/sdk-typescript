@@ -88,10 +88,6 @@ export interface Product {
 
   materials?: Array<string> | null;
 
-  /**
-   * @deprecated Simple variant list (deprecated, use variant_info for full variant
-   * details)
-   */
   variants?: Array<Variant>;
 }
 
@@ -169,10 +165,6 @@ export interface ProductDetail {
 
   materials?: Array<string> | null;
 
-  /**
-   * @deprecated Simple variant list (deprecated, use variant_info for full variant
-   * details)
-   */
   variants?: Array<Variant>;
 }
 
