@@ -1,5 +1,19 @@
 # Changelog
 
+## 2.10.0 (2026-01-14)
+
+Full Changelog: [v2.9.0...v2.10.0](https://github.com/channel3-ai/sdk-typescript/compare/v2.9.0...v2.10.0)
+
+### Features
+
+* **api:** api update ([17f20ea](https://github.com/channel3-ai/sdk-typescript/commit/17f20eaf395bfa1a2307ddce2258cceaaf069d9e))
+
+
+### Chores
+
+* break long lines in snippets into multiline ([30853de](https://github.com/channel3-ai/sdk-typescript/commit/30853dea23ee1e36d2413bf76768590fe68216c7))
+* **internal:** codegen related update ([de52a02](https://github.com/channel3-ai/sdk-typescript/commit/de52a020f9be71d64238b7152bb7ca52f3fdf0a6))
+
 ## 2.9.0 (2025-12-17)
 
 Full Changelog: [v2.8.0...v2.9.0](https://github.com/channel3-ai/sdk-typescript/compare/v2.8.0...v2.9.0)
