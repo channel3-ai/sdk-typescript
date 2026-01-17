@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.11.1 (2026-01-17)
+
+Full Changelog: [v2.11.0...v2.11.1](https://github.com/channel3-ai/sdk-typescript/compare/v2.11.0...v2.11.1)
+
+### Chores
+
+* **internal:** update `actions/checkout` version ([aa9cfe8](https://github.com/channel3-ai/sdk-typescript/commit/aa9cfe8d34c8d450e0d7ca5084209518626c1c5f))
+* **internal:** upgrade babel, qs, js-yaml ([3a53cb9](https://github.com/channel3-ai/sdk-typescript/commit/3a53cb9aa5966c02ddd0645469e748b98d9399e8))
+
 ## 2.11.0 (2026-01-14)
 
 Full Changelog: [v2.10.0...v2.11.0](https://github.com/channel3-ai/sdk-typescript/compare/v2.10.0...v2.11.0)
