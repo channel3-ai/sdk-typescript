@@ -32,9 +32,11 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/brands.ts">Brand</a></code>
+- <code><a href="./src/resources/brands.ts">PaginatedListBrandsResponse</a></code>
 
 Methods:
 
+- <code title="get /v0/list-brands">client.brands.<a href="./src/resources/brands.ts">list</a>({ ...params }) -> PaginatedListBrandsResponse</code>
 - <code title="get /v0/brands">client.brands.<a href="./src/resources/brands.ts">find</a>({ ...params }) -> Brand</code>
 
 # Websites

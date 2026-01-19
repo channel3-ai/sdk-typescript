@@ -7,8 +7,12 @@ import { RequestOptions } from '../internal/request-options';
 
 export class Enrich extends APIResource {
   /**
-   * Search by product URL, get back full product information from Channel3’s product
+   * Search by product URL, get back full product information from Channel3's product
    * database.
+   *
+   * If the product is not found in the database, the endpoint will attempt real-time
+   * retrieval from the product page. This fallback returns basic product information
+   * (price, images, title) without full enrichment.
    */
   enrichURL(body: EnrichEnrichURLParams, options?: RequestOptions): APIPromise<ProductsAPI.ProductDetail> {
     return this._client.post('/v0/enrich', { body, ...options });
