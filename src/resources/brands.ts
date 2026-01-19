@@ -6,6 +6,17 @@ import { RequestOptions } from '../internal/request-options';
 
 export class Brands extends APIResource {
   /**
+   * Lists all brands, sorted alphabetically. Supports infinite scrolling with the
+   * paging_token parameter.
+   */
+  list(
+    query: BrandListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<PaginatedListBrandsResponse> {
+    return this._client.get('/v0/list-brands', { query, ...options });
+  }
+
+  /**
    * Find a brand by name.
    */
   find(query: BrandFindParams, options?: RequestOptions): APIPromise<Brand> {
@@ -28,10 +39,39 @@ export interface Brand {
   logo_url?: string | null;
 }
 
+export interface PaginatedListBrandsResponse {
+  /**
+   * List of brands
+   */
+  items: Array<Brand>;
+
+  /**
+   * Cursor to fetch the next page of results. Null if no more results.
+   */
+  paging_token?: string | null;
+}
+
+export interface BrandListParams {
+  /**
+   * Max results (1-100)
+   */
+  limit?: number;
+
+  /**
+   * Pagination cursor
+   */
+  paging_token?: string | null;
+}
+
 export interface BrandFindParams {
   query: string;
 }
 
 export declare namespace Brands {
-  export { type Brand as Brand, type BrandFindParams as BrandFindParams };
+  export {
+    type Brand as Brand,
+    type PaginatedListBrandsResponse as PaginatedListBrandsResponse,
+    type BrandListParams as BrandListParams,
+    type BrandFindParams as BrandFindParams,
+  };
 }

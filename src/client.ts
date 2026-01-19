@@ -17,7 +17,13 @@ import * as Errors from './core/error';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
-import { Brand, BrandFindParams, Brands } from './resources/brands';
+import {
+  Brand,
+  BrandFindParams,
+  BrandListParams,
+  Brands,
+  PaginatedListBrandsResponse,
+} from './resources/brands';
 import { Enrich, EnrichEnrichURLParams, EnrichRequest } from './resources/enrich';
 import {
   PaginatedSubscriptions,
@@ -769,7 +775,13 @@ export declare namespace Channel3 {
     type ProductRetrieveParams as ProductRetrieveParams,
   };
 
-  export { Brands as Brands, type Brand as Brand, type BrandFindParams as BrandFindParams };
+  export {
+    Brands as Brands,
+    type Brand as Brand,
+    type PaginatedListBrandsResponse as PaginatedListBrandsResponse,
+    type BrandListParams as BrandListParams,
+    type BrandFindParams as BrandFindParams,
+  };
 
   export { Websites as Websites, type Website as Website, type WebsiteFindParams as WebsiteFindParams };
 
