@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.12.1 (2026-01-24)
+
+Full Changelog: [v2.12.0...v2.12.1](https://github.com/channel3-ai/sdk-typescript/compare/v2.12.0...v2.12.1)
+
+### Chores
+
+* **ci:** upgrade `actions/github-script` ([a2c4022](https://github.com/channel3-ai/sdk-typescript/commit/a2c4022f2ca7db4a408a29af01ad23b7c98e8cc4))
+
 ## 2.12.0 (2026-01-19)
 
 Full Changelog: [v2.11.0...v2.12.0](https://github.com/channel3-ai/sdk-typescript/compare/v2.11.0...v2.12.0)
