@@ -217,9 +217,7 @@ export interface Variant {
 
 export interface ProductRetrieveParams {
   /**
-   * "price" redirects to the product page with the lowest price "commission"
-   * redirects to the product page with the highest commission rate "brand" redirects
-   * to the brand's product page
+   * Optional redirect mode
    */
   redirect_mode?: SearchAPI.RedirectMode | null;
 
