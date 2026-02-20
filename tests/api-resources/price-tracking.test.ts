@@ -8,7 +8,7 @@ const client = new Channel3({
 });
 
 describe('resource priceTracking', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('getHistory', async () => {
     const responsePromise = client.priceTracking.getHistory('canonical_product_id');
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource priceTracking', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('getHistory: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -32,7 +32,7 @@ describe('resource priceTracking', () => {
     ).rejects.toThrow(Channel3.NotFoundError);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('listSubscriptions', async () => {
     const responsePromise = client.priceTracking.listSubscriptions();
     const rawResponse = await responsePromise.asResponse();
@@ -44,7 +44,7 @@ describe('resource priceTracking', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('listSubscriptions: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -55,7 +55,7 @@ describe('resource priceTracking', () => {
     ).rejects.toThrow(Channel3.NotFoundError);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('start: only required params', async () => {
     const responsePromise = client.priceTracking.start({ canonical_product_id: 'canonical_product_id' });
     const rawResponse = await responsePromise.asResponse();
@@ -67,12 +67,12 @@ describe('resource priceTracking', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('start: required and optional params', async () => {
     const response = await client.priceTracking.start({ canonical_product_id: 'canonical_product_id' });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('stop: only required params', async () => {
     const responsePromise = client.priceTracking.stop({ canonical_product_id: 'canonical_product_id' });
     const rawResponse = await responsePromise.asResponse();
@@ -84,7 +84,7 @@ describe('resource priceTracking', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('stop: required and optional params', async () => {
     const response = await client.priceTracking.stop({ canonical_product_id: 'canonical_product_id' });
   });
