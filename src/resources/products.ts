@@ -67,20 +67,9 @@ export interface Product {
 
   url: string;
 
-  /**
-   * @deprecated
-   */
   brand_id?: string | null;
 
-  /**
-   * @deprecated
-   */
   brand_name?: string | null;
-
-  /**
-   * Ordered list of brands.
-   */
-  brands?: Array<Product.Brand>;
 
   categories?: Array<string>;
 
@@ -103,12 +92,6 @@ export interface Product {
 }
 
 export namespace Product {
-  export interface Brand {
-    id: string;
-
-    name?: string | null;
-  }
-
   /**
    * Product image with metadata
    */
@@ -161,20 +144,9 @@ export interface ProductDetail {
 
   url: string;
 
-  /**
-   * @deprecated
-   */
   brand_id?: string | null;
 
-  /**
-   * @deprecated
-   */
   brand_name?: string | null;
-
-  /**
-   * Ordered list of brands.
-   */
-  brands?: Array<ProductDetail.Brand>;
 
   categories?: Array<string>;
 
@@ -197,12 +169,6 @@ export interface ProductDetail {
 }
 
 export namespace ProductDetail {
-  export interface Brand {
-    id: string;
-
-    name?: string | null;
-  }
-
   /**
    * Product image with metadata
    */
