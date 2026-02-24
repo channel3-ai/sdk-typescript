@@ -60,7 +60,7 @@ $ yarn link @channel3/sdk
 # With pnpm
 $ pnpm link --global
 $ cd ../my-package
-$ pnpm link -—global @channel3/sdk
+$ pnpm link --global @channel3/sdk
 ```
 
 ## Running tests
