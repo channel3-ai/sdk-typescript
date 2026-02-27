@@ -67,9 +67,20 @@ export interface Product {
 
   url: string;
 
+  /**
+   * @deprecated
+   */
   brand_id?: string | null;
 
+  /**
+   * @deprecated
+   */
   brand_name?: string | null;
+
+  /**
+   * Ordered list of brands.
+   */
+  brands?: Array<Product.Brand>;
 
   categories?: Array<string>;
 
@@ -92,6 +103,12 @@ export interface Product {
 }
 
 export namespace Product {
+  export interface Brand {
+    id: string;
+
+    name?: string | null;
+  }
+
   /**
    * Product image with metadata
    */
@@ -144,9 +161,20 @@ export interface ProductDetail {
 
   url: string;
 
+  /**
+   * @deprecated
+   */
   brand_id?: string | null;
 
+  /**
+   * @deprecated
+   */
   brand_name?: string | null;
+
+  /**
+   * Ordered list of brands.
+   */
+  brands?: Array<ProductDetail.Brand>;
 
   categories?: Array<string>;
 
@@ -169,6 +197,12 @@ export interface ProductDetail {
 }
 
 export namespace ProductDetail {
+  export interface Brand {
+    id: string;
+
+    name?: string | null;
+  }
+
   /**
    * Product image with metadata
    */
@@ -217,9 +251,7 @@ export interface Variant {
 
 export interface ProductRetrieveParams {
   /**
-   * "price" redirects to the product page with the lowest price "commission"
-   * redirects to the product page with the highest commission rate "brand" redirects
-   * to the brand's product page
+   * Optional redirect mode
    */
   redirect_mode?: SearchAPI.RedirectMode | null;
 

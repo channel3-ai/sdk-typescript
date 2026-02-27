@@ -83,7 +83,14 @@ export interface SearchFilters {
   condition?: 'new' | 'refurbished' | 'used' | null;
 
   /**
-   * If provided, products with these IDs will be excluded from the results
+   * If provided, products in these categories (or their descendants) will be
+   * excluded from the results
+   */
+  exclude_category_ids?: Array<string> | null;
+
+  /**
+   * @deprecated If provided, products with these IDs will be excluded from the
+   * results
    */
   exclude_product_ids?: Array<string> | null;
 

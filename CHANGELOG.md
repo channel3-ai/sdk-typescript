@@ -1,5 +1,42 @@
 # Changelog
 
+## 2.13.0 (2026-02-27)
+
+Full Changelog: [v2.12.0...v2.13.0](https://github.com/channel3-ai/sdk-typescript/compare/v2.12.0...v2.13.0)
+
+### Features
+
+* **api:** api update ([371ee62](https://github.com/channel3-ai/sdk-typescript/commit/371ee62d5e0e67ba28b630d818ce377dfa1e3093))
+* **api:** api update ([a9a6045](https://github.com/channel3-ai/sdk-typescript/commit/a9a6045bb8bf3a28b068d3e4797fca8179c36a20))
+* **api:** api update ([9baac2d](https://github.com/channel3-ai/sdk-typescript/commit/9baac2db3e8525b6c161b3fb006d472231e89cd0))
+* **api:** api update ([5f92c68](https://github.com/channel3-ai/sdk-typescript/commit/5f92c680cc3dfafc7f78b902dbbc12352af5b43b))
+* **api:** api update ([f7c6ea2](https://github.com/channel3-ai/sdk-typescript/commit/f7c6ea278fbe53b9cd652e6fd39c0ac6957a8cf6))
+* **api:** api update ([7b9ea72](https://github.com/channel3-ai/sdk-typescript/commit/7b9ea72773294aa4a60f56dd23912b4b9fa32236))
+* **api:** api update ([e02d70d](https://github.com/channel3-ai/sdk-typescript/commit/e02d70d9c2eef36fe5f4c92a7ce316eebe112b8f))
+* **api:** api update ([3bcd1c8](https://github.com/channel3-ai/sdk-typescript/commit/3bcd1c81cb0c3763960c8d5170387f9d16d481e5))
+* **api:** api update ([2d46f1b](https://github.com/channel3-ai/sdk-typescript/commit/2d46f1be912e3a27fdae5f0b6c46e5241ca21929))
+* **api:** api update ([60206f1](https://github.com/channel3-ai/sdk-typescript/commit/60206f13111f303a918fe664c54fe4363037d3a3))
+
+
+### Bug Fixes
+
+* **client:** avoid memory leak with abort signals ([2f6d14d](https://github.com/channel3-ai/sdk-typescript/commit/2f6d14d415cb91a60400b08afd90280a12c3515e))
+* **client:** avoid removing abort listener too early ([841eed4](https://github.com/channel3-ai/sdk-typescript/commit/841eed44b13fae489c0e8dd8b149b3803fdc3b62))
+* **docs/contributing:** correct pnpm link command ([31d0198](https://github.com/channel3-ai/sdk-typescript/commit/31d0198d6529c1103cecac18dc981a74cee5cea7))
+
+
+### Chores
+
+* **api:** minor updates ([7ca072c](https://github.com/channel3-ai/sdk-typescript/commit/7ca072ce37b72c410b30d37689b62611f7035c35))
+* **ci:** upgrade `actions/github-script` ([a2c4022](https://github.com/channel3-ai/sdk-typescript/commit/a2c4022f2ca7db4a408a29af01ad23b7c98e8cc4))
+* **client:** do not parse responses with empty content-length ([094b658](https://github.com/channel3-ai/sdk-typescript/commit/094b6581e1752b4ca975a1673df206ac474adb2b))
+* **client:** restructure abort controller binding ([5014ecf](https://github.com/channel3-ai/sdk-typescript/commit/5014ecf6414ff8a642f8a10e14e29f093a92b357))
+* **internal/client:** fix form-urlencoded requests ([b3ad1f6](https://github.com/channel3-ai/sdk-typescript/commit/b3ad1f60caf6b86392f9174f3279eff2ee5392ab))
+* **internal:** avoid type checking errors with ts-reset ([53071ac](https://github.com/channel3-ai/sdk-typescript/commit/53071ac8999f03bccfcb6ae0decbd262dd4b1134))
+* **internal:** move stringifyQuery implementation to internal function ([0003232](https://github.com/channel3-ai/sdk-typescript/commit/00032329a353a8ec982b41f64185faeb3bfd1bcd))
+* **internal:** remove mock server code ([5fd89e2](https://github.com/channel3-ai/sdk-typescript/commit/5fd89e25e858b8e8042d108fa7971b98b18a5602))
+* update mock server docs ([82cf04b](https://github.com/channel3-ai/sdk-typescript/commit/82cf04b00aac70fd56a906efe4615cdfe06f6636))
+
 ## 2.12.0 (2026-01-19)
 
 Full Changelog: [v2.11.0...v2.12.0](https://github.com/channel3-ai/sdk-typescript/compare/v2.11.0...v2.12.0)
