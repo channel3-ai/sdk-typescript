@@ -20,7 +20,10 @@ Types:
 - <code><a href="./src/resources/products.ts">AvailabilityStatus</a></code>
 - <code><a href="./src/resources/products.ts">Price</a></code>
 - <code><a href="./src/resources/products.ts">Product</a></code>
+- <code><a href="./src/resources/products.ts">ProductBrand</a></code>
 - <code><a href="./src/resources/products.ts">ProductDetail</a></code>
+- <code><a href="./src/resources/products.ts">ProductImage</a></code>
+- <code><a href="./src/resources/products.ts">ProductOffer</a></code>
 - <code><a href="./src/resources/products.ts">Variant</a></code>
 
 Methods:
@@ -32,11 +35,10 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/brands.ts">Brand</a></code>
-- <code><a href="./src/resources/brands.ts">PaginatedListBrandsResponse</a></code>
 
 Methods:
 
-- <code title="get /v0/list-brands">client.brands.<a href="./src/resources/brands.ts">list</a>({ ...params }) -> PaginatedListBrandsResponse</code>
+- <code title="get /v0/list-brands">client.brands.<a href="./src/resources/brands.ts">list</a>({ ...params }) -> BrandsCursorPage</code>
 - <code title="get /v0/brands">client.brands.<a href="./src/resources/brands.ts">find</a>({ ...params }) -> Brand</code>
 
 # Websites
@@ -63,13 +65,12 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/price-tracking.ts">PaginatedSubscriptions</a></code>
 - <code><a href="./src/resources/price-tracking.ts">PriceHistory</a></code>
 - <code><a href="./src/resources/price-tracking.ts">Subscription</a></code>
 
 Methods:
 
 - <code title="get /v0/price-tracking/history/{canonical_product_id}">client.priceTracking.<a href="./src/resources/price-tracking.ts">getHistory</a>(canonicalProductID, { ...params }) -> PriceHistory</code>
-- <code title="get /v0/price-tracking/subscriptions">client.priceTracking.<a href="./src/resources/price-tracking.ts">listSubscriptions</a>({ ...params }) -> PaginatedSubscriptions</code>
+- <code title="get /v0/price-tracking/subscriptions">client.priceTracking.<a href="./src/resources/price-tracking.ts">listSubscriptions</a>({ ...params }) -> SubscriptionsCursorPage</code>
 - <code title="post /v0/price-tracking/start">client.priceTracking.<a href="./src/resources/price-tracking.ts">start</a>({ ...params }) -> Subscription</code>
 - <code title="post /v0/price-tracking/stop">client.priceTracking.<a href="./src/resources/price-tracking.ts">stop</a>({ ...params }) -> Subscription</code>

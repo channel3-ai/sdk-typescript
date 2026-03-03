@@ -14,19 +14,14 @@ import * as Opts from './internal/request-options';
 import { stringifyQuery } from './internal/utils/query';
 import { VERSION } from './version';
 import * as Errors from './core/error';
+import * as Pagination from './core/pagination';
+import { AbstractPage, type CursorPageParams, CursorPageResponse } from './core/pagination';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
-import {
-  Brand,
-  BrandFindParams,
-  BrandListParams,
-  Brands,
-  PaginatedListBrandsResponse,
-} from './resources/brands';
+import { Brand, BrandFindParams, BrandListParams, Brands, BrandsCursorPage } from './resources/brands';
 import { Enrich, EnrichEnrichURLParams, EnrichRequest } from './resources/enrich';
 import {
-  PaginatedSubscriptions,
   PriceHistory,
   PriceTracking,
   PriceTrackingGetHistoryParams,
@@ -34,12 +29,16 @@ import {
   PriceTrackingStartParams,
   PriceTrackingStopParams,
   Subscription,
+  SubscriptionsCursorPage,
 } from './resources/price-tracking';
 import {
   AvailabilityStatus,
   Price,
   Product,
+  ProductBrand,
   ProductDetail,
+  ProductImage,
+  ProductOffer,
   ProductRetrieveParams,
   Products,
   Variant,
@@ -504,6 +503,30 @@ export class Channel3 {
     return { response, options, controller, requestLogID, retryOfRequestLogID, startTime };
   }
 
+  getAPIList<Item, PageClass extends Pagination.AbstractPage<Item> = Pagination.AbstractPage<Item>>(
+    path: string,
+    Page: new (...args: any[]) => PageClass,
+    opts?: PromiseOrValue<RequestOptions>,
+  ): Pagination.PagePromise<PageClass, Item> {
+    return this.requestAPIList(
+      Page,
+      opts && 'then' in opts ?
+        opts.then((opts) => ({ method: 'get', path, ...opts }))
+      : { method: 'get', path, ...opts },
+    );
+  }
+
+  requestAPIList<
+    Item = unknown,
+    PageClass extends Pagination.AbstractPage<Item> = Pagination.AbstractPage<Item>,
+  >(
+    Page: new (...args: ConstructorParameters<typeof Pagination.AbstractPage>) => PageClass,
+    options: PromiseOrValue<FinalRequestOptions>,
+  ): Pagination.PagePromise<PageClass, Item> {
+    const request = this.makeRequest(options, null, undefined);
+    return new Pagination.PagePromise<PageClass, Item>(this as any as Channel3, request, Page);
+  }
+
   async fetchWithTimeout(
     url: RequestInfo,
     init: RequestInit | undefined,
@@ -769,6 +792,9 @@ Channel3.PriceTracking = PriceTracking;
 export declare namespace Channel3 {
   export type RequestOptions = Opts.RequestOptions;
 
+  export import CursorPage = Pagination.CursorPage;
+  export { type CursorPageParams as CursorPageParams, type CursorPageResponse as CursorPageResponse };
+
   export {
     Search as Search,
     type RedirectMode as RedirectMode,
@@ -785,7 +811,10 @@ export declare namespace Channel3 {
     type AvailabilityStatus as AvailabilityStatus,
     type Price as Price,
     type Product as Product,
+    type ProductBrand as ProductBrand,
     type ProductDetail as ProductDetail,
+    type ProductImage as ProductImage,
+    type ProductOffer as ProductOffer,
     type Variant as Variant,
     type ProductRetrieveParams as ProductRetrieveParams,
   };
@@ -793,7 +822,7 @@ export declare namespace Channel3 {
   export {
     Brands as Brands,
     type Brand as Brand,
-    type PaginatedListBrandsResponse as PaginatedListBrandsResponse,
+    type BrandsCursorPage as BrandsCursorPage,
     type BrandListParams as BrandListParams,
     type BrandFindParams as BrandFindParams,
   };
@@ -808,9 +837,9 @@ export declare namespace Channel3 {
 
   export {
     PriceTracking as PriceTracking,
-    type PaginatedSubscriptions as PaginatedSubscriptions,
     type PriceHistory as PriceHistory,
     type Subscription as Subscription,
+    type SubscriptionsCursorPage as SubscriptionsCursorPage,
     type PriceTrackingGetHistoryParams as PriceTrackingGetHistoryParams,
     type PriceTrackingListSubscriptionsParams as PriceTrackingListSubscriptionsParams,
     type PriceTrackingStartParams as PriceTrackingStartParams,

@@ -49,7 +49,7 @@ describe('resource priceTracking', () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.priceTracking.listSubscriptions(
-        { limit: 1, page_token: 'page_token' },
+        { cursor: 'cursor', limit: 1 },
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(Channel3.NotFoundError);
