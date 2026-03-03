@@ -52,24 +52,44 @@ export interface Price {
 export interface Product {
   id: string;
 
-  availability: AvailabilityStatus;
+  /**
+   * @deprecated Deprecated, use offers field
+   */
+  availability: 'InStock' | 'OutOfStock';
 
   /**
    * @deprecated Main product image (deprecated, use images field)
    */
   image_url: string;
 
+  /**
+   * @deprecated Deprecated, use offers field
+   */
   price: Price;
 
   score: number;
 
   title: string;
 
+  /**
+   * @deprecated Deprecated, use offers field
+   */
   url: string;
 
+  /**
+   * @deprecated
+   */
   brand_id?: string | null;
 
+  /**
+   * @deprecated
+   */
   brand_name?: string | null;
+
+  /**
+   * Ordered list of brands.
+   */
+  brands?: Array<ProductBrand>;
 
   categories?: Array<string>;
 
@@ -82,52 +102,24 @@ export interface Product {
    */
   image_urls?: Array<string>;
 
-  images?: Array<Product.Image>;
+  images?: Array<ProductImage>;
 
   key_features?: Array<string> | null;
 
   materials?: Array<string> | null;
 
+  /**
+   * All merchant offers for this product in the requested locale.
+   */
+  offers?: Array<ProductOffer>;
+
   variants?: Array<Variant>;
 }
 
-export namespace Product {
-  /**
-   * Product image with metadata
-   */
-  export interface Image {
-    url: string;
+export interface ProductBrand {
+  id: string;
 
-    alt_text?: string | null;
-
-    is_main_image?: boolean;
-
-    /**
-     * @deprecated Photo quality classification for API responses. Note: This enum is
-     * decoupled from internal ImageIntelligence types as they may diverge.
-     */
-    photo_quality?: 'professional' | 'ugc' | 'poor' | null;
-
-    /**
-     * Product image type classification for API responses. Note: This enum is
-     * decoupled from internal ImageIntelligence types as they may diverge.
-     */
-    shot_type?:
-      | 'hero'
-      | 'lifestyle'
-      | 'on_model'
-      | 'detail'
-      | 'scale_reference'
-      | 'angle_view'
-      | 'flat_lay'
-      | 'in_use'
-      | 'packaging'
-      | 'size_chart'
-      | 'color_swatch'
-      | 'product_information'
-      | 'merchant_information'
-      | null;
-  }
+  name: string;
 }
 
 /**
@@ -136,17 +128,37 @@ export namespace Product {
 export interface ProductDetail {
   id: string;
 
-  availability: AvailabilityStatus;
+  /**
+   * @deprecated Deprecated, use offers field
+   */
+  availability: 'InStock' | 'OutOfStock';
 
+  /**
+   * @deprecated Deprecated, use offers field
+   */
   price: Price;
 
   title: string;
 
+  /**
+   * @deprecated Deprecated, use offers field
+   */
   url: string;
 
+  /**
+   * @deprecated
+   */
   brand_id?: string | null;
 
+  /**
+   * @deprecated
+   */
   brand_name?: string | null;
+
+  /**
+   * Ordered list of brands.
+   */
+  brands?: Array<ProductBrand>;
 
   categories?: Array<string>;
 
@@ -159,52 +171,72 @@ export interface ProductDetail {
    */
   image_urls?: Array<string>;
 
-  images?: Array<ProductDetail.Image>;
+  images?: Array<ProductImage>;
 
   key_features?: Array<string> | null;
 
   materials?: Array<string> | null;
 
+  /**
+   * All merchant offers for this product in the requested locale.
+   */
+  offers?: Array<ProductOffer>;
+
   variants?: Array<Variant>;
 }
 
-export namespace ProductDetail {
+/**
+ * Product image with metadata
+ */
+export interface ProductImage {
+  url: string;
+
+  alt_text?: string | null;
+
+  is_main_image?: boolean;
+
   /**
-   * Product image with metadata
+   * @deprecated Photo quality classification for API responses. Note: This enum is
+   * decoupled from internal ImageIntelligence types as they may diverge.
    */
-  export interface Image {
-    url: string;
+  photo_quality?: 'professional' | 'ugc' | 'poor' | null;
 
-    alt_text?: string | null;
+  /**
+   * Product image type classification for API responses. Note: This enum is
+   * decoupled from internal ImageIntelligence types as they may diverge.
+   */
+  shot_type?:
+    | 'hero'
+    | 'lifestyle'
+    | 'on_model'
+    | 'detail'
+    | 'scale_reference'
+    | 'angle_view'
+    | 'flat_lay'
+    | 'in_use'
+    | 'packaging'
+    | 'size_chart'
+    | 'color_swatch'
+    | 'product_information'
+    | 'merchant_information'
+    | null;
+}
 
-    is_main_image?: boolean;
+export interface ProductOffer {
+  availability: 'InStock' | 'OutOfStock';
 
-    /**
-     * @deprecated Photo quality classification for API responses. Note: This enum is
-     * decoupled from internal ImageIntelligence types as they may diverge.
-     */
-    photo_quality?: 'professional' | 'ugc' | 'poor' | null;
+  domain: string;
 
-    /**
-     * Product image type classification for API responses. Note: This enum is
-     * decoupled from internal ImageIntelligence types as they may diverge.
-     */
-    shot_type?:
-      | 'hero'
-      | 'lifestyle'
-      | 'on_model'
-      | 'detail'
-      | 'scale_reference'
-      | 'angle_view'
-      | 'flat_lay'
-      | 'in_use'
-      | 'packaging'
-      | 'size_chart'
-      | 'color_swatch'
-      | 'product_information'
-      | 'merchant_information'
-      | null;
-  }
+  price: Price;
+
+  url: string;
+
+  /**
+   * The maximum commission rate for the merchant, as a percentage. 0 is no
+   * commission. 0.5 is 50% commission. 'Max' because the actual commission rate may
+   * be lower due to vendor-specific affiliate rules.
+   */
+  max_commission_rate?: number;
 }
 
 export interface Variant {
@@ -217,9 +249,7 @@ export interface Variant {
 
 export interface ProductRetrieveParams {
   /**
-   * "price" redirects to the product page with the lowest price "commission"
-   * redirects to the product page with the highest commission rate "brand" redirects
-   * to the brand's product page
+   * Deprecated and ignored. Each offer now contains its own merchant URL.
    */
   redirect_mode?: SearchAPI.RedirectMode | null;
 
@@ -235,7 +265,10 @@ export declare namespace Products {
     type AvailabilityStatus as AvailabilityStatus,
     type Price as Price,
     type Product as Product,
+    type ProductBrand as ProductBrand,
     type ProductDetail as ProductDetail,
+    type ProductImage as ProductImage,
+    type ProductOffer as ProductOffer,
     type Variant as Variant,
     type ProductRetrieveParams as ProductRetrieveParams,
   };

@@ -8,7 +8,7 @@ const client = new Channel3({
 });
 
 describe('resource search', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('perform', async () => {
     const responsePromise = client.search.perform({});
     const rawResponse = await responsePromise.asResponse();

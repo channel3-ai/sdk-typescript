@@ -32,9 +32,9 @@ export interface SearchConfig {
   keyword_search_only?: boolean;
 
   /**
-   * "price" redirects to the product page with the lowest price "commission"
-   * redirects to the product page with the highest commission rate "brand" redirects
-   * to the brand's product page
+   * @deprecated "price" redirects to the product page with the lowest price
+   * "commission" redirects to the product page with the highest commission rate
+   * "brand" redirects to the brand's product page
    */
   redirect_mode?: RedirectMode | null;
 }
@@ -83,9 +83,26 @@ export interface SearchFilters {
   condition?: 'new' | 'refurbished' | 'used' | null;
 
   /**
-   * If provided, products with these IDs will be excluded from the results
+   * If provided, products from these brands will be excluded from the results
+   */
+  exclude_brand_ids?: Array<string> | null;
+
+  /**
+   * If provided, products in these categories (or their descendants) will be
+   * excluded from the results
+   */
+  exclude_category_ids?: Array<string> | null;
+
+  /**
+   * @deprecated Deprecated: this field is accepted but ignored. It has no effect on
+   * search results.
    */
   exclude_product_ids?: Array<string> | null;
+
+  /**
+   * If provided, products from these websites will be excluded from the results
+   */
+  exclude_website_ids?: Array<string> | null;
 
   gender?: 'male' | 'female' | 'unisex' | null;
 

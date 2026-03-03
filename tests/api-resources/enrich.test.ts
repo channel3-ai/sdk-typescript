@@ -8,7 +8,7 @@ const client = new Channel3({
 });
 
 describe('resource enrich', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('enrichURL: only required params', async () => {
     const responsePromise = client.enrich.enrichURL({ url: 'url' });
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource enrich', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('enrichURL: required and optional params', async () => {
     const response = await client.enrich.enrichURL({ url: 'url' });
   });

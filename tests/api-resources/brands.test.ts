@@ -8,7 +8,7 @@ const client = new Channel3({
 });
 
 describe('resource brands', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.brands.list();
     const rawResponse = await responsePromise.asResponse();
@@ -20,15 +20,15 @@ describe('resource brands', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.brands.list({ limit: 1, paging_token: 'paging_token' }, { path: '/_stainless_unknown_path' }),
+      client.brands.list({ cursor: 'cursor', limit: 1 }, { path: '/_stainless_unknown_path' }),
     ).rejects.toThrow(Channel3.NotFoundError);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('find: only required params', async () => {
     const responsePromise = client.brands.find({ query: 'query' });
     const rawResponse = await responsePromise.asResponse();
@@ -40,7 +40,7 @@ describe('resource brands', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('find: required and optional params', async () => {
     const response = await client.brands.find({ query: 'query' });
   });

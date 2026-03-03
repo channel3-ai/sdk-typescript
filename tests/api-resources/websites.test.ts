@@ -8,7 +8,7 @@ const client = new Channel3({
 });
 
 describe('resource websites', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('find: only required params', async () => {
     const responsePromise = client.websites.find({ query: 'query' });
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource websites', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('find: required and optional params', async () => {
     const response = await client.websites.find({ query: 'query' });
   });

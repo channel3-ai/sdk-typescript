@@ -11,22 +11,17 @@ import type { APIResponseProps } from './internal/parse';
 import { getPlatformHeaders } from './internal/detect-platform';
 import * as Shims from './internal/shims';
 import * as Opts from './internal/request-options';
-import * as qs from './internal/qs';
+import { stringifyQuery } from './internal/utils/query';
 import { VERSION } from './version';
 import * as Errors from './core/error';
+import * as Pagination from './core/pagination';
+import { AbstractPage, type CursorPageParams, CursorPageResponse } from './core/pagination';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
-import {
-  Brand,
-  BrandFindParams,
-  BrandListParams,
-  Brands,
-  PaginatedListBrandsResponse,
-} from './resources/brands';
+import { Brand, BrandFindParams, BrandListParams, Brands, BrandsCursorPage } from './resources/brands';
 import { Enrich, EnrichEnrichURLParams, EnrichRequest } from './resources/enrich';
 import {
-  PaginatedSubscriptions,
   PriceHistory,
   PriceTracking,
   PriceTrackingGetHistoryParams,
@@ -34,12 +29,16 @@ import {
   PriceTrackingStartParams,
   PriceTrackingStopParams,
   Subscription,
+  SubscriptionsCursorPage,
 } from './resources/price-tracking';
 import {
   AvailabilityStatus,
   Price,
   Product,
+  ProductBrand,
   ProductDetail,
+  ProductImage,
+  ProductOffer,
   ProductRetrieveParams,
   Products,
   Variant,
@@ -248,8 +247,8 @@ export class Channel3 {
     return buildHeaders([{ 'x-api-key': this.apiKey }]);
   }
 
-  protected stringifyQuery(query: Record<string, unknown>): string {
-    return qs.stringify(query, { arrayFormat: 'comma' });
+  protected stringifyQuery(query: object | Record<string, unknown>): string {
+    return stringifyQuery(query);
   }
 
   private getUserAgent(): string {
@@ -286,7 +285,7 @@ export class Channel3 {
     }
 
     if (typeof query === 'object' && query && !Array.isArray(query)) {
-      url.search = this.stringifyQuery(query as Record<string, unknown>);
+      url.search = this.stringifyQuery(query);
     }
 
     return url.toString();
@@ -470,7 +469,7 @@ export class Channel3 {
       loggerFor(this).info(`${responseInfo} - ${retryMessage}`);
 
       const errText = await response.text().catch((err: any) => castToError(err).message);
-      const errJSON = safeJSON(errText);
+      const errJSON = safeJSON(errText) as any;
       const errMessage = errJSON ? undefined : errText;
 
       loggerFor(this).debug(
@@ -504,6 +503,30 @@ export class Channel3 {
     return { response, options, controller, requestLogID, retryOfRequestLogID, startTime };
   }
 
+  getAPIList<Item, PageClass extends Pagination.AbstractPage<Item> = Pagination.AbstractPage<Item>>(
+    path: string,
+    Page: new (...args: any[]) => PageClass,
+    opts?: PromiseOrValue<RequestOptions>,
+  ): Pagination.PagePromise<PageClass, Item> {
+    return this.requestAPIList(
+      Page,
+      opts && 'then' in opts ?
+        opts.then((opts) => ({ method: 'get', path, ...opts }))
+      : { method: 'get', path, ...opts },
+    );
+  }
+
+  requestAPIList<
+    Item = unknown,
+    PageClass extends Pagination.AbstractPage<Item> = Pagination.AbstractPage<Item>,
+  >(
+    Page: new (...args: ConstructorParameters<typeof Pagination.AbstractPage>) => PageClass,
+    options: PromiseOrValue<FinalRequestOptions>,
+  ): Pagination.PagePromise<PageClass, Item> {
+    const request = this.makeRequest(options, null, undefined);
+    return new Pagination.PagePromise<PageClass, Item>(this as any as Channel3, request, Page);
+  }
+
   async fetchWithTimeout(
     url: RequestInfo,
     init: RequestInit | undefined,
@@ -511,9 +534,10 @@ export class Channel3 {
     controller: AbortController,
   ): Promise<Response> {
     const { signal, method, ...options } = init || {};
-    if (signal) signal.addEventListener('abort', () => controller.abort());
+    const abort = this._makeAbort(controller);
+    if (signal) signal.addEventListener('abort', abort, { once: true });
 
-    const timeout = setTimeout(() => controller.abort(), ms);
+    const timeout = setTimeout(abort, ms);
 
     const isReadableBody =
       ((globalThis as any).ReadableStream && options.body instanceof (globalThis as any).ReadableStream) ||
@@ -680,6 +704,12 @@ export class Channel3 {
     return headers.values;
   }
 
+  private _makeAbort(controller: AbortController) {
+    // note: we can't just inline this method inside `fetchWithTimeout()` because then the closure
+    //       would capture all request options, and cause a memory leak.
+    return () => controller.abort();
+  }
+
   private buildBody({ options: { body, headers: rawHeaders } }: { options: FinalRequestOptions }): {
     bodyHeaders: HeadersLike;
     body: BodyInit | undefined;
@@ -712,6 +742,14 @@ export class Channel3 {
         (Symbol.iterator in body && 'next' in body && typeof body.next === 'function'))
     ) {
       return { bodyHeaders: undefined, body: Shims.ReadableStreamFrom(body as AsyncIterable<Uint8Array>) };
+    } else if (
+      typeof body === 'object' &&
+      headers.values.get('content-type') === 'application/x-www-form-urlencoded'
+    ) {
+      return {
+        bodyHeaders: { 'content-type': 'application/x-www-form-urlencoded' },
+        body: this.stringifyQuery(body),
+      };
     } else {
       return this.#encoder({ body, headers });
     }
@@ -754,6 +792,9 @@ Channel3.PriceTracking = PriceTracking;
 export declare namespace Channel3 {
   export type RequestOptions = Opts.RequestOptions;
 
+  export import CursorPage = Pagination.CursorPage;
+  export { type CursorPageParams as CursorPageParams, type CursorPageResponse as CursorPageResponse };
+
   export {
     Search as Search,
     type RedirectMode as RedirectMode,
@@ -770,7 +811,10 @@ export declare namespace Channel3 {
     type AvailabilityStatus as AvailabilityStatus,
     type Price as Price,
     type Product as Product,
+    type ProductBrand as ProductBrand,
     type ProductDetail as ProductDetail,
+    type ProductImage as ProductImage,
+    type ProductOffer as ProductOffer,
     type Variant as Variant,
     type ProductRetrieveParams as ProductRetrieveParams,
   };
@@ -778,7 +822,7 @@ export declare namespace Channel3 {
   export {
     Brands as Brands,
     type Brand as Brand,
-    type PaginatedListBrandsResponse as PaginatedListBrandsResponse,
+    type BrandsCursorPage as BrandsCursorPage,
     type BrandListParams as BrandListParams,
     type BrandFindParams as BrandFindParams,
   };
@@ -793,9 +837,9 @@ export declare namespace Channel3 {
 
   export {
     PriceTracking as PriceTracking,
-    type PaginatedSubscriptions as PaginatedSubscriptions,
     type PriceHistory as PriceHistory,
     type Subscription as Subscription,
+    type SubscriptionsCursorPage as SubscriptionsCursorPage,
     type PriceTrackingGetHistoryParams as PriceTrackingGetHistoryParams,
     type PriceTrackingListSubscriptionsParams as PriceTrackingListSubscriptionsParams,
     type PriceTrackingStartParams as PriceTrackingStartParams,
