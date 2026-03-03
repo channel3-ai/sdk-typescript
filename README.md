@@ -120,6 +120,37 @@ On timeout, an `APIConnectionTimeoutError` is thrown.
 
 Note that requests which time out will be [retried twice by default](#retries).
 
+## Auto-pagination
+
+List methods in the Channel3 API are paginated.
+You can use the `for await … of` syntax to iterate through items across all pages:
+
+```ts
+async function fetchAllBrands(params) {
+  const allBrands = [];
+  // Automatically fetches more pages as needed.
+  for await (const brand of client.brands.list()) {
+    allBrands.push(brand);
+  }
+  return allBrands;
+}
+```
+
+Alternatively, you can request a single page at a time:
+
+```ts
+let page = await client.brands.list();
+for (const brand of page.items) {
+  console.log(brand);
+}
+
+// Convenience methods are provided for manually paginating:
+while (page.hasNextPage()) {
+  page = await page.getNextPage();
+  // ...
+}
+```
+
 ## Advanced Usage
 
 ### Accessing raw Response data (e.g., headers)

@@ -2,6 +2,7 @@
 
 import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
+import { CursorPage, type CursorPageParams, PagePromise } from '../core/pagination';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
@@ -23,8 +24,11 @@ export class PriceTracking extends APIResource {
   listSubscriptions(
     query: PriceTrackingListSubscriptionsParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<PaginatedSubscriptions> {
-    return this._client.get('/v0/price-tracking/subscriptions', { query, ...options });
+  ): PagePromise<SubscriptionsCursorPage, Subscription> {
+    return this._client.getAPIList('/v0/price-tracking/subscriptions', CursorPage<Subscription>, {
+      query,
+      ...options,
+    });
   }
 
   /**
@@ -42,11 +46,7 @@ export class PriceTracking extends APIResource {
   }
 }
 
-export interface PaginatedSubscriptions {
-  subscriptions: Array<Subscription>;
-
-  next_page_token?: string | null;
-}
+export type SubscriptionsCursorPage = CursorPage<Subscription>;
 
 export interface PriceHistory {
   canonical_product_id: string;
@@ -99,11 +99,7 @@ export interface PriceTrackingGetHistoryParams {
   days?: number;
 }
 
-export interface PriceTrackingListSubscriptionsParams {
-  limit?: number;
-
-  page_token?: string | null;
-}
+export interface PriceTrackingListSubscriptionsParams extends CursorPageParams {}
 
 export interface PriceTrackingStartParams {
   canonical_product_id: string;
@@ -115,9 +111,9 @@ export interface PriceTrackingStopParams {
 
 export declare namespace PriceTracking {
   export {
-    type PaginatedSubscriptions as PaginatedSubscriptions,
     type PriceHistory as PriceHistory,
     type Subscription as Subscription,
+    type SubscriptionsCursorPage as SubscriptionsCursorPage,
     type PriceTrackingGetHistoryParams as PriceTrackingGetHistoryParams,
     type PriceTrackingListSubscriptionsParams as PriceTrackingListSubscriptionsParams,
     type PriceTrackingStartParams as PriceTrackingStartParams,
