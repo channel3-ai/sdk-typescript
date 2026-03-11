@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
-import * as SearchAPI from './search';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
@@ -47,7 +46,7 @@ export interface Price {
 }
 
 /**
- * A search result that includes product details and a relevance score.
+ * v0 search result with score and deprecated image_url.
  */
 export interface Product {
   id: string;
@@ -113,6 +112,10 @@ export interface Product {
    */
   offers?: Array<ProductOffer>;
 
+  /**
+   * @deprecated Legacy variant list, always empty. Use v1 API for variant
+   * dimensions.
+   */
   variants?: Array<Variant>;
 }
 
@@ -123,7 +126,7 @@ export interface ProductBrand {
 }
 
 /**
- * A product with detailed information
+ * v0 product detail with deprecated fields.
  */
 export interface ProductDetail {
   id: string;
@@ -182,11 +185,15 @@ export interface ProductDetail {
    */
   offers?: Array<ProductOffer>;
 
+  /**
+   * @deprecated Legacy variant list, always empty. Use v1 API for variant
+   * dimensions.
+   */
   variants?: Array<Variant>;
 }
 
 /**
- * Product image with metadata
+ * v0 product image with deprecated photo_quality field.
  */
 export interface ProductImage {
   url: string;
@@ -196,14 +203,12 @@ export interface ProductImage {
   is_main_image?: boolean;
 
   /**
-   * @deprecated Photo quality classification for API responses. Note: This enum is
-   * decoupled from internal ImageIntelligence types as they may diverge.
+   * @deprecated Photo quality classification for API responses.
    */
   photo_quality?: 'professional' | 'ugc' | 'poor' | null;
 
   /**
-   * Product image type classification for API responses. Note: This enum is
-   * decoupled from internal ImageIntelligence types as they may diverge.
+   * Product image type classification for API responses.
    */
   shot_type?:
     | 'hero'
@@ -216,7 +221,6 @@ export interface ProductImage {
     | 'in_use'
     | 'packaging'
     | 'size_chart'
-    | 'color_swatch'
     | 'product_information'
     | 'merchant_information'
     | null;
@@ -249,9 +253,10 @@ export interface Variant {
 
 export interface ProductRetrieveParams {
   /**
-   * Deprecated and ignored. Each offer now contains its own merchant URL.
+   * @deprecated Deprecated and ignored. Each offer now contains its own merchant
+   * URL.
    */
-  redirect_mode?: SearchAPI.RedirectMode | null;
+  redirect_mode?: 'brand' | 'price' | 'commission' | null;
 
   /**
    * Optional list of website IDs to constrain the buy URL to, relevant if multiple

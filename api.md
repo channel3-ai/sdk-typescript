@@ -2,16 +2,15 @@
 
 Types:
 
-- <code><a href="./src/resources/search.ts">RedirectMode</a></code>
 - <code><a href="./src/resources/search.ts">SearchConfig</a></code>
 - <code><a href="./src/resources/search.ts">SearchFilterPrice</a></code>
 - <code><a href="./src/resources/search.ts">SearchFilters</a></code>
 - <code><a href="./src/resources/search.ts">SearchRequest</a></code>
-- <code><a href="./src/resources/search.ts">SearchPerformResponse</a></code>
+- <code><a href="./src/resources/search.ts">SearchResponse</a></code>
 
 Methods:
 
-- <code title="post /v0/search">client.search.<a href="./src/resources/search.ts">perform</a>({ ...params }) -> SearchPerformResponse</code>
+- <code title="post /v1/search">client.search.<a href="./src/resources/search.ts">perform</a>({ ...params }) -> SearchResponse</code>
 
 # Products
 
@@ -38,6 +37,7 @@ Types:
 
 Methods:
 
+- <code title="get /v0/brands/{brand_id}">client.brands.<a href="./src/resources/brands.ts">retrieve</a>(brandID) -> Brand</code>
 - <code title="get /v0/list-brands">client.brands.<a href="./src/resources/brands.ts">list</a>({ ...params }) -> BrandsCursorPage</code>
 - <code title="get /v0/brands">client.brands.<a href="./src/resources/brands.ts">find</a>({ ...params }) -> Brand</code>
 

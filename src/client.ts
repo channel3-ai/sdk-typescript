@@ -44,14 +44,13 @@ import {
   Variant,
 } from './resources/products';
 import {
-  RedirectMode,
   Search,
   SearchConfig,
   SearchFilterPrice,
   SearchFilters,
   SearchPerformParams,
-  SearchPerformResponse,
   SearchRequest,
+  SearchResponse,
 } from './resources/search';
 import { Website, WebsiteFindParams, Websites } from './resources/websites';
 import { type Fetch } from './internal/builtin-types';
@@ -798,12 +797,11 @@ export declare namespace Channel3 {
 
   export {
     Search as Search,
-    type RedirectMode as RedirectMode,
     type SearchConfig as SearchConfig,
     type SearchFilterPrice as SearchFilterPrice,
     type SearchFilters as SearchFilters,
     type SearchRequest as SearchRequest,
-    type SearchPerformResponse as SearchPerformResponse,
+    type SearchResponse as SearchResponse,
     type SearchPerformParams as SearchPerformParams,
   };
 
