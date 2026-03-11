@@ -7,22 +7,15 @@ import { RequestOptions } from '../internal/request-options';
 
 export class Search extends APIResource {
   /**
-   * Search for products.
+   * Search for products with pagination support.
    */
-  perform(body: SearchPerformParams, options?: RequestOptions): APIPromise<SearchPerformResponse> {
-    return this._client.post('/v0/search', { body, ...options });
+  perform(body: SearchPerformParams, options?: RequestOptions): APIPromise<SearchResponse> {
+    return this._client.post('/v1/search', { body, ...options });
   }
 }
 
 /**
- * "price" redirects to the product page with the lowest price "commission"
- * redirects to the product page with the highest commission rate "brand" redirects
- * to the brand's product page
- */
-export type RedirectMode = 'brand' | 'price' | 'commission';
-
-/**
- * Configuration for a search request
+ * Search configuration for the search API.
  */
 export interface SearchConfig {
   /**
@@ -30,17 +23,10 @@ export interface SearchConfig {
    * search is not supported with image input.
    */
   keyword_search_only?: boolean;
-
-  /**
-   * @deprecated "price" redirects to the product page with the lowest price
-   * "commission" redirects to the product page with the highest commission rate
-   * "brand" redirects to the brand's product page
-   */
-  redirect_mode?: RedirectMode | null;
 }
 
 /**
- * Price filter. Values are inclusive.
+ * Price filter for search. Values are inclusive.
  */
 export interface SearchFilterPrice {
   /**
@@ -54,6 +40,9 @@ export interface SearchFilterPrice {
   min_price?: number | null;
 }
 
+/**
+ * Search filters for the search API.
+ */
 export interface SearchFilters {
   /**
    * Filter by age group. Age-agnostic products are treated as adult products.
@@ -94,12 +83,6 @@ export interface SearchFilters {
   exclude_category_ids?: Array<string> | null;
 
   /**
-   * @deprecated Deprecated: this field is accepted but ignored. It has no effect on
-   * search results.
-   */
-  exclude_product_ids?: Array<string> | null;
-
-  /**
    * If provided, products from these websites will be excluded from the results
    */
   exclude_website_ids?: Array<string> | null;
@@ -107,7 +90,7 @@ export interface SearchFilters {
   gender?: 'male' | 'female' | 'unisex' | null;
 
   /**
-   * Price filter. Values are inclusive.
+   * Price filter for search. Values are inclusive.
    */
   price?: SearchFilterPrice | null;
 
@@ -117,6 +100,9 @@ export interface SearchFilters {
   website_ids?: Array<string> | null;
 }
 
+/**
+ * Search request with pagination support.
+ */
 export interface SearchRequest {
   /**
    * Base64 encoded image
@@ -127,11 +113,6 @@ export interface SearchRequest {
    * Optional configuration
    */
   config?: SearchConfig;
-
-  /**
-   * Optional customer information to personalize search results
-   */
-  context?: string | null;
 
   /**
    * Optional filters. Search will only consider products that match all of the
@@ -150,12 +131,91 @@ export interface SearchRequest {
   limit?: number | null;
 
   /**
+   * Opaque token from a previous search response to fetch the next page of results.
+   */
+  page_token?: string | null;
+
+  /**
    * Search query
    */
   query?: string | null;
 }
 
-export type SearchPerformResponse = Array<ProductsAPI.Product>;
+/**
+ * v1 paginated search response.
+ */
+export interface SearchResponse {
+  products: Array<SearchResponse.Product>;
+
+  /**
+   * Token to fetch the next page. Null when no more results.
+   */
+  next_page_token?: string | null;
+}
+
+export namespace SearchResponse {
+  /**
+   * Product with detailed information.
+   */
+  export interface Product {
+    id: string;
+
+    title: string;
+
+    /**
+     * Ordered list of brands.
+     */
+    brands?: Array<ProductsAPI.ProductBrand>;
+
+    categories?: Array<string>;
+
+    description?: string | null;
+
+    gender?: 'male' | 'female' | 'unisex' | null;
+
+    images?: Array<Product.Image>;
+
+    key_features?: Array<string> | null;
+
+    materials?: Array<string> | null;
+
+    /**
+     * All merchant offers for this product in the requested locale.
+     */
+    offers?: Array<ProductsAPI.ProductOffer>;
+  }
+
+  export namespace Product {
+    /**
+     * Product image with metadata.
+     */
+    export interface Image {
+      url: string;
+
+      alt_text?: string | null;
+
+      is_main_image?: boolean;
+
+      /**
+       * Product image type classification for API responses.
+       */
+      shot_type?:
+        | 'hero'
+        | 'lifestyle'
+        | 'on_model'
+        | 'detail'
+        | 'scale_reference'
+        | 'angle_view'
+        | 'flat_lay'
+        | 'in_use'
+        | 'packaging'
+        | 'size_chart'
+        | 'product_information'
+        | 'merchant_information'
+        | null;
+    }
+  }
+}
 
 export interface SearchPerformParams {
   /**
@@ -169,11 +229,6 @@ export interface SearchPerformParams {
   config?: SearchConfig;
 
   /**
-   * Optional customer information to personalize search results
-   */
-  context?: string | null;
-
-  /**
    * Optional filters. Search will only consider products that match all of the
    * filters.
    */
@@ -190,6 +245,11 @@ export interface SearchPerformParams {
   limit?: number | null;
 
   /**
+   * Opaque token from a previous search response to fetch the next page of results.
+   */
+  page_token?: string | null;
+
+  /**
    * Search query
    */
   query?: string | null;
@@ -197,12 +257,11 @@ export interface SearchPerformParams {
 
 export declare namespace Search {
   export {
-    type RedirectMode as RedirectMode,
     type SearchConfig as SearchConfig,
     type SearchFilterPrice as SearchFilterPrice,
     type SearchFilters as SearchFilters,
     type SearchRequest as SearchRequest,
-    type SearchPerformResponse as SearchPerformResponse,
+    type SearchResponse as SearchResponse,
     type SearchPerformParams as SearchPerformParams,
   };
 }

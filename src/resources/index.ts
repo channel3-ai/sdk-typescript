@@ -32,12 +32,11 @@ export {
 } from './products';
 export {
   Search,
-  type RedirectMode,
   type SearchConfig,
   type SearchFilterPrice,
   type SearchFilters,
   type SearchRequest,
-  type SearchPerformResponse,
+  type SearchResponse,
   type SearchPerformParams,
 } from './search';
 export { Websites, type Website, type WebsiteFindParams } from './websites';
