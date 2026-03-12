@@ -20,7 +20,7 @@ import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import { Brand, BrandFindParams, BrandListParams, Brands, BrandsCursorPage } from './resources/brands';
-import { Enrich, EnrichEnrichURLParams, EnrichRequest } from './resources/enrich';
+import { Enrich, EnrichEnrichURLParams, EnrichEnrichURLResponse, EnrichRequest } from './resources/enrich';
 import {
   PriceHistory,
   PriceTracking,
@@ -34,14 +34,12 @@ import {
 import {
   AvailabilityStatus,
   Price,
-  Product,
   ProductBrand,
   ProductDetail,
   ProductImage,
   ProductOffer,
   ProductRetrieveParams,
   Products,
-  Variant,
 } from './resources/products';
 import {
   Search,
@@ -809,12 +807,10 @@ export declare namespace Channel3 {
     Products as Products,
     type AvailabilityStatus as AvailabilityStatus,
     type Price as Price,
-    type Product as Product,
     type ProductBrand as ProductBrand,
     type ProductDetail as ProductDetail,
     type ProductImage as ProductImage,
     type ProductOffer as ProductOffer,
-    type Variant as Variant,
     type ProductRetrieveParams as ProductRetrieveParams,
   };
 
@@ -831,6 +827,7 @@ export declare namespace Channel3 {
   export {
     Enrich as Enrich,
     type EnrichRequest as EnrichRequest,
+    type EnrichEnrichURLResponse as EnrichEnrichURLResponse,
     type EnrichEnrichURLParams as EnrichEnrichURLParams,
   };
 

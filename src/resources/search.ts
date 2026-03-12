@@ -145,76 +145,12 @@ export interface SearchRequest {
  * v1 paginated search response.
  */
 export interface SearchResponse {
-  products: Array<SearchResponse.Product>;
+  products: Array<ProductsAPI.ProductDetail>;
 
   /**
    * Token to fetch the next page. Null when no more results.
    */
   next_page_token?: string | null;
-}
-
-export namespace SearchResponse {
-  /**
-   * Product with detailed information.
-   */
-  export interface Product {
-    id: string;
-
-    title: string;
-
-    /**
-     * Ordered list of brands.
-     */
-    brands?: Array<ProductsAPI.ProductBrand>;
-
-    categories?: Array<string>;
-
-    description?: string | null;
-
-    gender?: 'male' | 'female' | 'unisex' | null;
-
-    images?: Array<Product.Image>;
-
-    key_features?: Array<string> | null;
-
-    materials?: Array<string> | null;
-
-    /**
-     * All merchant offers for this product in the requested locale.
-     */
-    offers?: Array<ProductsAPI.ProductOffer>;
-  }
-
-  export namespace Product {
-    /**
-     * Product image with metadata.
-     */
-    export interface Image {
-      url: string;
-
-      alt_text?: string | null;
-
-      is_main_image?: boolean;
-
-      /**
-       * Product image type classification for API responses.
-       */
-      shot_type?:
-        | 'hero'
-        | 'lifestyle'
-        | 'on_model'
-        | 'detail'
-        | 'scale_reference'
-        | 'angle_view'
-        | 'flat_lay'
-        | 'in_use'
-        | 'packaging'
-        | 'size_chart'
-        | 'product_information'
-        | 'merchant_information'
-        | null;
-    }
-  }
 }
 
 export interface SearchPerformParams {
