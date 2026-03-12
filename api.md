@@ -18,16 +18,14 @@ Types:
 
 - <code><a href="./src/resources/products.ts">AvailabilityStatus</a></code>
 - <code><a href="./src/resources/products.ts">Price</a></code>
-- <code><a href="./src/resources/products.ts">Product</a></code>
 - <code><a href="./src/resources/products.ts">ProductBrand</a></code>
 - <code><a href="./src/resources/products.ts">ProductDetail</a></code>
 - <code><a href="./src/resources/products.ts">ProductImage</a></code>
 - <code><a href="./src/resources/products.ts">ProductOffer</a></code>
-- <code><a href="./src/resources/products.ts">Variant</a></code>
 
 Methods:
 
-- <code title="get /v0/products/{product_id}">client.products.<a href="./src/resources/products.ts">retrieve</a>(productID, { ...params }) -> ProductDetail</code>
+- <code title="get /v1/products/{product_id}">client.products.<a href="./src/resources/products.ts">retrieve</a>(productID, { ...params }) -> ProductDetail</code>
 
 # Brands
 
@@ -56,10 +54,11 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/enrich.ts">EnrichRequest</a></code>
+- <code><a href="./src/resources/enrich.ts">EnrichEnrichURLResponse</a></code>
 
 Methods:
 
-- <code title="post /v0/enrich">client.enrich.<a href="./src/resources/enrich.ts">enrichURL</a>({ ...params }) -> ProductDetail</code>
+- <code title="post /v0/enrich">client.enrich.<a href="./src/resources/enrich.ts">enrichURL</a>({ ...params }) -> EnrichEnrichURLResponse</code>
 
 # PriceTracking
 
