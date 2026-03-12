@@ -26,7 +26,9 @@ const client = new Channel3({
   apiKey: process.env['CHANNEL3_API_KEY'], // This is the default and can be omitted
 });
 
-const products = await client.search.perform();
+const searchResponse = await client.search.perform();
+
+console.log(searchResponse.products);
 ```
 
 ### Request & Response types
@@ -41,7 +43,7 @@ const client = new Channel3({
   apiKey: process.env['CHANNEL3_API_KEY'], // This is the default and can be omitted
 });
 
-const products: Channel3.SearchPerformResponse = await client.search.perform();
+const searchResponse: Channel3.SearchResponse = await client.search.perform();
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -54,7 +56,7 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-const products = await client.search.perform().catch(async (err) => {
+const searchResponse = await client.search.perform().catch(async (err) => {
   if (err instanceof Channel3.APIError) {
     console.log(err.status); // 400
     console.log(err.name); // BadRequestError
@@ -169,9 +171,9 @@ const response = await client.search.perform().asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: products, response: raw } = await client.search.perform().withResponse();
+const { data: searchResponse, response: raw } = await client.search.perform().withResponse();
 console.log(raw.headers.get('X-My-Header'));
-console.log(products);
+console.log(searchResponse.products);
 ```
 
 ### Logging

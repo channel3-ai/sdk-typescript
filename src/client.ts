@@ -20,7 +20,7 @@ import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import { Brand, BrandFindParams, BrandListParams, Brands, BrandsCursorPage } from './resources/brands';
-import { Enrich, EnrichEnrichURLParams, EnrichRequest } from './resources/enrich';
+import { Enrich, EnrichEnrichURLParams, EnrichEnrichURLResponse, EnrichRequest } from './resources/enrich';
 import {
   PriceHistory,
   PriceTracking,
@@ -34,24 +34,21 @@ import {
 import {
   AvailabilityStatus,
   Price,
-  Product,
   ProductBrand,
   ProductDetail,
   ProductImage,
   ProductOffer,
   ProductRetrieveParams,
   Products,
-  Variant,
 } from './resources/products';
 import {
-  RedirectMode,
   Search,
   SearchConfig,
   SearchFilterPrice,
   SearchFilters,
   SearchPerformParams,
-  SearchPerformResponse,
   SearchRequest,
+  SearchResponse,
 } from './resources/search';
 import { Website, WebsiteFindParams, Websites } from './resources/websites';
 import { type Fetch } from './internal/builtin-types';
@@ -280,8 +277,9 @@ export class Channel3 {
       : new URL(baseURL + (baseURL.endsWith('/') && path.startsWith('/') ? path.slice(1) : path));
 
     const defaultQuery = this.defaultQuery();
-    if (!isEmptyObj(defaultQuery)) {
-      query = { ...defaultQuery, ...query };
+    const pathQuery = Object.fromEntries(url.searchParams);
+    if (!isEmptyObj(defaultQuery) || !isEmptyObj(pathQuery)) {
+      query = { ...pathQuery, ...defaultQuery, ...query };
     }
 
     if (typeof query === 'object' && query && !Array.isArray(query)) {
@@ -614,9 +612,9 @@ export class Channel3 {
       }
     }
 
-    // If the API asks us to wait a certain amount of time (and it's a reasonable amount),
-    // just do what it says, but otherwise calculate a default
-    if (!(timeoutMillis && 0 <= timeoutMillis && timeoutMillis < 60 * 1000)) {
+    // If the API asks us to wait a certain amount of time, just do what it
+    // says, but otherwise calculate a default
+    if (timeoutMillis === undefined) {
       const maxRetries = options.maxRetries ?? this.maxRetries;
       timeoutMillis = this.calculateDefaultRetryTimeoutMillis(retriesRemaining, maxRetries);
     }
@@ -797,12 +795,11 @@ export declare namespace Channel3 {
 
   export {
     Search as Search,
-    type RedirectMode as RedirectMode,
     type SearchConfig as SearchConfig,
     type SearchFilterPrice as SearchFilterPrice,
     type SearchFilters as SearchFilters,
     type SearchRequest as SearchRequest,
-    type SearchPerformResponse as SearchPerformResponse,
+    type SearchResponse as SearchResponse,
     type SearchPerformParams as SearchPerformParams,
   };
 
@@ -810,12 +807,10 @@ export declare namespace Channel3 {
     Products as Products,
     type AvailabilityStatus as AvailabilityStatus,
     type Price as Price,
-    type Product as Product,
     type ProductBrand as ProductBrand,
     type ProductDetail as ProductDetail,
     type ProductImage as ProductImage,
     type ProductOffer as ProductOffer,
-    type Variant as Variant,
     type ProductRetrieveParams as ProductRetrieveParams,
   };
 
@@ -832,6 +827,7 @@ export declare namespace Channel3 {
   export {
     Enrich as Enrich,
     type EnrichRequest as EnrichRequest,
+    type EnrichEnrichURLResponse as EnrichEnrichURLResponse,
     type EnrichEnrichURLParams as EnrichEnrichURLParams,
   };
 

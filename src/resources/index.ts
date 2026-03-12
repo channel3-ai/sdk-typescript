@@ -7,7 +7,12 @@ export {
   type BrandFindParams,
   type BrandsCursorPage,
 } from './brands';
-export { Enrich, type EnrichRequest, type EnrichEnrichURLParams } from './enrich';
+export {
+  Enrich,
+  type EnrichRequest,
+  type EnrichEnrichURLResponse,
+  type EnrichEnrichURLParams,
+} from './enrich';
 export {
   PriceTracking,
   type PriceHistory,
@@ -22,22 +27,19 @@ export {
   Products,
   type AvailabilityStatus,
   type Price,
-  type Product,
   type ProductBrand,
   type ProductDetail,
   type ProductImage,
   type ProductOffer,
-  type Variant,
   type ProductRetrieveParams,
 } from './products';
 export {
   Search,
-  type RedirectMode,
   type SearchConfig,
   type SearchFilterPrice,
   type SearchFilters,
   type SearchRequest,
-  type SearchPerformResponse,
+  type SearchResponse,
   type SearchPerformParams,
 } from './search';
 export { Websites, type Website, type WebsiteFindParams } from './websites';

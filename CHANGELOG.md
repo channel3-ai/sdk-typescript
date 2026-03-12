@@ -1,5 +1,26 @@
 # Changelog
 
+## 3.0.0 (2026-03-12)
+
+Full Changelog: [v2.13.0...v3.0.0](https://github.com/channel3-ai/sdk-typescript/compare/v2.13.0...v3.0.0)
+
+### Features
+
+* **api:** add brands.retrieve, upgrade search to v1 with pagination, remove deprecated fields ([563ceb0](https://github.com/channel3-ai/sdk-typescript/commit/563ceb008ed517553f6bd07a88c9f363bc0caca7))
+* **api:** add products v1 endpoint, remove deprecated Product/Variant types, enrich response type ([106c98d](https://github.com/channel3-ai/sdk-typescript/commit/106c98d1b866dd9eca178a250668f5c04d3b8a99))
+
+
+### Bug Fixes
+
+* **client:** preserve URL params already embedded in path ([11fd64d](https://github.com/channel3-ai/sdk-typescript/commit/11fd64dbdc39d8f3842ba4275d4c691b14d34364))
+
+
+### Chores
+
+* **ci:** skip uploading artifacts on stainless-internal branches ([929ed2c](https://github.com/channel3-ai/sdk-typescript/commit/929ed2cf1e1c80e1ebe0c09a89baa97772fc268b))
+* **internal:** codegen related update ([1714a00](https://github.com/channel3-ai/sdk-typescript/commit/1714a00dfda4adf143372f517e3a7c2101a71dbb))
+* **internal:** update dependencies to address dependabot vulnerabilities ([129058c](https://github.com/channel3-ai/sdk-typescript/commit/129058c9b6704ffd460947bd589702672f553e78))
+
 ## 2.13.0 (2026-03-03)
 
 Full Changelog: [v2.12.0...v2.13.0](https://github.com/channel3-ai/sdk-typescript/compare/v2.12.0...v2.13.0)

@@ -26,7 +26,7 @@ describe('resource products', () => {
     await expect(
       client.products.retrieve(
         'product_id',
-        { redirect_mode: 'brand', website_ids: ['string'] },
+        { website_ids: ['string'] },
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(Channel3.NotFoundError);

@@ -4,8 +4,16 @@ import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
 import { CursorPage, type CursorPageParams, PagePromise } from '../core/pagination';
 import { RequestOptions } from '../internal/request-options';
+import { path } from '../internal/utils/path';
 
 export class Brands extends APIResource {
+  /**
+   * Get detailed information about a specific brand by its ID.
+   */
+  retrieve(brandID: string, options?: RequestOptions): APIPromise<Brand> {
+    return this._client.get(path`/v0/brands/${brandID}`, options);
+  }
+
   /**
    * Lists all brands, sorted alphabetically. Supports pagination with the cursor
    * parameter.

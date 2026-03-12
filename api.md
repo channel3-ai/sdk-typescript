@@ -2,16 +2,15 @@
 
 Types:
 
-- <code><a href="./src/resources/search.ts">RedirectMode</a></code>
 - <code><a href="./src/resources/search.ts">SearchConfig</a></code>
 - <code><a href="./src/resources/search.ts">SearchFilterPrice</a></code>
 - <code><a href="./src/resources/search.ts">SearchFilters</a></code>
 - <code><a href="./src/resources/search.ts">SearchRequest</a></code>
-- <code><a href="./src/resources/search.ts">SearchPerformResponse</a></code>
+- <code><a href="./src/resources/search.ts">SearchResponse</a></code>
 
 Methods:
 
-- <code title="post /v0/search">client.search.<a href="./src/resources/search.ts">perform</a>({ ...params }) -> SearchPerformResponse</code>
+- <code title="post /v1/search">client.search.<a href="./src/resources/search.ts">perform</a>({ ...params }) -> SearchResponse</code>
 
 # Products
 
@@ -19,16 +18,14 @@ Types:
 
 - <code><a href="./src/resources/products.ts">AvailabilityStatus</a></code>
 - <code><a href="./src/resources/products.ts">Price</a></code>
-- <code><a href="./src/resources/products.ts">Product</a></code>
 - <code><a href="./src/resources/products.ts">ProductBrand</a></code>
 - <code><a href="./src/resources/products.ts">ProductDetail</a></code>
 - <code><a href="./src/resources/products.ts">ProductImage</a></code>
 - <code><a href="./src/resources/products.ts">ProductOffer</a></code>
-- <code><a href="./src/resources/products.ts">Variant</a></code>
 
 Methods:
 
-- <code title="get /v0/products/{product_id}">client.products.<a href="./src/resources/products.ts">retrieve</a>(productID, { ...params }) -> ProductDetail</code>
+- <code title="get /v1/products/{product_id}">client.products.<a href="./src/resources/products.ts">retrieve</a>(productID, { ...params }) -> ProductDetail</code>
 
 # Brands
 
@@ -38,6 +35,7 @@ Types:
 
 Methods:
 
+- <code title="get /v0/brands/{brand_id}">client.brands.<a href="./src/resources/brands.ts">retrieve</a>(brandID) -> Brand</code>
 - <code title="get /v0/list-brands">client.brands.<a href="./src/resources/brands.ts">list</a>({ ...params }) -> BrandsCursorPage</code>
 - <code title="get /v0/brands">client.brands.<a href="./src/resources/brands.ts">find</a>({ ...params }) -> Brand</code>
 
@@ -56,10 +54,11 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/enrich.ts">EnrichRequest</a></code>
+- <code><a href="./src/resources/enrich.ts">EnrichEnrichURLResponse</a></code>
 
 Methods:
 
-- <code title="post /v0/enrich">client.enrich.<a href="./src/resources/enrich.ts">enrichURL</a>({ ...params }) -> ProductDetail</code>
+- <code title="post /v0/enrich">client.enrich.<a href="./src/resources/enrich.ts">enrichURL</a>({ ...params }) -> EnrichEnrichURLResponse</code>
 
 # PriceTracking
 
