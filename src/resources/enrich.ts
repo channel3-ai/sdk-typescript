@@ -7,6 +7,8 @@ import { RequestOptions } from '../internal/request-options';
 
 export class Enrich extends APIResource {
   /**
+   * **Deprecated** — use POST /v1/lookup instead.
+   *
    * Search by product URL, get back full product information from Channel3's product
    * database.
    *

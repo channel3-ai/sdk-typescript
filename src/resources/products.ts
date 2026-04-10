@@ -16,6 +16,16 @@ export class Products extends APIResource {
   ): APIPromise<ProductDetail> {
     return this._client.get(path`/v1/products/${productID}`, { query, ...options });
   }
+
+  /**
+   * Retrieve product information for any supported product URL.
+   *
+   * Returns the same Product model as GET /v1/products/{product_id}. The product_id
+   * in the response can be used with the Product Detail endpoint.
+   */
+  lookup(body: ProductLookupParams, options?: RequestOptions): APIPromise<LookupResponse> {
+    return this._client.post('/v1/lookup', { body, ...options });
+  }
 }
 
 export type AvailabilityStatus =
@@ -27,6 +37,29 @@ export type AvailabilityStatus =
   | 'OutOfStock'
   | 'Discontinued'
   | 'Unknown';
+
+export interface LookupRequest {
+  /**
+   * The URL of the product to look up
+   */
+  url: string;
+
+  /**
+   * Maximum age (in hours) of cached product data before forcing a fresh lookup.
+   * Defaults to 3 hours.
+   */
+  max_staleness_hours?: number;
+}
+
+/**
+ * Response from the /v1/lookup endpoint.
+ */
+export interface LookupResponse {
+  /**
+   * Product with detailed information.
+   */
+  product: ProductDetail;
+}
 
 export interface Price {
   /**
@@ -136,14 +169,30 @@ export interface ProductRetrieveParams {
   website_ids?: Array<string> | null;
 }
 
+export interface ProductLookupParams {
+  /**
+   * The URL of the product to look up
+   */
+  url: string;
+
+  /**
+   * Maximum age (in hours) of cached product data before forcing a fresh lookup.
+   * Defaults to 3 hours.
+   */
+  max_staleness_hours?: number;
+}
+
 export declare namespace Products {
   export {
     type AvailabilityStatus as AvailabilityStatus,
+    type LookupRequest as LookupRequest,
+    type LookupResponse as LookupResponse,
     type Price as Price,
     type ProductBrand as ProductBrand,
     type ProductDetail as ProductDetail,
     type ProductImage as ProductImage,
     type ProductOffer as ProductOffer,
     type ProductRetrieveParams as ProductRetrieveParams,
+    type ProductLookupParams as ProductLookupParams,
   };
 }
