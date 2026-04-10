@@ -12,21 +12,6 @@ Methods:
 
 - <code title="post /v1/search">client.search.<a href="./src/resources/search.ts">perform</a>({ ...params }) -> SearchResponse</code>
 
-# Products
-
-Types:
-
-- <code><a href="./src/resources/products.ts">AvailabilityStatus</a></code>
-- <code><a href="./src/resources/products.ts">Price</a></code>
-- <code><a href="./src/resources/products.ts">ProductBrand</a></code>
-- <code><a href="./src/resources/products.ts">ProductDetail</a></code>
-- <code><a href="./src/resources/products.ts">ProductImage</a></code>
-- <code><a href="./src/resources/products.ts">ProductOffer</a></code>
-
-Methods:
-
-- <code title="get /v1/products/{product_id}">client.products.<a href="./src/resources/products.ts">retrieve</a>(productID, { ...params }) -> ProductDetail</code>
-
 # Brands
 
 Types:
@@ -59,6 +44,24 @@ Types:
 Methods:
 
 - <code title="post /v0/enrich">client.enrich.<a href="./src/resources/enrich.ts">enrichURL</a>({ ...params }) -> EnrichEnrichURLResponse</code>
+
+# Products
+
+Types:
+
+- <code><a href="./src/resources/products.ts">AvailabilityStatus</a></code>
+- <code><a href="./src/resources/products.ts">LookupRequest</a></code>
+- <code><a href="./src/resources/products.ts">LookupResponse</a></code>
+- <code><a href="./src/resources/products.ts">Price</a></code>
+- <code><a href="./src/resources/products.ts">ProductBrand</a></code>
+- <code><a href="./src/resources/products.ts">ProductDetail</a></code>
+- <code><a href="./src/resources/products.ts">ProductImage</a></code>
+- <code><a href="./src/resources/products.ts">ProductOffer</a></code>
+
+Methods:
+
+- <code title="get /v1/products/{product_id}">client.products.<a href="./src/resources/products.ts">retrieve</a>(productID, { ...params }) -> ProductDetail</code>
+- <code title="post /v1/lookup">client.products.<a href="./src/resources/products.ts">lookup</a>({ ...params }) -> LookupResponse</code>
 
 # PriceTracking
 

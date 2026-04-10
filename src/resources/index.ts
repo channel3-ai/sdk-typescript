@@ -26,12 +26,15 @@ export {
 export {
   Products,
   type AvailabilityStatus,
+  type LookupRequest,
+  type LookupResponse,
   type Price,
   type ProductBrand,
   type ProductDetail,
   type ProductImage,
   type ProductOffer,
   type ProductRetrieveParams,
+  type ProductLookupParams,
 } from './products';
 export {
   Search,
