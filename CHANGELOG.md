@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.1.0 (2026-04-13)
+
+Full Changelog: [v3.0.1...v3.1.0](https://github.com/channel3-ai/sdk-typescript/compare/v3.0.1...v3.1.0)
+
+### Chores
+
+* align version with Python SDK ([8511979](https://github.com/channel3-ai/sdk-typescript/commit/851197931caf0507159728a761e48e5aa77633ca))
+
 ## 3.0.1 (2026-04-13)
 
 Full Changelog: [v3.0.0...v3.0.1](https://github.com/channel3-ai/sdk-typescript/compare/v3.0.0...v3.0.1)
