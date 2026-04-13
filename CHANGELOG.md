@@ -1,5 +1,19 @@
 # Changelog
 
+## 3.0.1 (2026-04-13)
+
+Full Changelog: [v3.0.0...v3.0.1](https://github.com/channel3-ai/sdk-typescript/compare/v3.0.0...v3.0.1)
+
+### Chores
+
+* **ci:** skip lint on metadata-only changes ([a8c8a24](https://github.com/channel3-ai/sdk-typescript/commit/a8c8a24ed264c06024a43dc8be8cb1807ae64785))
+* **internal:** codegen related update ([7b08d13](https://github.com/channel3-ai/sdk-typescript/commit/7b08d13098c1640a5cd0a9fb73c00ff3c7b15475))
+* **internal:** codegen related update ([418941e](https://github.com/channel3-ai/sdk-typescript/commit/418941eec078e52e54e02c057044aa6d27cba0de))
+* **internal:** codegen related update ([ce51147](https://github.com/channel3-ai/sdk-typescript/commit/ce51147d625eb81c0c0e9083a5762f941490ec8e))
+* **internal:** regenerate SDK with no functional changes ([f8c6193](https://github.com/channel3-ai/sdk-typescript/commit/f8c61938c935f5ea52f3f9760eec1323e3442fd5))
+* **internal:** tweak CI branches ([39c5b7e](https://github.com/channel3-ai/sdk-typescript/commit/39c5b7e3b38d92bcd307a1cebbe8d93b6ce71fd1))
+* **internal:** update gitignore ([b6aca12](https://github.com/channel3-ai/sdk-typescript/commit/b6aca1208ebe80e1bfc8d80f31fb27324339db0c))
+
 ## 3.0.0 (2026-03-12)
 
 Full Changelog: [v2.13.0...v3.0.0](https://github.com/channel3-ai/sdk-typescript/compare/v2.13.0...v3.0.0)
