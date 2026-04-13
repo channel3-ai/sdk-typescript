@@ -33,10 +33,13 @@ import {
 } from './resources/price-tracking';
 import {
   AvailabilityStatus,
+  LookupRequest,
+  LookupResponse,
   Price,
   ProductBrand,
   ProductDetail,
   ProductImage,
+  ProductLookupParams,
   ProductOffer,
   ProductRetrieveParams,
   Products,
@@ -773,18 +776,18 @@ export class Channel3 {
   static toFile = Uploads.toFile;
 
   search: API.Search = new API.Search(this);
-  products: API.Products = new API.Products(this);
   brands: API.Brands = new API.Brands(this);
   websites: API.Websites = new API.Websites(this);
   enrich: API.Enrich = new API.Enrich(this);
+  products: API.Products = new API.Products(this);
   priceTracking: API.PriceTracking = new API.PriceTracking(this);
 }
 
 Channel3.Search = Search;
-Channel3.Products = Products;
 Channel3.Brands = Brands;
 Channel3.Websites = Websites;
 Channel3.Enrich = Enrich;
+Channel3.Products = Products;
 Channel3.PriceTracking = PriceTracking;
 
 export declare namespace Channel3 {
@@ -804,17 +807,6 @@ export declare namespace Channel3 {
   };
 
   export {
-    Products as Products,
-    type AvailabilityStatus as AvailabilityStatus,
-    type Price as Price,
-    type ProductBrand as ProductBrand,
-    type ProductDetail as ProductDetail,
-    type ProductImage as ProductImage,
-    type ProductOffer as ProductOffer,
-    type ProductRetrieveParams as ProductRetrieveParams,
-  };
-
-  export {
     Brands as Brands,
     type Brand as Brand,
     type BrandsCursorPage as BrandsCursorPage,
@@ -829,6 +821,20 @@ export declare namespace Channel3 {
     type EnrichRequest as EnrichRequest,
     type EnrichEnrichURLResponse as EnrichEnrichURLResponse,
     type EnrichEnrichURLParams as EnrichEnrichURLParams,
+  };
+
+  export {
+    Products as Products,
+    type AvailabilityStatus as AvailabilityStatus,
+    type LookupRequest as LookupRequest,
+    type LookupResponse as LookupResponse,
+    type Price as Price,
+    type ProductBrand as ProductBrand,
+    type ProductDetail as ProductDetail,
+    type ProductImage as ProductImage,
+    type ProductOffer as ProductOffer,
+    type ProductRetrieveParams as ProductRetrieveParams,
+    type ProductLookupParams as ProductLookupParams,
   };
 
   export {
