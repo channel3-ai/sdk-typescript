@@ -15,14 +15,53 @@ export class Search extends APIResource {
 }
 
 /**
- * Search configuration for the search API.
+ * Search and locale options for a search request.
+ *
+ * Locale fields are optional; the server infers missing values. Details are on
+ * `language`, `country`, and `currency` below.
  */
 export interface SearchConfig {
+  /**
+   * ISO 3166-1 alpha-2 country code. May stay unset for pan-region storefronts (e.g.
+   * `currency=EUR` with no specific country).
+   */
+  country?:
+    | 'US'
+    | 'GB'
+    | 'EU'
+    | 'AU'
+    | 'CA'
+    | 'IE'
+    | 'DE'
+    | 'AT'
+    | 'FR'
+    | 'BE'
+    | 'IT'
+    | 'ES'
+    | 'NL'
+    | 'SE'
+    | 'FI'
+    | 'PT'
+    | 'CZ'
+    | null;
+
+  /**
+   * ISO 4217 currency code. When unset, inferred from `country` (e.g. `GB` → `GBP`),
+   * defaulting to `USD`.
+   */
+  currency?: 'USD' | 'CAD' | 'AUD' | 'GBP' | 'EUR' | 'SEK' | 'CZK' | null;
+
   /**
    * If True, search will only use keyword search and not vector search. Keyword-only
    * search is not supported with image input.
    */
   keyword_search_only?: boolean;
+
+  /**
+   * ISO 639-1 language code. When unset, inferred from `country` (preferred) then
+   * `currency`, defaulting to `en`.
+   */
+  language?: 'en' | 'de' | 'fr' | 'it' | 'es' | 'nl' | 'sv' | 'fi' | 'pt' | 'cs' | null;
 }
 
 /**
