@@ -26,7 +26,12 @@ describe('resource products', () => {
     await expect(
       client.products.retrieve(
         'product_id',
-        { website_ids: ['string'] },
+        {
+          country: 'US',
+          currency: 'USD',
+          language: 'en',
+          website_ids: ['string'],
+        },
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(Channel3.NotFoundError);
