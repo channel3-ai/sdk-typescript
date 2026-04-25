@@ -77,8 +77,6 @@ export interface SearchFilterPrice {
    * Minimum price, in dollars and cents
    */
   min_price?: number | null;
-
-  MIN_PRICE_FLOOR?: number;
 }
 
 /**
