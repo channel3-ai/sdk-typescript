@@ -74,6 +74,21 @@ export interface ClientOptions {
   apiKey?: string | undefined;
 
   /**
+   * Default ISO 639-1 language code applied to product calls (e.g. 'en'). Per-call config.language overrides this.
+   */
+  language?: string | null | undefined;
+
+  /**
+   * Default ISO 3166-1 alpha-2 country code applied to product calls (e.g. 'GB'). Per-call values override this.
+   */
+  country?: string | null | undefined;
+
+  /**
+   * Default ISO 4217 currency code applied to product calls (e.g. 'GBP'). Per-call values override this.
+   */
+  currency?: string | null | undefined;
+
+  /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
    *
    * Defaults to process.env['CHANNEL3_BASE_URL'].
@@ -147,6 +162,9 @@ export interface ClientOptions {
  */
 export class Channel3 {
   apiKey: string;
+  language: string | null;
+  country: string | null;
+  currency: string | null;
 
   baseURL: string;
   maxRetries: number;
@@ -164,6 +182,9 @@ export class Channel3 {
    * API Client for interfacing with the Channel3 API.
    *
    * @param {string | undefined} [opts.apiKey=process.env['CHANNEL3_API_KEY'] ?? undefined]
+   * @param {string | null | undefined} [opts.language=process.env['CHANNEL3_LANGUAGE'] ?? null]
+   * @param {string | null | undefined} [opts.country=process.env['CHANNEL3_COUNTRY'] ?? null]
+   * @param {string | null | undefined} [opts.currency=process.env['CHANNEL3_CURRENCY'] ?? null]
    * @param {string} [opts.baseURL=process.env['CHANNEL3_BASE_URL'] ?? https://api.trychannel3.com] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
@@ -175,6 +196,9 @@ export class Channel3 {
   constructor({
     baseURL = readEnv('CHANNEL3_BASE_URL'),
     apiKey = readEnv('CHANNEL3_API_KEY'),
+    language = readEnv('CHANNEL3_LANGUAGE') ?? null,
+    country = readEnv('CHANNEL3_COUNTRY') ?? null,
+    currency = readEnv('CHANNEL3_CURRENCY') ?? null,
     ...opts
   }: ClientOptions = {}) {
     if (apiKey === undefined) {
@@ -185,6 +209,9 @@ export class Channel3 {
 
     const options: ClientOptions = {
       apiKey,
+      language,
+      country,
+      currency,
       ...opts,
       baseURL: baseURL || `https://api.trychannel3.com`,
     };
@@ -219,6 +246,9 @@ export class Channel3 {
     this._options = options;
 
     this.apiKey = apiKey;
+    this.language = language;
+    this.country = country;
+    this.currency = currency;
   }
 
   /**
@@ -235,6 +265,9 @@ export class Channel3 {
       fetch: this.fetch,
       fetchOptions: this.fetchOptions,
       apiKey: this.apiKey,
+      language: this.language,
+      country: this.country,
+      currency: this.currency,
       ...options,
     });
     return client;
@@ -705,6 +738,9 @@ export class Channel3 {
         'X-Stainless-Retry-Count': String(retryCount),
         ...(options.timeout ? { 'X-Stainless-Timeout': String(Math.trunc(options.timeout / 1000)) } : {}),
         ...getPlatformHeaders(),
+        'X-Channel3-Language': this.language,
+        'X-Channel3-Country': this.country,
+        'X-Channel3-Currency': this.currency,
       },
       await this.authHeaders(options),
       this._options.defaultHeaders,
