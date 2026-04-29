@@ -16,9 +16,6 @@ export class Search extends APIResource {
 
 /**
  * Search and locale options for a search request.
- *
- * Locale fields are optional; the server infers missing values. Details are on
- * `language`, `country`, and `currency` below.
  */
 export interface SearchConfig {
   /**
