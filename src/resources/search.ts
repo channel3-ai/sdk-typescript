@@ -8,6 +8,9 @@ import { RequestOptions } from '../internal/request-options';
 export class Search extends APIResource {
   /**
    * Search for products with pagination support.
+   *
+   * At least one of `query`, `image_url`, or `base64_image` must be provided;
+   * requests with none of these will return 422.
    */
   perform(body: SearchPerformParams, options?: RequestOptions): APIPromise<SearchResponse> {
     return this._client.post('/v1/search', { body, ...options });
@@ -141,7 +144,8 @@ export interface SearchFilters {
  */
 export interface SearchRequest {
   /**
-   * Base64 encoded image
+   * Base64 encoded image. At least one of `query`, `image_url`, or `base64_image`
+   * must be provided.
    */
   base64_image?: string | null;
 
@@ -157,7 +161,8 @@ export interface SearchRequest {
   filters?: SearchFilters;
 
   /**
-   * Image URL
+   * Image URL. At least one of `query`, `image_url`, or `base64_image` must be
+   * provided.
    */
   image_url?: string | null;
 
@@ -172,7 +177,8 @@ export interface SearchRequest {
   page_token?: string | null;
 
   /**
-   * Search query
+   * Search query. At least one of `query`, `image_url`, or `base64_image` must be
+   * provided.
    */
   query?: string | null;
 }
@@ -191,7 +197,8 @@ export interface SearchResponse {
 
 export interface SearchPerformParams {
   /**
-   * Base64 encoded image
+   * Base64 encoded image. At least one of `query`, `image_url`, or `base64_image`
+   * must be provided.
    */
   base64_image?: string | null;
 
@@ -207,7 +214,8 @@ export interface SearchPerformParams {
   filters?: SearchFilters;
 
   /**
-   * Image URL
+   * Image URL. At least one of `query`, `image_url`, or `base64_image` must be
+   * provided.
    */
   image_url?: string | null;
 
@@ -222,7 +230,8 @@ export interface SearchPerformParams {
   page_token?: string | null;
 
   /**
-   * Search query
+   * Search query. At least one of `query`, `image_url`, or `base64_image` must be
+   * provided.
    */
   query?: string | null;
 }
