@@ -99,7 +99,8 @@ export interface SearchFilters {
   brand_ids?: Array<string> | null;
 
   /**
-   * If provided, only products from these categories will be returned
+   * If provided, only products from these categories will be returned. Accepts
+   * category slugs.
    */
   category_ids?: Array<string> | null;
 
@@ -117,7 +118,7 @@ export interface SearchFilters {
 
   /**
    * If provided, products in these categories (or their descendants) will be
-   * excluded from the results
+   * excluded from the results. Accepts category slugs.
    */
   exclude_category_ids?: Array<string> | null;
 
