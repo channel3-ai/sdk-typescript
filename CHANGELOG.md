@@ -1,5 +1,27 @@
 # Changelog
 
+## 3.2.0 (2026-04-29)
+
+Full Changelog: [v3.1.0...v3.2.0](https://github.com/channel3-ai/sdk-typescript/compare/v3.1.0...v3.2.0)
+
+### Features
+
+* Add SDK client-level locale ([eebeaf2](https://github.com/channel3-ai/sdk-typescript/commit/eebeaf2ac7c1635cde9bbd0f38b9ca6b1976b8ea))
+* **api:** add country/currency/language parameters to products/search ([e125d0f](https://github.com/channel3-ai/sdk-typescript/commit/e125d0fb7e827d4b6a78ecf1f8080af881a4f454))
+* Image search endpoint ([213862d](https://github.com/channel3-ai/sdk-typescript/commit/213862debc58bbd599f64bd10dd8c1728938ad14))
+* support setting headers via env ([187aac2](https://github.com/channel3-ai/sdk-typescript/commit/187aac27fdbc3898b8f54803eef14d64d48892a6))
+
+
+### Bug Fixes
+
+* **types:** remove MIN_PRICE_FLOOR field from SearchFilterPrice ([02d001b](https://github.com/channel3-ai/sdk-typescript/commit/02d001b70712ff385d2f498bafe2cc977be46699))
+
+
+### Chores
+
+* **internal:** codegen related update ([e970831](https://github.com/channel3-ai/sdk-typescript/commit/e970831eeea2cef5a99b1fcd5434463e761d5a24))
+* **internal:** more robust bootstrap script ([6319ac9](https://github.com/channel3-ai/sdk-typescript/commit/6319ac9828fa5deae39400bafe4eb510a0455419))
+
 ## 3.1.0 (2026-04-13)
 
 Full Changelog: [v3.0.1...v3.1.0](https://github.com/channel3-ai/sdk-typescript/compare/v3.0.1...v3.1.0)

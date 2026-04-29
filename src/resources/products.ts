@@ -163,6 +163,42 @@ export interface ProductOffer {
 
 export interface ProductRetrieveParams {
   /**
+   * ISO 3166-1 alpha-2 country code. Matches any country when unset; defaults to
+   * 'US' only when language and currency are also unset.
+   */
+  country?:
+    | 'US'
+    | 'GB'
+    | 'EU'
+    | 'AU'
+    | 'CA'
+    | 'IE'
+    | 'DE'
+    | 'AT'
+    | 'FR'
+    | 'BE'
+    | 'IT'
+    | 'ES'
+    | 'NL'
+    | 'SE'
+    | 'FI'
+    | 'PT'
+    | 'CZ'
+    | null;
+
+  /**
+   * ISO 4217 currency code. When unset, inferred from `country` (e.g. GB -> GBP);
+   * falls back to 'USD' only when all three locale fields are unset.
+   */
+  currency?: 'USD' | 'CAD' | 'AUD' | 'GBP' | 'EUR' | 'SEK' | 'CZK' | null;
+
+  /**
+   * ISO 639-1 language code. Matches any language when unset; defaults to 'en' only
+   * when country and currency are also unset.
+   */
+  language?: 'en' | 'de' | 'fr' | 'it' | 'es' | 'nl' | 'sv' | 'fi' | 'pt' | 'cs' | null;
+
+  /**
    * Optional list of website IDs to constrain the buy URL to, relevant if multiple
    * merchants exist
    */
