@@ -1,7 +1,9 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
+import * as SearchAPI from './search';
 import { APIPromise } from '../core/api-promise';
+import { PagePromise, SearchPage, type SearchPageParams } from '../core/pagination';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
@@ -18,6 +20,24 @@ export class Products extends APIResource {
   }
 
   /**
+   * Find products similar to a given product.
+   *
+   * Consider setting `filters` to narrow results to the same gender, brand,
+   * category, price range, etc. when you only want similar items within a specific
+   * slice of the catalog.
+   */
+  findSimilar(
+    body: ProductFindSimilarParams,
+    options?: RequestOptions,
+  ): PagePromise<ProductDetailsSearchPage, ProductDetail> {
+    return this._client.getAPIList('/v1/similar', SearchPage<ProductDetail>, {
+      body,
+      method: 'post',
+      ...options,
+    });
+  }
+
+  /**
    * Retrieve product information for any supported product URL.
    *
    * Returns the same Product model as GET /v1/products/{product_id}. The product_id
@@ -26,7 +46,43 @@ export class Products extends APIResource {
   lookup(body: ProductLookupParams, options?: RequestOptions): APIPromise<LookupResponse> {
     return this._client.post('/v1/lookup', { body, ...options });
   }
+
+  /**
+   * Search for products with pagination support.
+   *
+   * At least one of `query`, `image_url`, or `base64_image` must be provided;
+   * requests with none of these will return 422.
+   */
+  search(
+    body: ProductSearchParams,
+    options?: RequestOptions,
+  ): PagePromise<ProductDetailsSearchPage, ProductDetail> {
+    return this._client.getAPIList('/v1/search', SearchPage<ProductDetail>, {
+      body,
+      method: 'post',
+      ...options,
+    });
+  }
+
+  /**
+   * Search the catalog by image (URL or base64), with pagination support.
+   *
+   * Provide exactly one of `image_url` or `base64_image`. For text or text+image
+   * search, use `POST /v1/search`.
+   */
+  searchByImage(
+    body: ProductSearchByImageParams,
+    options?: RequestOptions,
+  ): PagePromise<ProductDetailsSearchPage, ProductDetail> {
+    return this._client.getAPIList('/v1/image-search', SearchPage<ProductDetail>, {
+      body,
+      method: 'post',
+      ...options,
+    });
+  }
 }
+
+export type ProductDetailsSearchPage = SearchPage<ProductDetail>;
 
 export type AvailabilityStatus =
   | 'InStock'
@@ -37,6 +93,87 @@ export type AvailabilityStatus =
   | 'OutOfStock'
   | 'Discontinued'
   | 'Unknown';
+
+/**
+ * Image-only search request.
+ */
+export interface ImageSearchRequest {
+  /**
+   * Base64 encoded image bytes (no data URI prefix).
+   */
+  base64_image?: string | null;
+
+  /**
+   * Optional locale configuration.
+   */
+  config?: LocaleConfig;
+
+  /**
+   * Optional filters. Search will only consider products that match all of the
+   * filters.
+   */
+  filters?: SearchAPI.SearchFilters;
+
+  /**
+   * Publicly accessible URL of the image to search with.
+   */
+  image_url?: string | null;
+
+  /**
+   * Optional limit on the number of results. Default is 20, max is 30.
+   */
+  limit?: number | null;
+
+  /**
+   * Opaque token from a previous image-search response to fetch the next page of
+   * results.
+   */
+  page_token?: string | null;
+}
+
+/**
+ * Locale options for API requests.
+ *
+ * Locale fields are optional; the server infers missing values. Details are on
+ * `language`, `country`, and `currency` below.
+ */
+export interface LocaleConfig {
+  /**
+   * ISO 3166-1 alpha-2 country code. May stay unset for pan-region storefronts (e.g.
+   * `currency=EUR` with no specific country).
+   */
+  country?:
+    | 'US'
+    | 'GB'
+    | 'EU'
+    | 'AU'
+    | 'CA'
+    | 'IE'
+    | 'DE'
+    | 'AT'
+    | 'FR'
+    | 'BE'
+    | 'IT'
+    | 'ES'
+    | 'NL'
+    | 'SE'
+    | 'FI'
+    | 'PT'
+    | 'CZ'
+    | null;
+
+  /**
+   * ISO 4217 currency code. When unset, inferred from `country` (e.g. `GB` → `GBP`),
+   * defaulting to `USD`.
+   */
+  currency?: 'USD' | 'CAD' | 'AUD' | 'GBP' | 'EUR' | 'SEK' | 'CZK' | null;
+
+  /**
+   * ISO 639-1 language code. When unset, inferred from `country` (preferred) then
+   * `currency`, defaulting to `en`.
+   */
+  language?: 'en' | 'de' | 'fr' | 'it' | 'es' | 'nl' | 'sv' | 'fi' | 'pt' | 'cs' | null;
+}
 
 export interface LookupRequest {
   /**
@@ -166,6 +303,37 @@ export interface ProductOffer {
   max_commission_rate?: number;
 }
 
+/**
+ * Find products similar to a given product.
+ */
+export interface SimilarProductsRequest {
+  /**
+   * Canonical product ID to find similar products for.
+   */
+  product_id: string;
+
+  /**
+   * Optional locale configuration.
+   */
+  config?: LocaleConfig;
+
+  /**
+   * Optional filters. Search will only consider products that match all of the
+   * filters.
+   */
+  filters?: SearchAPI.SearchFilters;
+
+  /**
+   * Optional limit on the number of results. Default is 20, max is 30.
+   */
+  limit?: number | null;
+
+  /**
+   * Opaque token from a previous similar response to fetch the next page of results.
+   */
+  page_token?: string | null;
+}
+
 export interface ProductRetrieveParams {
   /**
    * ISO 3166-1 alpha-2 country code. Matches any country when unset; defaults to
@@ -210,6 +378,29 @@ export interface ProductRetrieveParams {
   website_ids?: Array<string> | null;
 }
 
+export interface ProductFindSimilarParams extends SearchPageParams {
+  /**
+   * Canonical product ID to find similar products for.
+   */
+  product_id: string;
+
+  /**
+   * Optional locale configuration.
+   */
+  config?: LocaleConfig;
+
+  /**
+   * Optional filters. Search will only consider products that match all of the
+   * filters.
+   */
+  filters?: SearchAPI.SearchFilters;
+
+  /**
+   * Optional limit on the number of results. Default is 20, max is 30.
+   */
+  limit?: number | null;
+}
+
 export interface ProductLookupParams {
   /**
    * The URL of the product to look up
@@ -223,9 +414,75 @@ export interface ProductLookupParams {
   max_staleness_hours?: number;
 }
 
+export interface ProductSearchParams extends SearchPageParams {
+  /**
+   * Base64 encoded image. At least one of `query`, `image_url`, or `base64_image`
+   * must be provided.
+   */
+  base64_image?: string | null;
+
+  /**
+   * Optional configuration
+   */
+  config?: SearchAPI.SearchConfig;
+
+  /**
+   * Optional filters. Search will only consider products that match all of the
+   * filters.
+   */
+  filters?: SearchAPI.SearchFilters;
+
+  /**
+   * Image URL. At least one of `query`, `image_url`, or `base64_image` must be
+   * provided.
+   */
+  image_url?: string | null;
+
+  /**
+   * Optional limit on the number of results. Default is 20, max is 30.
+   */
+  limit?: number | null;
+
+  /**
+   * Search query. At least one of `query`, `image_url`, or `base64_image` must be
+   * provided.
+   */
+  query?: string | null;
+}
+
+export interface ProductSearchByImageParams extends SearchPageParams {
+  /**
+   * Base64 encoded image bytes (no data URI prefix).
+   */
+  base64_image?: string | null;
+
+  /**
+   * Optional locale configuration.
+   */
+  config?: LocaleConfig;
+
+  /**
+   * Optional filters. Search will only consider products that match all of the
+   * filters.
+   */
+  filters?: SearchAPI.SearchFilters;
+
+  /**
+   * Publicly accessible URL of the image to search with.
+   */
+  image_url?: string | null;
+
+  /**
+   * Optional limit on the number of results. Default is 20, max is 30.
+   */
+  limit?: number | null;
+}
+
 export declare namespace Products {
   export {
     type AvailabilityStatus as AvailabilityStatus,
+    type ImageSearchRequest as ImageSearchRequest,
+    type LocaleConfig as LocaleConfig,
     type LookupRequest as LookupRequest,
     type LookupResponse as LookupResponse,
     type Price as Price,
@@ -233,7 +490,12 @@ export declare namespace Products {
     type ProductDetail as ProductDetail,
     type ProductImage as ProductImage,
     type ProductOffer as ProductOffer,
+    type SimilarProductsRequest as SimilarProductsRequest,
+    type ProductDetailsSearchPage as ProductDetailsSearchPage,
     type ProductRetrieveParams as ProductRetrieveParams,
+    type ProductFindSimilarParams as ProductFindSimilarParams,
     type ProductLookupParams as ProductLookupParams,
+    type ProductSearchParams as ProductSearchParams,
+    type ProductSearchByImageParams as ProductSearchByImageParams,
   };
 }

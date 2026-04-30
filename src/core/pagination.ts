@@ -155,3 +155,106 @@ export class CursorPage<Item> extends AbstractPage<Item> implements CursorPageRe
     };
   }
 }
+
+export interface SearchPageResponse<Item> {
+  products: Array<Item>;
+
+  next_page_token: string | null;
+}
+
+export interface SearchPageParams {
+  page_token?: string;
+}
+
+export class SearchPage<Item> extends AbstractPage<Item> implements SearchPageResponse<Item> {
+  products: Array<Item>;
+
+  next_page_token: string | null;
+
+  constructor(
+    client: Channel3,
+    response: Response,
+    body: SearchPageResponse<Item>,
+    options: FinalRequestOptions,
+  ) {
+    super(client, response, body, options);
+
+    this.products = body.products || [];
+    this.next_page_token = body.next_page_token || null;
+  }
+
+  getPaginatedItems(): Item[] {
+    return this.products ?? [];
+  }
+
+  nextPageRequestOptions(): PageRequestOptions | null {
+    const cursor = this.next_page_token;
+    if (!cursor) {
+      return null;
+    }
+
+    return {
+      ...this.options,
+      body: {
+        ...maybeObj(this.options.body),
+        page_token: cursor,
+      },
+    };
+  }
+}
+
+export interface CategoryPageResponse<Item> {
+  items: Array<Item>;
+
+  page: number;
+
+  page_size: number;
+
+  total: number;
+}
+
+export interface CategoryPageParams {
+  page?: number;
+
+  page_size?: number;
+}
+
+export class CategoryPage<Item> extends AbstractPage<Item> implements CategoryPageResponse<Item> {
+  items: Array<Item>;
+
+  page: number;
+
+  page_size: number;
+
+  total: number;
+
+  constructor(
+    client: Channel3,
+    response: Response,
+    body: CategoryPageResponse<Item>,
+    options: FinalRequestOptions,
+  ) {
+    super(client, response, body, options);
+
+    this.items = body.items || [];
+    this.page = body.page || 0;
+    this.page_size = body.page_size || 0;
+    this.total = body.total || 0;
+  }
+
+  getPaginatedItems(): Item[] {
+    return this.items ?? [];
+  }
+
+  nextPageRequestOptions(): PageRequestOptions | null {
+    const currentPage = this.page;
+
+    return {
+      ...this.options,
+      query: {
+        ...maybeObj(this.options.query),
+        page: currentPage + 1,
+      },
+    };
+  }
+}

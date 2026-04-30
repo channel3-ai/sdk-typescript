@@ -8,15 +8,9 @@ import { path } from '../internal/utils/path';
 
 export class PriceTracking extends APIResource {
   /**
-   * Get price history for a canonical product.
+   * @deprecated use `retrieve_history` instead; will be removed in the next major version
    */
-  getHistory(
-    canonicalProductID: string,
-    query: PriceTrackingGetHistoryParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<PriceHistory> {
-    return this._client.get(path`/v0/price-tracking/history/${canonicalProductID}`, { query, ...options });
-  }
+  getHistory = this.retrieveHistory;
 
   /**
    * List your active price tracking subscriptions.
@@ -29,6 +23,17 @@ export class PriceTracking extends APIResource {
       query,
       ...options,
     });
+  }
+
+  /**
+   * Get price history for a canonical product.
+   */
+  retrieveHistory(
+    canonicalProductID: string,
+    query: PriceTrackingRetrieveHistoryParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<PriceHistory> {
+    return this._client.get(path`/v0/price-tracking/history/${canonicalProductID}`, { query, ...options });
   }
 
   /**
@@ -48,40 +53,52 @@ export class PriceTracking extends APIResource {
 
 export type SubscriptionsCursorPage = CursorPage<Subscription>;
 
+export interface PaginatedSubscriptionsResponse {
+  items: Array<Subscription>;
+
+  next_cursor?: string | null;
+}
+
 export interface PriceHistory {
   canonical_product_id: string;
 
-  history?: Array<PriceHistory.History>;
+  history?: Array<PriceHistoryPoint>;
 
   product_title?: string | null;
 
-  statistics?: PriceHistory.Statistics | null;
+  statistics?: PriceStatistics | null;
 }
 
-export namespace PriceHistory {
-  export interface History {
-    currency: string;
+export interface PriceHistoryPoint {
+  currency: string;
 
-    price: number;
+  price: number;
 
-    timestamp: string;
-  }
+  timestamp: string;
+}
 
-  export interface Statistics {
-    currency: string;
+export interface PriceStatistics {
+  currency: string;
 
-    current_price: number;
+  current_price: number;
 
-    current_status: 'low' | 'typical' | 'high';
+  current_status: 'low' | 'typical' | 'high';
 
-    max_price: number;
+  max_price: number;
 
-    mean: number;
+  mean: number;
 
-    min_price: number;
+  min_price: number;
 
-    std_dev: number;
-  }
+  std_dev: number;
+}
+
+export interface StartTrackingRequest {
+  canonical_product_id: string;
+}
+
+export interface StopTrackingRequest {
+  canonical_product_id: string;
 }
 
 export interface Subscription {
@@ -92,6 +109,16 @@ export interface Subscription {
   subscription_status: 'active' | 'cancelled';
 }
 
+/**
+ * @deprecated renamed to PriceHistoryPoint; will be removed in the next major version
+ */
+export type History = PriceHistoryPoint;
+
+/**
+ * @deprecated renamed to PriceStatistics; will be removed in the next major version
+ */
+export type Statistics = PriceStatistics;
+
 export interface PriceTrackingGetHistoryParams {
   /**
    * Number of days of history to fetch (max 30)
@@ -100,6 +127,13 @@ export interface PriceTrackingGetHistoryParams {
 }
 
 export interface PriceTrackingListSubscriptionsParams extends CursorPageParams {}
+
+export interface PriceTrackingRetrieveHistoryParams {
+  /**
+   * Number of days of history to fetch (max 30)
+   */
+  days?: number;
+}
 
 export interface PriceTrackingStartParams {
   canonical_product_id: string;
@@ -111,11 +145,19 @@ export interface PriceTrackingStopParams {
 
 export declare namespace PriceTracking {
   export {
+    type PaginatedSubscriptionsResponse as PaginatedSubscriptionsResponse,
     type PriceHistory as PriceHistory,
+    type PriceHistoryPoint as PriceHistoryPoint,
+    type PriceStatistics as PriceStatistics,
+    type StartTrackingRequest as StartTrackingRequest,
+    type StopTrackingRequest as StopTrackingRequest,
     type Subscription as Subscription,
+    type History as History,
+    type Statistics as Statistics,
     type SubscriptionsCursorPage as SubscriptionsCursorPage,
     type PriceTrackingGetHistoryParams as PriceTrackingGetHistoryParams,
     type PriceTrackingListSubscriptionsParams as PriceTrackingListSubscriptionsParams,
+    type PriceTrackingRetrieveHistoryParams as PriceTrackingRetrieveHistoryParams,
     type PriceTrackingStartParams as PriceTrackingStartParams,
     type PriceTrackingStopParams as PriceTrackingStopParams,
   };
