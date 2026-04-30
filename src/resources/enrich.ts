@@ -5,6 +5,9 @@ import * as ProductsAPI from './products';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 
+/**
+ * @deprecated enrich is deprecated; migrate to `products.lookup`. This resource will be removed in the next major version.
+ */
 export class Enrich extends APIResource {
   /**
    * **Deprecated** — use POST /v1/lookup instead.
@@ -15,6 +18,8 @@ export class Enrich extends APIResource {
    * If the product is not found in the database, the endpoint will attempt real-time
    * retrieval from the product page. This fallback returns basic product information
    * (price, images, title) without full enrichment.
+   *
+   * @deprecated use `products.lookup` instead; will be removed in the next major version
    */
   enrichURL(body: EnrichEnrichURLParams, options?: RequestOptions): APIPromise<EnrichEnrichURLResponse> {
     return this._client.post('/v0/enrich', { body, ...options });

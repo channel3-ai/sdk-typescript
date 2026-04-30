@@ -8,9 +8,14 @@ export class Websites extends APIResource {
   /**
    * Find a website by URL.
    */
-  find(query: WebsiteFindParams, options?: RequestOptions): APIPromise<Website | null> {
+  retrieve(query: WebsiteRetrieveParams, options?: RequestOptions): APIPromise<Website | null> {
     return this._client.get('/v0/websites', { query, ...options });
   }
+
+  /**
+   * @deprecated use `retrieve` instead; will be removed in the next major version
+   */
+  find = this.retrieve;
 }
 
 export interface Website {
@@ -24,10 +29,18 @@ export interface Website {
   best_commission_rate?: number;
 }
 
+export interface WebsiteRetrieveParams {
+  query: string;
+}
+
 export interface WebsiteFindParams {
   query: string;
 }
 
 export declare namespace Websites {
-  export { type Website as Website, type WebsiteFindParams as WebsiteFindParams };
+  export {
+    type Website as Website,
+    type WebsiteRetrieveParams as WebsiteRetrieveParams,
+    type WebsiteFindParams as WebsiteFindParams,
+  };
 }

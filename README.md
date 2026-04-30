@@ -26,9 +26,10 @@ const client = new Channel3({
   apiKey: process.env['CHANNEL3_API_KEY'], // This is the default and can be omitted
 });
 
-const searchResponse = await client.search.perform();
+const page = await client.products.search();
+const productDetail = page.products[0];
 
-console.log(searchResponse.products);
+console.log(productDetail.id);
 ```
 
 ### Request & Response types
@@ -43,7 +44,7 @@ const client = new Channel3({
   apiKey: process.env['CHANNEL3_API_KEY'], // This is the default and can be omitted
 });
 
-const searchResponse: Channel3.SearchResponse = await client.search.perform();
+const [productDetail]: [Channel3.ProductDetail] = await client.products.search();
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -56,7 +57,7 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-const searchResponse = await client.search.perform().catch(async (err) => {
+const page = await client.products.search().catch(async (err) => {
   if (err instanceof Channel3.APIError) {
     console.log(err.status); // 400
     console.log(err.name); // BadRequestError
@@ -96,7 +97,7 @@ const client = new Channel3({
 });
 
 // Or, configure per-request:
-await client.search.perform({
+await client.products.search({
   maxRetries: 5,
 });
 ```
@@ -113,7 +114,7 @@ const client = new Channel3({
 });
 
 // Override per-request:
-await client.search.perform({
+await client.products.search({
   timeout: 5 * 1000,
 });
 ```
@@ -128,22 +129,22 @@ List methods in the Channel3 API are paginated.
 You can use the `for await … of` syntax to iterate through items across all pages:
 
 ```ts
-async function fetchAllBrands(params) {
-  const allBrands = [];
+async function fetchAllProductDetails(params) {
+  const allProductDetails = [];
   // Automatically fetches more pages as needed.
-  for await (const brand of client.brands.list()) {
-    allBrands.push(brand);
+  for await (const productDetail of client.products.search()) {
+    allProductDetails.push(productDetail);
   }
-  return allBrands;
+  return allProductDetails;
 }
 ```
 
 Alternatively, you can request a single page at a time:
 
 ```ts
-let page = await client.brands.list();
-for (const brand of page.items) {
-  console.log(brand);
+let page = await client.products.search();
+for (const productDetail of page.products) {
+  console.log(productDetail);
 }
 
 // Convenience methods are provided for manually paginating:
@@ -167,13 +168,15 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 ```ts
 const client = new Channel3();
 
-const response = await client.search.perform().asResponse();
+const response = await client.products.search().asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: searchResponse, response: raw } = await client.search.perform().withResponse();
+const { data: page, response: raw } = await client.products.search().withResponse();
 console.log(raw.headers.get('X-My-Header'));
-console.log(searchResponse.products);
+for await (const productDetail of page) {
+  console.log(productDetail.id);
+}
 ```
 
 ### Logging
@@ -253,7 +256,7 @@ parameter. This library doesn't validate at runtime that the request matches the
 send will be sent as-is.
 
 ```ts
-client.search.perform({
+client.products.search({
   // ...
   // @ts-expect-error baz is not yet public
   baz: 'undocumented option',
