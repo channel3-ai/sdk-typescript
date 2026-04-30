@@ -127,7 +127,7 @@ export interface SearchFilters {
    */
   exclude_website_ids?: Array<string> | null;
 
-  gender?: 'male' | 'female' | 'unisex' | null;
+  gender?: 'male' | 'female' | null;
 
   /**
    * Price filter for search. Values are inclusive.

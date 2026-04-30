@@ -93,6 +93,11 @@ export interface ProductDetail {
   title: string;
 
   /**
+   * Target age group. Age-agnostic products are typically returned as 'adult'.
+   */
+  age?: 'newborn' | 'infant' | 'toddler' | 'kids' | 'adult' | null;
+
+  /**
    * Ordered list of brands.
    */
   brands?: Array<ProductBrand>;
