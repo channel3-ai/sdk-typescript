@@ -52,6 +52,11 @@ export interface EnrichEnrichURLResponse {
   url: string;
 
   /**
+   * Target age group. Age-agnostic products are typically returned as 'adult'.
+   */
+  age?: 'newborn' | 'infant' | 'toddler' | 'kids' | 'adult' | null;
+
+  /**
    * @deprecated
    */
   brand_id?: string | null;
