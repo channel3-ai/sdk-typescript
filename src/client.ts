@@ -15,34 +15,77 @@ import { stringifyQuery } from './internal/utils/query';
 import { VERSION } from './version';
 import * as Errors from './core/error';
 import * as Pagination from './core/pagination';
-import { AbstractPage, type CursorPageParams, CursorPageResponse } from './core/pagination';
+import {
+  AbstractPage,
+  type CategoryPageParams,
+  CategoryPageResponse,
+  type CursorPageParams,
+  CursorPageResponse,
+  type SearchPageParams,
+  SearchPageResponse,
+} from './core/pagination';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
-import { Brand, BrandFindParams, BrandListParams, Brands, BrandsCursorPage } from './resources/brands';
+import {
+  Brand,
+  BrandFindParams,
+  BrandListParams,
+  BrandSearchParams,
+  Brands,
+  BrandsCursorPage,
+  SearchBrandsResponse,
+} from './resources/brands';
+import {
+  Categories,
+  Category,
+  CategoryAttribute,
+  CategoryListParams,
+  CategoryRef,
+  CategorySearchParams,
+  CategorySummariesCategoryPage,
+  CategorySummary,
+  PaginatedListCategoriesResponse,
+  SearchCategoriesResponse,
+} from './resources/categories';
 import { Enrich, EnrichEnrichURLParams, EnrichEnrichURLResponse, EnrichRequest } from './resources/enrich';
 import {
+  History,
+  PaginatedSubscriptionsResponse,
   PriceHistory,
+  PriceHistoryPoint,
+  PriceStatistics,
   PriceTracking,
   PriceTrackingGetHistoryParams,
   PriceTrackingListSubscriptionsParams,
+  PriceTrackingRetrieveHistoryParams,
   PriceTrackingStartParams,
   PriceTrackingStopParams,
+  StartTrackingRequest,
+  Statistics,
+  StopTrackingRequest,
   Subscription,
   SubscriptionsCursorPage,
 } from './resources/price-tracking';
 import {
   AvailabilityStatus,
+  ImageSearchRequest,
+  LocaleConfig,
   LookupRequest,
   LookupResponse,
   Price,
   ProductBrand,
   ProductDetail,
+  ProductDetailsSearchPage,
+  ProductFindSimilarParams,
   ProductImage,
   ProductLookupParams,
   ProductOffer,
   ProductRetrieveParams,
+  ProductSearchByImageParams,
+  ProductSearchParams,
   Products,
+  SimilarProductsRequest,
 } from './resources/products';
 import {
   Search,
@@ -53,7 +96,7 @@ import {
   SearchRequest,
   SearchResponse,
 } from './resources/search';
-import { Website, WebsiteFindParams, Websites } from './resources/websites';
+import { Website, WebsiteFindParams, WebsiteRetrieveParams, Websites } from './resources/websites';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -823,26 +866,104 @@ export class Channel3 {
 
   static toFile = Uploads.toFile;
 
-  search: API.Search = new API.Search(this);
-  brands: API.Brands = new API.Brands(this);
-  websites: API.Websites = new API.Websites(this);
-  enrich: API.Enrich = new API.Enrich(this);
   products: API.Products = new API.Products(this);
+  brands: API.Brands = new API.Brands(this);
+  categories: API.Categories = new API.Categories(this);
+  websites: API.Websites = new API.Websites(this);
   priceTracking: API.PriceTracking = new API.PriceTracking(this);
+  search: API.Search = new API.Search(this);
+  enrich: API.Enrich = new API.Enrich(this);
 }
 
-Channel3.Search = Search;
-Channel3.Brands = Brands;
-Channel3.Websites = Websites;
-Channel3.Enrich = Enrich;
 Channel3.Products = Products;
+Channel3.Brands = Brands;
+Channel3.Categories = Categories;
+Channel3.Websites = Websites;
 Channel3.PriceTracking = PriceTracking;
+Channel3.Search = Search;
+Channel3.Enrich = Enrich;
 
 export declare namespace Channel3 {
   export type RequestOptions = Opts.RequestOptions;
 
   export import CursorPage = Pagination.CursorPage;
   export { type CursorPageParams as CursorPageParams, type CursorPageResponse as CursorPageResponse };
+
+  export import SearchPage = Pagination.SearchPage;
+  export { type SearchPageParams as SearchPageParams, type SearchPageResponse as SearchPageResponse };
+
+  export import CategoryPage = Pagination.CategoryPage;
+  export { type CategoryPageParams as CategoryPageParams, type CategoryPageResponse as CategoryPageResponse };
+
+  export {
+    Products as Products,
+    type AvailabilityStatus as AvailabilityStatus,
+    type ImageSearchRequest as ImageSearchRequest,
+    type LocaleConfig as LocaleConfig,
+    type LookupRequest as LookupRequest,
+    type LookupResponse as LookupResponse,
+    type Price as Price,
+    type ProductBrand as ProductBrand,
+    type ProductDetail as ProductDetail,
+    type ProductImage as ProductImage,
+    type ProductOffer as ProductOffer,
+    type SimilarProductsRequest as SimilarProductsRequest,
+    type ProductDetailsSearchPage as ProductDetailsSearchPage,
+    type ProductRetrieveParams as ProductRetrieveParams,
+    type ProductFindSimilarParams as ProductFindSimilarParams,
+    type ProductLookupParams as ProductLookupParams,
+    type ProductSearchParams as ProductSearchParams,
+    type ProductSearchByImageParams as ProductSearchByImageParams,
+  };
+
+  export {
+    Brands as Brands,
+    type Brand as Brand,
+    type SearchBrandsResponse as SearchBrandsResponse,
+    type BrandsCursorPage as BrandsCursorPage,
+    type BrandListParams as BrandListParams,
+    type BrandFindParams as BrandFindParams,
+    type BrandSearchParams as BrandSearchParams,
+  };
+
+  export {
+    Categories as Categories,
+    type Category as Category,
+    type CategoryAttribute as CategoryAttribute,
+    type CategoryRef as CategoryRef,
+    type CategorySummary as CategorySummary,
+    type PaginatedListCategoriesResponse as PaginatedListCategoriesResponse,
+    type SearchCategoriesResponse as SearchCategoriesResponse,
+    type CategorySummariesCategoryPage as CategorySummariesCategoryPage,
+    type CategoryListParams as CategoryListParams,
+    type CategorySearchParams as CategorySearchParams,
+  };
+
+  export {
+    Websites as Websites,
+    type Website as Website,
+    type WebsiteRetrieveParams as WebsiteRetrieveParams,
+    type WebsiteFindParams as WebsiteFindParams,
+  };
+
+  export {
+    PriceTracking as PriceTracking,
+    type PaginatedSubscriptionsResponse as PaginatedSubscriptionsResponse,
+    type PriceHistory as PriceHistory,
+    type PriceHistoryPoint as PriceHistoryPoint,
+    type PriceStatistics as PriceStatistics,
+    type StartTrackingRequest as StartTrackingRequest,
+    type StopTrackingRequest as StopTrackingRequest,
+    type Subscription as Subscription,
+    type History as History,
+    type Statistics as Statistics,
+    type SubscriptionsCursorPage as SubscriptionsCursorPage,
+    type PriceTrackingGetHistoryParams as PriceTrackingGetHistoryParams,
+    type PriceTrackingListSubscriptionsParams as PriceTrackingListSubscriptionsParams,
+    type PriceTrackingRetrieveHistoryParams as PriceTrackingRetrieveHistoryParams,
+    type PriceTrackingStartParams as PriceTrackingStartParams,
+    type PriceTrackingStopParams as PriceTrackingStopParams,
+  };
 
   export {
     Search as Search,
@@ -855,44 +976,11 @@ export declare namespace Channel3 {
   };
 
   export {
-    Brands as Brands,
-    type Brand as Brand,
-    type BrandsCursorPage as BrandsCursorPage,
-    type BrandListParams as BrandListParams,
-    type BrandFindParams as BrandFindParams,
-  };
-
-  export { Websites as Websites, type Website as Website, type WebsiteFindParams as WebsiteFindParams };
-
-  export {
     Enrich as Enrich,
     type EnrichRequest as EnrichRequest,
     type EnrichEnrichURLResponse as EnrichEnrichURLResponse,
     type EnrichEnrichURLParams as EnrichEnrichURLParams,
   };
 
-  export {
-    Products as Products,
-    type AvailabilityStatus as AvailabilityStatus,
-    type LookupRequest as LookupRequest,
-    type LookupResponse as LookupResponse,
-    type Price as Price,
-    type ProductBrand as ProductBrand,
-    type ProductDetail as ProductDetail,
-    type ProductImage as ProductImage,
-    type ProductOffer as ProductOffer,
-    type ProductRetrieveParams as ProductRetrieveParams,
-    type ProductLookupParams as ProductLookupParams,
-  };
-
-  export {
-    PriceTracking as PriceTracking,
-    type PriceHistory as PriceHistory,
-    type Subscription as Subscription,
-    type SubscriptionsCursorPage as SubscriptionsCursorPage,
-    type PriceTrackingGetHistoryParams as PriceTrackingGetHistoryParams,
-    type PriceTrackingListSubscriptionsParams as PriceTrackingListSubscriptionsParams,
-    type PriceTrackingStartParams as PriceTrackingStartParams,
-    type PriceTrackingStopParams as PriceTrackingStopParams,
-  };
+  export type ErrorResponse = API.ErrorResponse;
 }

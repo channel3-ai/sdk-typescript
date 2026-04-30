@@ -5,12 +5,17 @@ import * as ProductsAPI from './products';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 
+/**
+ * @deprecated use `products.search` (or `products.search_by_image` / `products.find_similar`) instead; this resource will be removed in the next major version
+ */
 export class Search extends APIResource {
   /**
    * Search for products with pagination support.
    *
    * At least one of `query`, `image_url`, or `base64_image` must be provided;
    * requests with none of these will return 422.
+   *
+   * @deprecated use `products.search` instead, which auto-paginates; will be removed in the next major version
    */
   perform(body: SearchPerformParams, options?: RequestOptions): APIPromise<SearchResponse> {
     return this._client.post('/v1/search', { body, ...options });
@@ -127,7 +132,7 @@ export interface SearchFilters {
    */
   exclude_website_ids?: Array<string> | null;
 
-  gender?: 'male' | 'female' | null;
+  gender?: 'male' | 'female' | 'unisex' | null;
 
   /**
    * Price filter for search. Values are inclusive.
