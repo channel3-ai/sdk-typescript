@@ -1,5 +1,36 @@
 # Changelog
 
+## 3.2.0 (2026-04-30)
+
+Full Changelog: [v3.1.0...v3.2.0](https://github.com/channel3-ai/sdk-typescript/compare/v3.1.0...v3.2.0)
+
+### Features
+
+* Add SDK client-level locale ([eebeaf2](https://github.com/channel3-ai/sdk-typescript/commit/eebeaf2ac7c1635cde9bbd0f38b9ca6b1976b8ea))
+* **api:** add categories, products/brands search, deprecate search/enrich, brands to v1 ([d068ac9](https://github.com/channel3-ai/sdk-typescript/commit/d068ac97664ee50453fed88c1e130d03f957ccda))
+* **api:** add country/currency/language parameters to products/search ([e125d0f](https://github.com/channel3-ai/sdk-typescript/commit/e125d0fb7e827d4b6a78ecf1f8080af881a4f454))
+* Image search endpoint ([213862d](https://github.com/channel3-ai/sdk-typescript/commit/213862debc58bbd599f64bd10dd8c1728938ad14))
+* support setting headers via env ([187aac2](https://github.com/channel3-ai/sdk-typescript/commit/187aac27fdbc3898b8f54803eef14d64d48892a6))
+
+
+### Bug Fixes
+
+* **types:** remove MIN_PRICE_FLOOR field from SearchFilterPrice ([02d001b](https://github.com/channel3-ai/sdk-typescript/commit/02d001b70712ff385d2f498bafe2cc977be46699))
+* **types:** remove unisex option from gender field in SearchFilters ([cd1843e](https://github.com/channel3-ai/sdk-typescript/commit/cd1843e5ad587661ac518b0b944edeb1b97979fe))
+
+
+### Chores
+
+* **format:** run eslint and prettier separately ([82d64c4](https://github.com/channel3-ai/sdk-typescript/commit/82d64c4298a5d4a4773fdb69d5ace17cc21b65b1))
+* **internal:** codegen related update ([e970831](https://github.com/channel3-ai/sdk-typescript/commit/e970831eeea2cef5a99b1fcd5434463e761d5a24))
+* **internal:** more robust bootstrap script ([6319ac9](https://github.com/channel3-ai/sdk-typescript/commit/6319ac9828fa5deae39400bafe4eb510a0455419))
+
+
+### Documentation
+
+* **api:** clarify category_ids and exclude_category_ids accept slugs in search ([be6c730](https://github.com/channel3-ai/sdk-typescript/commit/be6c730c18079a668163f33a5d377958539b6ee3))
+* **api:** clarify search parameter requirements ([55bdca6](https://github.com/channel3-ai/sdk-typescript/commit/55bdca66ff21fa5a12a8b815f55da3efe29234d7))
+
 ## 3.1.0 (2026-04-13)
 
 Full Changelog: [v3.0.1...v3.1.0](https://github.com/channel3-ai/sdk-typescript/compare/v3.0.1...v3.1.0)
