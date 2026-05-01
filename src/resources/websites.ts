@@ -6,7 +6,9 @@ import { RequestOptions } from '../internal/request-options';
 
 export class Websites extends APIResource {
   /**
-   * Find a website by URL.
+   * Resolve a website URL to its ID and best_commission_rate. Tip: website_ids
+   * filters accept domains directly, so this lookup is most useful for retrieving
+   * commission rates.
    */
   retrieve(query: WebsiteRetrieveParams, options?: RequestOptions): APIPromise<Website | null> {
     return this._client.get('/v0/websites', { query, ...options });

@@ -128,11 +128,12 @@ export interface SearchFilters {
   exclude_category_ids?: Array<string> | null;
 
   /**
-   * If provided, products from these websites will be excluded from the results
+   * If provided, products from these websites will be excluded from the results.
+   * Accepts website IDs or domains (e.g. "nike.com").
    */
   exclude_website_ids?: Array<string> | null;
 
-  gender?: 'male' | 'female' | 'unisex' | null;
+  gender?: 'male' | 'female' | null;
 
   /**
    * Price filter for search. Values are inclusive.
@@ -140,7 +141,8 @@ export interface SearchFilters {
   price?: SearchFilterPrice | null;
 
   /**
-   * If provided, only products from these websites will be returned
+   * If provided, only products from these websites will be returned. Accepts website
+   * IDs or domains (e.g. "nike.com").
    */
   website_ids?: Array<string> | null;
 }
