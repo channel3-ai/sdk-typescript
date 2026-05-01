@@ -373,7 +373,7 @@ export interface ProductRetrieveParams {
 
   /**
    * Optional list of website IDs to constrain the buy URL to, relevant if multiple
-   * merchants exist
+   * merchants exist. Accepts website IDs or domains (e.g. "nike.com").
    */
   website_ids?: Array<string> | null;
 }
