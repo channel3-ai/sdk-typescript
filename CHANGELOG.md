@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.3.0 (2026-05-01)
+
+Full Changelog: [v3.2.0...v3.3.0](https://github.com/channel3-ai/sdk-typescript/compare/v3.2.0...v3.3.0)
+
+### Features
+
+* add channel3 cli to stainless... i think? ([429d689](https://github.com/channel3-ai/sdk-typescript/commit/429d6894cad20732865a36f2109145ee5c5cd354))
+
 ## 3.2.0 (2026-04-30)
 
 Full Changelog: [v3.1.0...v3.2.0](https://github.com/channel3-ai/sdk-typescript/compare/v3.1.0...v3.2.0)
