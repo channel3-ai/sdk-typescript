@@ -15,7 +15,7 @@ export class Brands extends APIResource {
   }
 
   /**
-   * Paginated list of brands.
+   * Paginated list of brands, capped at the top 5,000.
    */
   list(
     query: BrandListParams | null | undefined = {},

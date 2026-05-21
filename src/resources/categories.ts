@@ -54,7 +54,8 @@ export interface Category {
   title: string;
 
   /**
-   * Structured attributes applicable to this category
+   * Structured attributes applicable to this category, with their allowed values.
+   * Usable as keys in `SearchFilters.attributes`.
    */
   attributes?: Array<CategoryAttribute>;
 

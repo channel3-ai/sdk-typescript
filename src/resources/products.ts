@@ -160,19 +160,21 @@ export interface LocaleConfig {
     | 'FI'
     | 'PT'
     | 'CZ'
+    | 'GR'
+    | 'RO'
     | null;
 
   /**
    * ISO 4217 currency code. When unset, inferred from `country` (e.g. `GB` → `GBP`),
    * defaulting to `USD`.
    */
-  currency?: 'USD' | 'CAD' | 'AUD' | 'GBP' | 'EUR' | 'SEK' | 'CZK' | null;
+  currency?: 'USD' | 'CAD' | 'AUD' | 'GBP' | 'EUR' | 'SEK' | 'CZK' | 'RON' | null;
 
   /**
    * ISO 639-1 language code. When unset, inferred from `country` (preferred) then
    * `currency`, defaulting to `en`.
    */
-  language?: 'en' | 'de' | 'fr' | 'it' | 'es' | 'nl' | 'sv' | 'fi' | 'pt' | 'cs' | null;
+  language?: 'en' | 'de' | 'fr' | 'it' | 'es' | 'nl' | 'sv' | 'fi' | 'pt' | 'cs' | 'el' | 'ro' | null;
 }
 
 export interface LookupRequest {
@@ -255,6 +257,13 @@ export interface ProductDetail {
    * All merchant offers for this product in the requested locale.
    */
   offers?: Array<ProductOffer>;
+
+  /**
+   * Structured attributes extracted for this product, keyed by attribute handle
+   * (e.g. 'color', 'material'). Values are the canonical allowed values for that
+   * handle.
+   */
+  structured_attributes?: { [key: string]: Array<string> };
 }
 
 /**
@@ -357,19 +366,21 @@ export interface ProductRetrieveParams {
     | 'FI'
     | 'PT'
     | 'CZ'
+    | 'GR'
+    | 'RO'
     | null;
 
   /**
    * ISO 4217 currency code. When unset, inferred from `country` (e.g. GB -> GBP);
    * falls back to 'USD' only when all three locale fields are unset.
    */
-  currency?: 'USD' | 'CAD' | 'AUD' | 'GBP' | 'EUR' | 'SEK' | 'CZK' | null;
+  currency?: 'USD' | 'CAD' | 'AUD' | 'GBP' | 'EUR' | 'SEK' | 'CZK' | 'RON' | null;
 
   /**
    * ISO 639-1 language code. Matches any language when unset; defaults to 'en' only
    * when country and currency are also unset.
    */
-  language?: 'en' | 'de' | 'fr' | 'it' | 'es' | 'nl' | 'sv' | 'fi' | 'pt' | 'cs' | null;
+  language?: 'en' | 'de' | 'fr' | 'it' | 'es' | 'nl' | 'sv' | 'fi' | 'pt' | 'cs' | 'el' | 'ro' | null;
 
   /**
    * Optional list of website IDs to constrain the buy URL to, relevant if multiple

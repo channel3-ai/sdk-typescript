@@ -60,9 +60,11 @@ describe('resource products', () => {
       },
       filters: {
         age: ['newborn'],
+        attributes: { foo: ['string'] },
         availability: ['InStock'],
         brand_ids: ['string'],
         category_ids: ['string'],
+        colors: { palette: [{ hex: 'hex', percentage: 0 }] },
         condition: 'new',
         exclude_brand_ids: ['string'],
         exclude_category_ids: ['string'],
