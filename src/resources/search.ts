@@ -48,13 +48,15 @@ export interface SearchConfig {
     | 'FI'
     | 'PT'
     | 'CZ'
+    | 'GR'
+    | 'RO'
     | null;
 
   /**
    * ISO 4217 currency code. When unset, inferred from `country` (e.g. `GB` → `GBP`),
    * defaulting to `USD`.
    */
-  currency?: 'USD' | 'CAD' | 'AUD' | 'GBP' | 'EUR' | 'SEK' | 'CZK' | null;
+  currency?: 'USD' | 'CAD' | 'AUD' | 'GBP' | 'EUR' | 'SEK' | 'CZK' | 'RON' | null;
 
   /**
    * If True, search will only use keyword search and not vector search. Keyword-only
@@ -66,7 +68,7 @@ export interface SearchConfig {
    * ISO 639-1 language code. When unset, inferred from `country` (preferred) then
    * `currency`, defaulting to `en`.
    */
-  language?: 'en' | 'de' | 'fr' | 'it' | 'es' | 'nl' | 'sv' | 'fi' | 'pt' | 'cs' | null;
+  language?: 'en' | 'de' | 'fr' | 'it' | 'es' | 'nl' | 'sv' | 'fi' | 'pt' | 'cs' | 'el' | 'ro' | null;
 }
 
 /**
@@ -94,6 +96,16 @@ export interface SearchFilters {
   age?: Array<'newborn' | 'infant' | 'toddler' | 'kids' | 'adult'> | null;
 
   /**
+   * If provided, only products whose extracted attributes match these key/value
+   * constraints will be returned. Keys are attribute handles (e.g. 'color',
+   * 'material') and values are lists of allowed values (OR within a key, AND across
+   * keys). When a category filter is also supplied, all keys must be valid
+   * attributes of at least one of the requested categories. See
+   * `Category.attributes` for the valid keys/values per category.
+   */
+  attributes?: { [key: string]: Array<string> } | null;
+
+  /**
    * If provided, only products with these availability statuses will be returned
    */
   availability?: Array<ProductsAPI.AvailabilityStatus> | null;
@@ -108,6 +120,12 @@ export interface SearchFilters {
    * category slugs.
    */
   category_ids?: Array<string> | null;
+
+  /**
+   * [Beta] Color filter wrapper. Holds the list of required colors today; reserved
+   * for future filter-level options (e.g. match modes, tolerance overrides).
+   */
+  colors?: SearchFilters.Colors | null;
 
   /**
    * Filter by product condition. Incubating: condition data is currently incomplete;
@@ -145,6 +163,36 @@ export interface SearchFilters {
    * IDs or domains (e.g. "nike.com").
    */
   website_ids?: Array<string> | null;
+}
+
+export namespace SearchFilters {
+  /**
+   * [Beta] Color filter wrapper. Holds the list of required colors today; reserved
+   * for future filter-level options (e.g. match modes, tolerance overrides).
+   */
+  export interface Colors {
+    /**
+     * Colors required in matching products. Treated as an AND condition.
+     */
+    palette: Array<Colors.Palette>;
+  }
+
+  export namespace Colors {
+    /**
+     * A single color requirement for the color filter.
+     */
+    export interface Palette {
+      /**
+       * sRGB hex string, e.g. '#a1b2c3'
+       */
+      hex: string;
+
+      /**
+       * Percentage of color, where 1.0 is 100%
+       */
+      percentage?: number | null;
+    }
+  }
 }
 
 /**
