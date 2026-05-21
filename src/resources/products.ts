@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
+import * as ProductsAPI from './products';
 import * as SearchAPI from './search';
 import { APIPromise } from '../core/api-promise';
 import { PagePromise, SearchPage, type SearchPageParams } from '../core/pagination';
@@ -264,6 +265,101 @@ export interface ProductDetail {
    * handle.
    */
   structured_attributes?: { [key: string]: Array<string> };
+
+  /**
+   * Wrapper for variant-interaction state on a Product.
+   *
+   * Holds `options` and `selected`. `options` represent all of the configuration
+   * options for the product. `selected` represents the currently selected option
+   * values.
+   */
+  variants?: ProductDetail.Variants | null;
+}
+
+export namespace ProductDetail {
+  /**
+   * Wrapper for variant-interaction state on a Product.
+   *
+   * Holds `options` and `selected`. `options` represent all of the configuration
+   * options for the product. `selected` represents the currently selected option
+   * values.
+   */
+  export interface Variants {
+    options: Array<Variants.Option>;
+
+    selected: Array<Variants.Selected>;
+  }
+
+  export namespace Variants {
+    /**
+     * One dimension of a product family (e.g. 'Color', 'Size').
+     */
+    export interface Option {
+      /**
+       * The name of the option (e.g. 'Color', 'Size')
+       */
+      name: string;
+
+      /**
+       * The values of the option (e.g. ['Blue', 'Red', 'Green'])
+       */
+      values: Array<Option.Value>;
+    }
+
+    export namespace Option {
+      /**
+       * One value of one variant option (e.g. 'Blue' under 'Color')
+       */
+      export interface Value {
+        /**
+         * Whether the option value exists on the product, or is a configuration only
+         * present on another variant of the same product. For example, a shirt that comes
+         * in multiple colors, but only one color is available in Size XL.
+         */
+        exists: boolean;
+
+        /**
+         * The display value of the option value (e.g. 'Blue')
+         */
+        label: string;
+
+        /**
+         * The availability status of the option value. None when returned on search
+         * results, hydrated only on get product detail requests.
+         */
+        available?: ProductsAPI.AvailabilityStatus | null;
+
+        /**
+         * The product id that represents this value. Variants that point to different
+         * products will have this field set, as well as thumbnail_url for displaying
+         * selector icons.
+         */
+        product_id?: string | null;
+
+        /**
+         * For options that reference different products, this is the URL of the thumbnail
+         * image for the option value. E.g., a shoe that comes in multiple colors will have
+         * an OptionValue for each color with a thumbnail_url set.
+         */
+        thumbnail_url?: string | null;
+      }
+    }
+
+    /**
+     * One effective selection on a product, post server-side relaxation.
+     */
+    export interface Selected {
+      /**
+       * The display value of the selected option (e.g. 'Blue', 'XL')
+       */
+      label: string;
+
+      /**
+       * The name of the selected option (e.g. 'Color', 'Size')
+       */
+      name: string;
+    }
+  }
 }
 
 /**
