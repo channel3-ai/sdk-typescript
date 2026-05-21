@@ -99,6 +99,13 @@ export interface EnrichEnrichURLResponse {
   offers?: Array<ProductsAPI.ProductOffer>;
 
   /**
+   * Structured attributes extracted for this product, keyed by attribute handle
+   * (e.g. 'color', 'material'). Values are the canonical allowed values for that
+   * handle.
+   */
+  structured_attributes?: { [key: string]: Array<string> };
+
+  /**
    * @deprecated Legacy variant list, always empty. Use v1 API for variant
    * dimensions.
    */
