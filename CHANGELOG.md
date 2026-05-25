@@ -1,5 +1,26 @@
 # Changelog
 
+## 3.3.0 (2026-05-25)
+
+Full Changelog: [v3.2.0...v3.3.0](https://github.com/channel3-ai/sdk-typescript/compare/v3.2.0...v3.3.0)
+
+### Features
+
+* add channel3 cli to stainless... i think? ([429d689](https://github.com/channel3-ai/sdk-typescript/commit/429d6894cad20732865a36f2109145ee5c5cd354))
+* **api:** add variants field to products, update structure in enrich ([a429180](https://github.com/channel3-ai/sdk-typescript/commit/a429180fcd3d27c8248f48773649920423f3c2e9))
+* Extracted attribute search on the API (test) ([0f7c426](https://github.com/channel3-ai/sdk-typescript/commit/0f7c426506b72552435b473dcc1de9460adb196b))
+
+
+### Bug Fixes
+
+* **typescript:** upgrade tsc-multi so that it works with Node 26 ([1399ad8](https://github.com/channel3-ai/sdk-typescript/commit/1399ad8983c2668e9d05ba0652eef2f998256d41))
+
+
+### Chores
+
+* redact api-key headers in debug logs ([893c315](https://github.com/channel3-ai/sdk-typescript/commit/893c3159cf8e004c8842da0341dedb03908e0f5b))
+* **tests:** remove redundant File import ([2602f27](https://github.com/channel3-ai/sdk-typescript/commit/2602f272a2a055bb34b9dfbac60c5785356859a1))
+
 ## 3.2.0 (2026-04-30)
 
 Full Changelog: [v3.1.0...v3.2.0](https://github.com/channel3-ai/sdk-typescript/compare/v3.1.0...v3.2.0)
