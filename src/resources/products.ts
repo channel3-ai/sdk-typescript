@@ -2,6 +2,7 @@
 
 import { APIResource } from '../core/resource';
 import * as ProductsAPI from './products';
+import * as CategoriesAPI from './categories';
 import * as SearchAPI from './search';
 import { APIPromise } from '../core/api-promise';
 import { PagePromise, SearchPage, type SearchPageParams } from '../core/pagination';
@@ -242,7 +243,15 @@ export interface ProductDetail {
    */
   brands?: Array<ProductBrand>;
 
+  /**
+   * @deprecated
+   */
   categories?: Array<string>;
+
+  /**
+   * Lean category representation used in search hits and list rows.
+   */
+  category?: CategoriesAPI.CategorySummary | null;
 
   description?: string | null;
 

@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
+import * as CategoriesAPI from './categories';
 import * as ProductsAPI from './products';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
@@ -76,7 +77,15 @@ export interface EnrichEnrichURLResponse {
    */
   brands?: Array<ProductsAPI.ProductBrand>;
 
+  /**
+   * @deprecated
+   */
   categories?: Array<string>;
+
+  /**
+   * Lean category representation used in search hits and list rows.
+   */
+  category?: CategoriesAPI.CategorySummary | null;
 
   description?: string | null;
 
