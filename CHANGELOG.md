@@ -1,5 +1,18 @@
 # Changelog
 
+## 3.3.1 (2026-05-25)
+
+Full Changelog: [v3.3.0...v3.3.1](https://github.com/channel3-ai/sdk-typescript/compare/v3.3.0...v3.3.1)
+
+### Features
+
+* **api:** add category field, deprecate categories in enrich/products responses ([6d5fc2a](https://github.com/channel3-ai/sdk-typescript/commit/6d5fc2a0e456fc851c20c6f4d70107b84abb526d))
+
+
+### Documentation
+
+* **api:** improve is_cleaned_image description in enrich/products ([75f7449](https://github.com/channel3-ai/sdk-typescript/commit/75f7449707bfb9e66d003277a349a3a746b1405e))
+
 ## 3.3.0 (2026-05-25)
 
 Full Changelog: [v3.2.0...v3.3.0](https://github.com/channel3-ai/sdk-typescript/compare/v3.2.0...v3.3.0)
