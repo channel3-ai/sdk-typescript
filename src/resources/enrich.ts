@@ -133,6 +133,13 @@ export namespace EnrichEnrichURLResponse {
 
     alt_text?: string | null;
 
+    /**
+     * True if this URL points to a cleaned image. A cleaned image has a square aspect
+     * ratio and a uniform, monochromatic background. Cleaned images are best displayed
+     * in a product grid.
+     */
+    is_cleaned_image?: boolean;
+
     is_main_image?: boolean;
 
     /**
