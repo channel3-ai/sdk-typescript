@@ -52,8 +52,8 @@ export class Products extends APIResource {
   /**
    * Search for products with pagination support.
    *
-   * At least one of `query`, `image_url`, or `base64_image` must be provided;
-   * requests with none of these will return 422.
+   * At least one of `query`, `image_url`, `base64_image`, or `page_token` must be
+   * provided; requests with none of these will return 422.
    */
   search(
     body: ProductSearchParams,
@@ -539,8 +539,8 @@ export interface ProductLookupParams {
 
 export interface ProductSearchParams extends SearchPageParams {
   /**
-   * Base64 encoded image. At least one of `query`, `image_url`, or `base64_image`
-   * must be provided.
+   * Base64 encoded image. At least one of `query`, `image_url`, `base64_image`, or
+   * `page_token` must be provided.
    */
   base64_image?: string | null;
 
@@ -556,8 +556,8 @@ export interface ProductSearchParams extends SearchPageParams {
   filters?: SearchAPI.SearchFilters;
 
   /**
-   * Image URL. At least one of `query`, `image_url`, or `base64_image` must be
-   * provided.
+   * Image URL. At least one of `query`, `image_url`, `base64_image`, or `page_token`
+   * must be provided.
    */
   image_url?: string | null;
 
@@ -567,8 +567,8 @@ export interface ProductSearchParams extends SearchPageParams {
   limit?: number | null;
 
   /**
-   * Search query. At least one of `query`, `image_url`, or `base64_image` must be
-   * provided.
+   * Search query. At least one of `query`, `image_url`, `base64_image`, or
+   * `page_token` must be provided.
    */
   query?: string | null;
 }
