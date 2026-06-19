@@ -417,6 +417,12 @@ export interface ProductOffer {
   url: string;
 
   /**
+   * Condition of this merchant offer (new, used, or refurbished). Null when
+   * condition is unknown.
+   */
+  condition?: 'new' | 'refurbished' | 'used' | null;
+
+  /**
    * The maximum commission rate for the merchant, as a percentage. 0 is no
    * commission. 0.5 is 50% commission. 'Max' because the actual commission rate may
    * be lower due to vendor-specific affiliate rules.

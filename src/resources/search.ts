@@ -128,9 +128,9 @@ export interface SearchFilters {
   colors?: SearchFilters.Colors | null;
 
   /**
-   * Filter by product condition. Incubating: condition data is currently incomplete;
-   * products without condition data will be included in all condition filter
-   * results.
+   * Filter by offer condition. Requires at least one offer matching the requested
+   * condition, locale, and any price filter. Offers without condition data are
+   * indexed as new.
    */
   condition?: 'new' | 'refurbished' | 'used' | null;
 
