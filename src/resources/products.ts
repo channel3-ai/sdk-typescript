@@ -131,6 +131,13 @@ export interface ImageSearchRequest {
    * results.
    */
   page_token?: string | null;
+
+  /**
+   * Image segmentation mode. None (default) disables segmentation. "AUTO" segments
+   * and crops the main product automatically. A custom string (e.g. "shoe", "mug")
+   * segments the specified object.
+   */
+  segment?: string | null;
 }
 
 /**
@@ -605,6 +612,13 @@ export interface ProductSearchByImageParams extends SearchPageParams {
    * Optional limit on the number of results. Default is 20, max is 30.
    */
   limit?: number | null;
+
+  /**
+   * Image segmentation mode. None (default) disables segmentation. "AUTO" segments
+   * and crops the main product automatically. A custom string (e.g. "shoe", "mug")
+   * segments the specified object.
+   */
+  segment?: string | null;
 }
 
 export declare namespace Products {

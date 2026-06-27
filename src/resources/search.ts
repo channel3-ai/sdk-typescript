@@ -159,6 +159,12 @@ export interface SearchFilters {
   price?: SearchFilterPrice | null;
 
   /**
+   * If 'on_sale', only products with at least one on-sale offer (priced below its
+   * compare-at price) for the requested locale are returned. If omitted, no filter.
+   */
+  sale?: 'on_sale' | null;
+
+  /**
    * If provided, only products from these websites will be returned. Accepts website
    * IDs or domains (e.g. "nike.com").
    */
