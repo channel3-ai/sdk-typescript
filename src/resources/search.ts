@@ -59,8 +59,7 @@ export interface SearchConfig {
   currency?: 'USD' | 'CAD' | 'AUD' | 'GBP' | 'EUR' | 'SEK' | 'CZK' | 'RON' | null;
 
   /**
-   * If True, search will only use keyword search and not vector search. Keyword-only
-   * search is not supported with image input.
+   * @deprecated Deprecated: use `mode`. `true` is equivalent to `mode=keyword`.
    */
   keyword_search_only?: boolean;
 
@@ -69,6 +68,15 @@ export interface SearchConfig {
    * `currency`, defaulting to `en`.
    */
   language?: 'en' | 'de' | 'fr' | 'it' | 'es' | 'nl' | 'sv' | 'fi' | 'pt' | 'cs' | 'el' | 'ro' | null;
+
+  /**
+   * Search strategy. `default` (recommended) combines lexical + semantic search and
+   * is right for most use cases. `keyword` is lexical only — use it for real-time,
+   * low-latency needs like ad targeting. `agentic` uses an LLM to plan multiple
+   * structured sub-searches for complex queries, with higher latency than the other
+   * modes.
+   */
+  mode?: 'keyword' | 'default' | 'agentic';
 }
 
 /**
