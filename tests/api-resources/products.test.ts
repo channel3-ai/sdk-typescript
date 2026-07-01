@@ -71,6 +71,7 @@ describe('resource products', () => {
         exclude_website_ids: ['string'],
         gender: 'male',
         price: { max_price: 0, min_price: 0 },
+        sale: 'on_sale',
         website_ids: ['string'],
       },
       limit: 1,

@@ -12,8 +12,8 @@ export class Search extends APIResource {
   /**
    * Search for products with pagination support.
    *
-   * At least one of `query`, `image_url`, or `base64_image` must be provided;
-   * requests with none of these will return 422.
+   * At least one of `query`, `image_url`, `base64_image`, or `page_token` must be
+   * provided; requests with none of these will return 422.
    *
    * @deprecated use `products.search` instead, which auto-paginates; will be removed in the next major version
    */
@@ -59,8 +59,7 @@ export interface SearchConfig {
   currency?: 'USD' | 'CAD' | 'AUD' | 'GBP' | 'EUR' | 'SEK' | 'CZK' | 'RON' | null;
 
   /**
-   * If True, search will only use keyword search and not vector search. Keyword-only
-   * search is not supported with image input.
+   * @deprecated Deprecated: use `mode`. `true` is equivalent to `mode=keyword`.
    */
   keyword_search_only?: boolean;
 
@@ -69,6 +68,15 @@ export interface SearchConfig {
    * `currency`, defaulting to `en`.
    */
   language?: 'en' | 'de' | 'fr' | 'it' | 'es' | 'nl' | 'sv' | 'fi' | 'pt' | 'cs' | 'el' | 'ro' | null;
+
+  /**
+   * Search strategy. `default` (recommended) combines lexical + semantic search and
+   * is right for most use cases. `keyword` is lexical only — use it for real-time,
+   * low-latency needs like ad targeting. `agentic` uses an LLM to plan multiple
+   * structured sub-searches for complex queries, with higher latency than the other
+   * modes.
+   */
+  mode?: 'keyword' | 'default' | 'agentic';
 }
 
 /**
@@ -128,9 +136,9 @@ export interface SearchFilters {
   colors?: SearchFilters.Colors | null;
 
   /**
-   * Filter by product condition. Incubating: condition data is currently incomplete;
-   * products without condition data will be included in all condition filter
-   * results.
+   * Filter by offer condition. Requires at least one offer matching the requested
+   * condition, locale, and any price filter. Offers without condition data are
+   * indexed as new.
    */
   condition?: 'new' | 'refurbished' | 'used' | null;
 
@@ -157,6 +165,12 @@ export interface SearchFilters {
    * Price filter for search. Values are inclusive.
    */
   price?: SearchFilterPrice | null;
+
+  /**
+   * If 'on_sale', only products with at least one on-sale offer (priced below its
+   * compare-at price) for the requested locale are returned. If omitted, no filter.
+   */
+  sale?: 'on_sale' | null;
 
   /**
    * If provided, only products from these websites will be returned. Accepts website
@@ -200,8 +214,8 @@ export namespace SearchFilters {
  */
 export interface SearchRequest {
   /**
-   * Base64 encoded image. At least one of `query`, `image_url`, or `base64_image`
-   * must be provided.
+   * Base64 encoded image. At least one of `query`, `image_url`, `base64_image`, or
+   * `page_token` must be provided.
    */
   base64_image?: string | null;
 
@@ -217,8 +231,8 @@ export interface SearchRequest {
   filters?: SearchFilters;
 
   /**
-   * Image URL. At least one of `query`, `image_url`, or `base64_image` must be
-   * provided.
+   * Image URL. At least one of `query`, `image_url`, `base64_image`, or `page_token`
+   * must be provided.
    */
   image_url?: string | null;
 
@@ -233,8 +247,8 @@ export interface SearchRequest {
   page_token?: string | null;
 
   /**
-   * Search query. At least one of `query`, `image_url`, or `base64_image` must be
-   * provided.
+   * Search query. At least one of `query`, `image_url`, `base64_image`, or
+   * `page_token` must be provided.
    */
   query?: string | null;
 }
@@ -253,8 +267,8 @@ export interface SearchResponse {
 
 export interface SearchPerformParams {
   /**
-   * Base64 encoded image. At least one of `query`, `image_url`, or `base64_image`
-   * must be provided.
+   * Base64 encoded image. At least one of `query`, `image_url`, `base64_image`, or
+   * `page_token` must be provided.
    */
   base64_image?: string | null;
 
@@ -270,8 +284,8 @@ export interface SearchPerformParams {
   filters?: SearchFilters;
 
   /**
-   * Image URL. At least one of `query`, `image_url`, or `base64_image` must be
-   * provided.
+   * Image URL. At least one of `query`, `image_url`, `base64_image`, or `page_token`
+   * must be provided.
    */
   image_url?: string | null;
 
@@ -286,8 +300,8 @@ export interface SearchPerformParams {
   page_token?: string | null;
 
   /**
-   * Search query. At least one of `query`, `image_url`, or `base64_image` must be
-   * provided.
+   * Search query. At least one of `query`, `image_url`, `base64_image`, or
+   * `page_token` must be provided.
    */
   query?: string | null;
 }

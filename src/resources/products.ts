@@ -52,8 +52,8 @@ export class Products extends APIResource {
   /**
    * Search for products with pagination support.
    *
-   * At least one of `query`, `image_url`, or `base64_image` must be provided;
-   * requests with none of these will return 422.
+   * At least one of `query`, `image_url`, `base64_image`, or `page_token` must be
+   * provided; requests with none of these will return 422.
    */
   search(
     body: ProductSearchParams,
@@ -131,6 +131,13 @@ export interface ImageSearchRequest {
    * results.
    */
   page_token?: string | null;
+
+  /**
+   * Image segmentation mode. None (default) disables segmentation. "AUTO" segments
+   * and crops the main product automatically. A custom string (e.g. "shoe", "mug")
+   * segments the specified object.
+   */
+  segment?: string | null;
 }
 
 /**
@@ -417,6 +424,12 @@ export interface ProductOffer {
   url: string;
 
   /**
+   * Condition of this merchant offer (new, used, or refurbished). Null when
+   * condition is unknown.
+   */
+  condition?: 'new' | 'refurbished' | 'used' | null;
+
+  /**
    * The maximum commission rate for the merchant, as a percentage. 0 is no
    * commission. 0.5 is 50% commission. 'Max' because the actual commission rate may
    * be lower due to vendor-specific affiliate rules.
@@ -539,8 +552,8 @@ export interface ProductLookupParams {
 
 export interface ProductSearchParams extends SearchPageParams {
   /**
-   * Base64 encoded image. At least one of `query`, `image_url`, or `base64_image`
-   * must be provided.
+   * Base64 encoded image. At least one of `query`, `image_url`, `base64_image`, or
+   * `page_token` must be provided.
    */
   base64_image?: string | null;
 
@@ -556,8 +569,8 @@ export interface ProductSearchParams extends SearchPageParams {
   filters?: SearchAPI.SearchFilters;
 
   /**
-   * Image URL. At least one of `query`, `image_url`, or `base64_image` must be
-   * provided.
+   * Image URL. At least one of `query`, `image_url`, `base64_image`, or `page_token`
+   * must be provided.
    */
   image_url?: string | null;
 
@@ -567,8 +580,8 @@ export interface ProductSearchParams extends SearchPageParams {
   limit?: number | null;
 
   /**
-   * Search query. At least one of `query`, `image_url`, or `base64_image` must be
-   * provided.
+   * Search query. At least one of `query`, `image_url`, `base64_image`, or
+   * `page_token` must be provided.
    */
   query?: string | null;
 }
@@ -599,6 +612,13 @@ export interface ProductSearchByImageParams extends SearchPageParams {
    * Optional limit on the number of results. Default is 20, max is 30.
    */
   limit?: number | null;
+
+  /**
+   * Image segmentation mode. None (default) disables segmentation. "AUTO" segments
+   * and crops the main product automatically. A custom string (e.g. "shoe", "mug")
+   * segments the specified object.
+   */
+  segment?: string | null;
 }
 
 export declare namespace Products {
