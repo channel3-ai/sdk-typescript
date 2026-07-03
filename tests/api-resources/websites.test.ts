@@ -22,7 +22,7 @@ describe('resource websites', () => {
 
   // Mock server tests are disabled
   test.skip('retrieve: required and optional params', async () => {
-    const response = await client.websites.retrieve({ query: 'query' });
+    const response = await client.websites.retrieve({ query: 'query', country: 'US' });
   });
 
   // Mock server tests are disabled
@@ -39,6 +39,6 @@ describe('resource websites', () => {
 
   // Mock server tests are disabled
   test.skip('find: required and optional params', async () => {
-    const response = await client.websites.find({ query: 'query' });
+    const response = await client.websites.find({ query: 'query', country: 'US' });
   });
 });

@@ -5,6 +5,7 @@ export {
   Brands,
   type Brand,
   type SearchBrandsResponse,
+  type BrandRetrieveParams,
   type BrandListParams,
   type BrandFindParams,
   type BrandSearchParams,
