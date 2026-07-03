@@ -26,17 +26,70 @@ export interface Website {
   url: string;
 
   /**
-   * The maximum commission rate for the website, as a percentage
+   * The maximum commission rate for the website in the requested country (default
+   * 'US'), as a percentage
    */
   best_commission_rate?: number;
 }
 
 export interface WebsiteRetrieveParams {
   query: string;
+
+  /**
+   * ISO 3166-1 alpha-2 country code that `best_commission_rate` is scoped to.
+   * Defaults to 'US' when unset.
+   */
+  country?:
+    | 'US'
+    | 'GB'
+    | 'EU'
+    | 'AU'
+    | 'CA'
+    | 'IE'
+    | 'DE'
+    | 'AT'
+    | 'FR'
+    | 'BE'
+    | 'IT'
+    | 'ES'
+    | 'NL'
+    | 'SE'
+    | 'FI'
+    | 'PT'
+    | 'CZ'
+    | 'GR'
+    | 'RO'
+    | null;
 }
 
 export interface WebsiteFindParams {
   query: string;
+
+  /**
+   * ISO 3166-1 alpha-2 country code that `best_commission_rate` is scoped to.
+   * Defaults to 'US' when unset.
+   */
+  country?:
+    | 'US'
+    | 'GB'
+    | 'EU'
+    | 'AU'
+    | 'CA'
+    | 'IE'
+    | 'DE'
+    | 'AT'
+    | 'FR'
+    | 'BE'
+    | 'IT'
+    | 'ES'
+    | 'NL'
+    | 'SE'
+    | 'FI'
+    | 'PT'
+    | 'CZ'
+    | 'GR'
+    | 'RO'
+    | null;
 }
 
 export declare namespace Websites {
