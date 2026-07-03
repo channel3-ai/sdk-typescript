@@ -37,7 +37,7 @@ Types:
 
 Methods:
 
-- <code title="get /v1/brands/{brand_id}">client.brands.<a href="./src/resources/brands.ts">retrieve</a>(brandID) -> Brand</code>
+- <code title="get /v1/brands/{brand_id}">client.brands.<a href="./src/resources/brands.ts">retrieve</a>(brandID, { ...params }) -> Brand</code>
 - <code title="get /v1/brands">client.brands.<a href="./src/resources/brands.ts">list</a>({ ...params }) -> BrandsCursorPage</code>
 - <code title="get /v0/brands">client.brands.<a href="./src/resources/brands.ts">find</a>({ ...params }) -> Brand</code>
 - <code title="get /v1/brands/search">client.brands.<a href="./src/resources/brands.ts">search</a>({ ...params }) -> SearchBrandsResponse</code>

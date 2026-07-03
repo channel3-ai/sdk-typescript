@@ -21,6 +21,14 @@ describe('resource brands', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('retrieve: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.brands.retrieve('brand_id', { country: 'US' }, { path: '/_stainless_unknown_path' }),
+    ).rejects.toThrow(Channel3.NotFoundError);
+  });
+
+  // Mock server tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.brands.list();
     const rawResponse = await responsePromise.asResponse();
@@ -36,7 +44,14 @@ describe('resource brands', () => {
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.brands.list({ cursor: 'cursor', limit: 1 }, { path: '/_stainless_unknown_path' }),
+      client.brands.list(
+        {
+          country: 'US',
+          cursor: 'cursor',
+          limit: 1,
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
     ).rejects.toThrow(Channel3.NotFoundError);
   });
 
@@ -71,6 +86,10 @@ describe('resource brands', () => {
 
   // Mock server tests are disabled
   test.skip('search: required and optional params', async () => {
-    const response = await client.brands.search({ query: 'x', limit: 1 });
+    const response = await client.brands.search({
+      query: 'x',
+      country: 'US',
+      limit: 1,
+    });
   });
 });

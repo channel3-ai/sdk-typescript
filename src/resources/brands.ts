@@ -10,8 +10,12 @@ export class Brands extends APIResource {
   /**
    * Get detailed information about a specific brand by its ID.
    */
-  retrieve(brandID: string, options?: RequestOptions): APIPromise<Brand> {
-    return this._client.get(path`/v1/brands/${brandID}`, options);
+  retrieve(
+    brandID: string,
+    query: BrandRetrieveParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<Brand> {
+    return this._client.get(path`/v1/brands/${brandID}`, { query, ...options });
   }
 
   /**
@@ -49,7 +53,8 @@ export interface Brand {
   name: string;
 
   /**
-   * The maximum commission rate for the brand, as a percentage
+   * The maximum commission rate for the brand in the requested country (default
+   * 'US'), as a percentage
    */
   best_commission_rate?: number;
 
@@ -65,7 +70,61 @@ export interface SearchBrandsResponse {
   brands: Array<Brand>;
 }
 
-export interface BrandListParams extends CursorPageParams {}
+export interface BrandRetrieveParams {
+  /**
+   * ISO 3166-1 alpha-2 country code that `best_commission_rate` is scoped to.
+   * Defaults to 'US' when unset.
+   */
+  country?:
+    | 'US'
+    | 'GB'
+    | 'EU'
+    | 'AU'
+    | 'CA'
+    | 'IE'
+    | 'DE'
+    | 'AT'
+    | 'FR'
+    | 'BE'
+    | 'IT'
+    | 'ES'
+    | 'NL'
+    | 'SE'
+    | 'FI'
+    | 'PT'
+    | 'CZ'
+    | 'GR'
+    | 'RO'
+    | null;
+}
+
+export interface BrandListParams extends CursorPageParams {
+  /**
+   * ISO 3166-1 alpha-2 country code that `best_commission_rate` is scoped to.
+   * Defaults to 'US' when unset.
+   */
+  country?:
+    | 'US'
+    | 'GB'
+    | 'EU'
+    | 'AU'
+    | 'CA'
+    | 'IE'
+    | 'DE'
+    | 'AT'
+    | 'FR'
+    | 'BE'
+    | 'IT'
+    | 'ES'
+    | 'NL'
+    | 'SE'
+    | 'FI'
+    | 'PT'
+    | 'CZ'
+    | 'GR'
+    | 'RO'
+    | null;
+}
 
 export interface BrandFindParams {
   query: string;
@@ -78,6 +137,32 @@ export interface BrandSearchParams {
   query: string;
 
   /**
+   * ISO 3166-1 alpha-2 country code that `best_commission_rate` is scoped to.
+   * Defaults to 'US' when unset.
+   */
+  country?:
+    | 'US'
+    | 'GB'
+    | 'EU'
+    | 'AU'
+    | 'CA'
+    | 'IE'
+    | 'DE'
+    | 'AT'
+    | 'FR'
+    | 'BE'
+    | 'IT'
+    | 'ES'
+    | 'NL'
+    | 'SE'
+    | 'FI'
+    | 'PT'
+    | 'CZ'
+    | 'GR'
+    | 'RO'
+    | null;
+
+  /**
    * Maximum number of brands to return.
    */
   limit?: number;
@@ -88,6 +173,7 @@ export declare namespace Brands {
     type Brand as Brand,
     type SearchBrandsResponse as SearchBrandsResponse,
     type BrandsCursorPage as BrandsCursorPage,
+    type BrandRetrieveParams as BrandRetrieveParams,
     type BrandListParams as BrandListParams,
     type BrandFindParams as BrandFindParams,
     type BrandSearchParams as BrandSearchParams,
