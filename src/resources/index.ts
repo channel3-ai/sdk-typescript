@@ -50,6 +50,7 @@ export {
 export {
   Products,
   type AvailabilityStatus,
+  type BrowseRequest,
   type ImageSearchRequest,
   type LocaleConfig,
   type LookupRequest,
@@ -61,6 +62,7 @@ export {
   type ProductOffer,
   type SimilarProductsRequest,
   type ProductRetrieveParams,
+  type ProductBrowseParams,
   type ProductFindSimilarParams,
   type ProductLookupParams,
   type ProductSearchParams,

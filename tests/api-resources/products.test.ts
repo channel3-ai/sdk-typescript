@@ -38,6 +38,18 @@ describe('resource products', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('browse', async () => {
+    const responsePromise = client.products.browse({});
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
   test.skip('findSimilar: only required params', async () => {
     const responsePromise = client.products.findSimilar({ product_id: 'product_id' });
     const rawResponse = await responsePromise.asResponse();
