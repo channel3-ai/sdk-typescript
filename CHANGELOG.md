@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.4.1 (2026-07-06)
+
+Full Changelog: [v3.4.0...v3.4.1](https://github.com/channel3-ai/sdk-typescript/compare/v3.4.0...v3.4.1)
+
+### Features
+
+* **api:** add monetize method to products ([34fed37](https://github.com/channel3-ai/sdk-typescript/commit/34fed37fe469b80c0fe24b8485ab59a84879ec81))
+
 ## 3.4.0 (2026-07-06)
 
 Full Changelog: [v3.3.1...v3.4.0](https://github.com/channel3-ai/sdk-typescript/compare/v3.3.1...v3.4.0)
