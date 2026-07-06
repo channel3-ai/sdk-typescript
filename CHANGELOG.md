@@ -1,5 +1,32 @@
 # Changelog
 
+## 3.4.0 (2026-07-06)
+
+Full Changelog: [v3.3.1...v3.4.0](https://github.com/channel3-ai/sdk-typescript/compare/v3.3.1...v3.4.0)
+
+### Features
+
+* **api:** add mode parameter to search, deprecate keyword_search_only ([ba6706e](https://github.com/channel3-ai/sdk-typescript/commit/ba6706ebccebfee9bfb5211e711b4a49923b9a17))
+* Experimental ClickHouse scraping telemetry (+ Grafana dashboards) ([fcfa07a](https://github.com/channel3-ai/sdk-typescript/commit/fcfa07a6d4e9c5d06ab614f174e51e96cf2e26c0))
+
+
+### Bug Fixes
+
+* **client:** send content-type header for requests with an omitted optional body ([6298481](https://github.com/channel3-ai/sdk-typescript/commit/629848178ffc188705f34be4830337fcf9b7593b))
+* **deps:** bump picomatch and flatted to patch CVEs ([#25](https://github.com/channel3-ai/sdk-typescript/issues/25)) ([4ddc854](https://github.com/channel3-ai/sdk-typescript/commit/4ddc8542b844a87d183586eb324869362cac6c93))
+
+
+### Chores
+
+* **internal:** regenerate SDK with no functional changes ([becbc12](https://github.com/channel3-ai/sdk-typescript/commit/becbc12aa98a05137331a5f570a5dadb5a4695d8))
+* **internal:** regenerate SDK with no functional changes ([c42b2bc](https://github.com/channel3-ai/sdk-typescript/commit/c42b2bcccce913aa99177d8ed0be906c3424e31b))
+
+
+### Documentation
+
+* **api:** clarify page_token parameter in products and search methods ([f040e5c](https://github.com/channel3-ai/sdk-typescript/commit/f040e5c4ce6fe6a5491ff5eb416203987ca3017b))
+* **types:** clarify max_commission_rate format in ProductOffer ([3179700](https://github.com/channel3-ai/sdk-typescript/commit/317970093bc17e35c1d9d4a8429efb13d7752b9f))
+
 ## 3.3.1 (2026-05-25)
 
 Full Changelog: [v3.3.0...v3.3.1](https://github.com/channel3-ai/sdk-typescript/compare/v3.3.0...v3.3.1)
