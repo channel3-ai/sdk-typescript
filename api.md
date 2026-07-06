@@ -14,6 +14,9 @@ Types:
 - <code><a href="./src/resources/products.ts">LocaleConfig</a></code>
 - <code><a href="./src/resources/products.ts">LookupRequest</a></code>
 - <code><a href="./src/resources/products.ts">LookupResponse</a></code>
+- <code><a href="./src/resources/products.ts">MonetizeOffer</a></code>
+- <code><a href="./src/resources/products.ts">MonetizeRequest</a></code>
+- <code><a href="./src/resources/products.ts">MonetizeResponse</a></code>
 - <code><a href="./src/resources/products.ts">Price</a></code>
 - <code><a href="./src/resources/products.ts">ProductBrand</a></code>
 - <code><a href="./src/resources/products.ts">ProductDetail</a></code>
@@ -27,6 +30,7 @@ Methods:
 - <code title="post /v1/browse">client.products.<a href="./src/resources/products.ts">browse</a>({ ...params }) -> ProductDetailsSearchPage</code>
 - <code title="post /v1/similar">client.products.<a href="./src/resources/products.ts">findSimilar</a>({ ...params }) -> ProductDetailsSearchPage</code>
 - <code title="post /v1/lookup">client.products.<a href="./src/resources/products.ts">lookup</a>({ ...params }) -> LookupResponse</code>
+- <code title="post /v1/monetize">client.products.<a href="./src/resources/products.ts">monetize</a>({ ...params }) -> MonetizeResponse</code>
 - <code title="post /v1/search">client.products.<a href="./src/resources/products.ts">search</a>({ ...params }) -> ProductDetailsSearchPage</code>
 - <code title="post /v1/image-search">client.products.<a href="./src/resources/products.ts">searchByImage</a>({ ...params }) -> ProductDetailsSearchPage</code>
 

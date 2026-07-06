@@ -72,6 +72,17 @@ export class Products extends APIResource {
   }
 
   /**
+   * Return monetizable offers (with max commission rate) for a product URL.
+   *
+   * Access to this endpoint is restricted. If you think your use-case requires it,
+   * please contact us. Usually, developers actually want search. This is helpful for
+   * migrating to Channel3.
+   */
+  monetize(body: ProductMonetizeParams, options?: RequestOptions): APIPromise<MonetizeResponse> {
+    return this._client.post('/v1/monetize', { body, ...options });
+  }
+
+  /**
    * Search for products with pagination support.
    *
    * At least one of `query`, `image_url`, `base64_image`, or `page_token` must be
@@ -250,6 +261,42 @@ export interface LookupResponse {
    * Product with detailed information.
    */
   product: ProductDetail;
+}
+
+export interface MonetizeOffer {
+  /**
+   * Merchant domain, e.g. nordstrom.com
+   */
+  domain: string;
+
+  /**
+   * buy.trychannel3.com deeplink. Clicks are tracked and routed through the
+   * highest-paying affiliate network for the merchant.
+   */
+  url: string;
+
+  /**
+   * Maximum post-take-rate commission for the merchant, as a decimal (0.05 = 5%).
+   * 'Max' because the realized rate may be lower.
+   */
+  max_commission_rate?: number;
+}
+
+export interface MonetizeRequest {
+  /**
+   * The URL of the product to monetize
+   */
+  url: string;
+}
+
+/**
+ * Response from the /v1/monetize endpoint — just the list of offers.
+ */
+export interface MonetizeResponse {
+  /**
+   * Monetizable offers, sorted by max_commission_rate descending.
+   */
+  offers?: Array<MonetizeOffer>;
 }
 
 export interface Price {
@@ -606,6 +653,13 @@ export interface ProductLookupParams {
   max_staleness_hours?: number;
 }
 
+export interface ProductMonetizeParams {
+  /**
+   * The URL of the product to monetize
+   */
+  url: string;
+}
+
 export interface ProductSearchParams extends SearchPageParams {
   /**
    * Base64 encoded image. At least one of `query`, `image_url`, `base64_image`, or
@@ -685,6 +739,9 @@ export declare namespace Products {
     type LocaleConfig as LocaleConfig,
     type LookupRequest as LookupRequest,
     type LookupResponse as LookupResponse,
+    type MonetizeOffer as MonetizeOffer,
+    type MonetizeRequest as MonetizeRequest,
+    type MonetizeResponse as MonetizeResponse,
     type Price as Price,
     type ProductBrand as ProductBrand,
     type ProductDetail as ProductDetail,
@@ -696,6 +753,7 @@ export declare namespace Products {
     type ProductBrowseParams as ProductBrowseParams,
     type ProductFindSimilarParams as ProductFindSimilarParams,
     type ProductLookupParams as ProductLookupParams,
+    type ProductMonetizeParams as ProductMonetizeParams,
     type ProductSearchParams as ProductSearchParams,
     type ProductSearchByImageParams as ProductSearchByImageParams,
   };
