@@ -9,6 +9,7 @@ Types:
 Types:
 
 - <code><a href="./src/resources/products.ts">AvailabilityStatus</a></code>
+- <code><a href="./src/resources/products.ts">BrowseRequest</a></code>
 - <code><a href="./src/resources/products.ts">ImageSearchRequest</a></code>
 - <code><a href="./src/resources/products.ts">LocaleConfig</a></code>
 - <code><a href="./src/resources/products.ts">LookupRequest</a></code>
@@ -23,6 +24,7 @@ Types:
 Methods:
 
 - <code title="get /v1/products/{product_id}">client.products.<a href="./src/resources/products.ts">retrieve</a>(productID, { ...params }) -> ProductDetail</code>
+- <code title="post /v1/browse">client.products.<a href="./src/resources/products.ts">browse</a>({ ...params }) -> ProductDetailsSearchPage</code>
 - <code title="post /v1/similar">client.products.<a href="./src/resources/products.ts">findSimilar</a>({ ...params }) -> ProductDetailsSearchPage</code>
 - <code title="post /v1/lookup">client.products.<a href="./src/resources/products.ts">lookup</a>({ ...params }) -> LookupResponse</code>
 - <code title="post /v1/search">client.products.<a href="./src/resources/products.ts">search</a>({ ...params }) -> ProductDetailsSearchPage</code>

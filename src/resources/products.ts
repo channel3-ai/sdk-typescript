@@ -22,6 +22,28 @@ export class Products extends APIResource {
   }
 
   /**
+   * List and page through products for a set of filters.
+   *
+   * Useful for a static, grid view of products for a brand, website, or category.
+   *
+   * At least one of `filters.brand_ids`, `filters.category_ids`, or
+   * `filters.website_ids` must be provided.
+   *
+   * Access to this endpoint is restricted. If you think your use-case requires it,
+   * please contact us.
+   */
+  browse(
+    body: ProductBrowseParams,
+    options?: RequestOptions,
+  ): PagePromise<ProductDetailsSearchPage, ProductDetail> {
+    return this._client.getAPIList('/v1/browse', SearchPage<ProductDetail>, {
+      body,
+      method: 'post',
+      ...options,
+    });
+  }
+
+  /**
    * Find products similar to a given product.
    *
    * Consider setting `filters` to narrow results to the same gender, brand,
@@ -95,6 +117,27 @@ export type AvailabilityStatus =
   | 'OutOfStock'
   | 'Discontinued'
   | 'Unknown';
+
+/**
+ * Filter-driven product listing with pagination (no free-text query).
+ */
+export interface BrowseRequest {
+  /**
+   * Filters to browse by. At least one of `brand_ids`, `category_ids`, or
+   * `website_ids` must be provided.
+   */
+  filters?: SearchAPI.SearchFilters;
+
+  /**
+   * Optional limit on the number of results. Default is 20, max is 30.
+   */
+  limit?: number | null;
+
+  /**
+   * Opaque token from a previous browse response to fetch the next page.
+   */
+  page_token?: string | null;
+}
 
 /**
  * Image-only search request.
@@ -514,6 +557,19 @@ export interface ProductRetrieveParams {
   website_ids?: Array<string> | null;
 }
 
+export interface ProductBrowseParams extends SearchPageParams {
+  /**
+   * Filters to browse by. At least one of `brand_ids`, `category_ids`, or
+   * `website_ids` must be provided.
+   */
+  filters?: SearchAPI.SearchFilters;
+
+  /**
+   * Optional limit on the number of results. Default is 20, max is 30.
+   */
+  limit?: number | null;
+}
+
 export interface ProductFindSimilarParams extends SearchPageParams {
   /**
    * Canonical product ID to find similar products for.
@@ -624,6 +680,7 @@ export interface ProductSearchByImageParams extends SearchPageParams {
 export declare namespace Products {
   export {
     type AvailabilityStatus as AvailabilityStatus,
+    type BrowseRequest as BrowseRequest,
     type ImageSearchRequest as ImageSearchRequest,
     type LocaleConfig as LocaleConfig,
     type LookupRequest as LookupRequest,
@@ -636,6 +693,7 @@ export declare namespace Products {
     type SimilarProductsRequest as SimilarProductsRequest,
     type ProductDetailsSearchPage as ProductDetailsSearchPage,
     type ProductRetrieveParams as ProductRetrieveParams,
+    type ProductBrowseParams as ProductBrowseParams,
     type ProductFindSimilarParams as ProductFindSimilarParams,
     type ProductLookupParams as ProductLookupParams,
     type ProductSearchParams as ProductSearchParams,

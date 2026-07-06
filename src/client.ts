@@ -70,12 +70,14 @@ import {
 } from './resources/price-tracking';
 import {
   AvailabilityStatus,
+  BrowseRequest,
   ImageSearchRequest,
   LocaleConfig,
   LookupRequest,
   LookupResponse,
   Price,
   ProductBrand,
+  ProductBrowseParams,
   ProductDetail,
   ProductDetailsSearchPage,
   ProductFindSimilarParams,
@@ -907,6 +909,7 @@ export declare namespace Channel3 {
   export {
     Products as Products,
     type AvailabilityStatus as AvailabilityStatus,
+    type BrowseRequest as BrowseRequest,
     type ImageSearchRequest as ImageSearchRequest,
     type LocaleConfig as LocaleConfig,
     type LookupRequest as LookupRequest,
@@ -919,6 +922,7 @@ export declare namespace Channel3 {
     type SimilarProductsRequest as SimilarProductsRequest,
     type ProductDetailsSearchPage as ProductDetailsSearchPage,
     type ProductRetrieveParams as ProductRetrieveParams,
+    type ProductBrowseParams as ProductBrowseParams,
     type ProductFindSimilarParams as ProductFindSimilarParams,
     type ProductLookupParams as ProductLookupParams,
     type ProductSearchParams as ProductSearchParams,
