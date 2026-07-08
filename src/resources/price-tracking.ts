@@ -8,11 +8,6 @@ import { path } from '../internal/utils/path';
 
 export class PriceTracking extends APIResource {
   /**
-   * @deprecated use `retrieve_history` instead; will be removed in the next major version
-   */
-  getHistory = this.retrieveHistory;
-
-  /**
    * List your active price tracking subscriptions.
    */
   listSubscriptions(
@@ -49,6 +44,11 @@ export class PriceTracking extends APIResource {
   stop(body: PriceTrackingStopParams, options?: RequestOptions): APIPromise<Subscription> {
     return this._client.post('/v0/price-tracking/stop', { body, ...options });
   }
+
+  /**
+   * @deprecated use `retrieve_history` instead; will be removed in the next major version
+   */
+  getHistory = this.retrieveHistory;
 }
 
 export type SubscriptionsCursorPage = CursorPage<Subscription>;
@@ -119,13 +119,6 @@ export type History = PriceHistoryPoint;
  */
 export type Statistics = PriceStatistics;
 
-export interface PriceTrackingGetHistoryParams {
-  /**
-   * Number of days of history to fetch (max 30)
-   */
-  days?: number;
-}
-
 export interface PriceTrackingListSubscriptionsParams extends CursorPageParams {}
 
 export interface PriceTrackingRetrieveHistoryParams {
@@ -143,6 +136,13 @@ export interface PriceTrackingStopParams {
   canonical_product_id: string;
 }
 
+export interface PriceTrackingGetHistoryParams {
+  /**
+   * Number of days of history to fetch (max 30)
+   */
+  days?: number;
+}
+
 export declare namespace PriceTracking {
   export {
     type PaginatedSubscriptionsResponse as PaginatedSubscriptionsResponse,
@@ -155,10 +155,10 @@ export declare namespace PriceTracking {
     type History as History,
     type Statistics as Statistics,
     type SubscriptionsCursorPage as SubscriptionsCursorPage,
-    type PriceTrackingGetHistoryParams as PriceTrackingGetHistoryParams,
     type PriceTrackingListSubscriptionsParams as PriceTrackingListSubscriptionsParams,
     type PriceTrackingRetrieveHistoryParams as PriceTrackingRetrieveHistoryParams,
     type PriceTrackingStartParams as PriceTrackingStartParams,
     type PriceTrackingStopParams as PriceTrackingStopParams,
+    type PriceTrackingGetHistoryParams as PriceTrackingGetHistoryParams,
   };
 }

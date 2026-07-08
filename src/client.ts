@@ -980,11 +980,11 @@ export declare namespace Channel3 {
     type History as History,
     type Statistics as Statistics,
     type SubscriptionsCursorPage as SubscriptionsCursorPage,
-    type PriceTrackingGetHistoryParams as PriceTrackingGetHistoryParams,
     type PriceTrackingListSubscriptionsParams as PriceTrackingListSubscriptionsParams,
     type PriceTrackingRetrieveHistoryParams as PriceTrackingRetrieveHistoryParams,
     type PriceTrackingStartParams as PriceTrackingStartParams,
     type PriceTrackingStopParams as PriceTrackingStopParams,
+    type PriceTrackingGetHistoryParams as PriceTrackingGetHistoryParams,
   };
 
   export {
