@@ -40,11 +40,11 @@ export {
   type Subscription,
   type History,
   type Statistics,
-  type PriceTrackingGetHistoryParams,
   type PriceTrackingListSubscriptionsParams,
   type PriceTrackingRetrieveHistoryParams,
   type PriceTrackingStartParams,
   type PriceTrackingStopParams,
+  type PriceTrackingGetHistoryParams,
   type SubscriptionsCursorPage,
 } from './price-tracking';
 export {
