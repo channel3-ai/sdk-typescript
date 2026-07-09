@@ -1,5 +1,19 @@
 # Changelog
 
+## 3.5.0 (2026-07-09)
+
+Full Changelog: [v3.4.1...v3.5.0](https://github.com/channel3-ai/sdk-typescript/compare/v3.4.1...v3.5.0)
+
+### Features
+
+* **api:** add lengthUnit/weightUnit client config, rename unit params in products/search ([9ce072a](https://github.com/channel3-ai/sdk-typescript/commit/9ce072a2f5353707c2d6cedc7951ea0497a2109b))
+* Index offer dimensions into OpenSearch and expose dimension search filters ([fad00a5](https://github.com/channel3-ai/sdk-typescript/commit/fad00a5bcc963ec8527f7c4517abe0f3595fcf3e))
+
+
+### Bug Fixes
+
+* **client:** emit method aliases after the methods they reference ([1c8f648](https://github.com/channel3-ai/sdk-typescript/commit/1c8f6488cb1d2ecf5e88a705938912770b2cd947))
+
 ## 3.4.1 (2026-07-06)
 
 Full Changelog: [v3.4.0...v3.4.1](https://github.com/channel3-ai/sdk-typescript/compare/v3.4.0...v3.4.1)
