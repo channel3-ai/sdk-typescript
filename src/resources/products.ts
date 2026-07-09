@@ -244,14 +244,14 @@ export interface LocaleConfig {
    * request dimension filter's unit for the field takes precedence; when neither is
    * set, the merchant's stated unit is returned.
    */
-  preferred_length_unit?: 'mm' | 'cm' | 'm' | 'in' | 'ft' | null;
+  length_unit?: 'mm' | 'cm' | 'm' | 'in' | 'ft' | null;
 
   /**
    * Preferred unit for weight dimensions in responses. A request dimension filter's
    * weight unit takes precedence; when neither is set, the merchant's stated unit is
    * returned.
    */
-  preferred_weight_unit?: 'mg' | 'g' | 'kg' | 'oz' | 'lb' | null;
+  weight_unit?: 'mg' | 'g' | 'kg' | 'oz' | 'lb' | null;
 }
 
 export interface LookupRequest {
@@ -707,19 +707,19 @@ export interface ProductRetrieveParams {
    * Preferred unit for length dimensions (length/width/height). When unset,
    * dimensions are returned in the unit the merchant stated.
    */
-  preferred_length_unit?: 'mm' | 'cm' | 'm' | 'in' | 'ft' | null;
-
-  /**
-   * Preferred unit for weight dimensions. When unset, weight is returned in the unit
-   * the merchant stated.
-   */
-  preferred_weight_unit?: 'mg' | 'g' | 'kg' | 'oz' | 'lb' | null;
+  length_unit?: 'mm' | 'cm' | 'm' | 'in' | 'ft' | null;
 
   /**
    * Optional list of website IDs to constrain the buy URL to, relevant if multiple
    * merchants exist. Accepts website IDs or domains (e.g. "nike.com").
    */
   website_ids?: Array<string> | null;
+
+  /**
+   * Preferred unit for weight dimensions. When unset, weight is returned in the unit
+   * the merchant stated.
+   */
+  weight_unit?: 'mg' | 'g' | 'kg' | 'oz' | 'lb' | null;
 }
 
 export interface ProductBrowseParams extends SearchPageParams {
