@@ -238,6 +238,20 @@ export interface LocaleConfig {
    * `currency`, defaulting to `en`.
    */
   language?: 'en' | 'de' | 'fr' | 'it' | 'es' | 'nl' | 'sv' | 'fi' | 'pt' | 'cs' | 'el' | 'ro' | null;
+
+  /**
+   * Preferred unit for length dimensions (length/width/height) in responses. A
+   * request dimension filter's unit for the field takes precedence; when neither is
+   * set, the merchant's stated unit is returned.
+   */
+  preferred_length_unit?: 'mm' | 'cm' | 'm' | 'in' | 'ft' | null;
+
+  /**
+   * Preferred unit for weight dimensions in responses. A request dimension filter's
+   * weight unit takes precedence; when neither is set, the merchant's stated unit is
+   * returned.
+   */
+  preferred_weight_unit?: 'mg' | 'g' | 'kg' | 'oz' | 'lb' | null;
 }
 
 export interface LookupRequest {
@@ -520,11 +534,103 @@ export interface ProductOffer {
   condition?: 'new' | 'refurbished' | 'used' | null;
 
   /**
+   * Physical dimensions of a product offer. Members are null when unknown.
+   *
+   * Values are standardized to the supported unit set; a merchant-stated value whose
+   * unit is not one of those units is omitted rather than shown.
+   */
+  dimensions?: ProductOffer.Dimensions | null;
+
+  /**
    * The maximum commission rate for the merchant, as a decimal fraction: 0 is no
    * commission, 0.5 is 50% commission. 'Max' because the actual commission rate may
    * be lower due to vendor-specific affiliate rules.
    */
   max_commission_rate?: number;
+}
+
+export namespace ProductOffer {
+  /**
+   * Physical dimensions of a product offer. Members are null when unknown.
+   *
+   * Values are standardized to the supported unit set; a merchant-stated value whose
+   * unit is not one of those units is omitted rather than shown.
+   */
+  export interface Dimensions {
+    /**
+     * A length measurement, in one of the supported length units.
+     */
+    height?: Dimensions.Height | null;
+
+    /**
+     * A length measurement, in one of the supported length units.
+     */
+    length?: Dimensions.Length | null;
+
+    /**
+     * A weight measurement, in one of the supported weight units.
+     */
+    weight?: Dimensions.Weight | null;
+
+    /**
+     * A length measurement, in one of the supported length units.
+     */
+    width?: Dimensions.Width | null;
+  }
+
+  export namespace Dimensions {
+    /**
+     * A length measurement, in one of the supported length units.
+     */
+    export interface Height {
+      number: number;
+
+      /**
+       * The unit from the request's dimension filters when one was given (the value is
+       * converted to it); otherwise the unit the merchant stated.
+       */
+      unit: 'mm' | 'cm' | 'm' | 'in' | 'ft';
+    }
+
+    /**
+     * A length measurement, in one of the supported length units.
+     */
+    export interface Length {
+      number: number;
+
+      /**
+       * The unit from the request's dimension filters when one was given (the value is
+       * converted to it); otherwise the unit the merchant stated.
+       */
+      unit: 'mm' | 'cm' | 'm' | 'in' | 'ft';
+    }
+
+    /**
+     * A weight measurement, in one of the supported weight units.
+     */
+    export interface Weight {
+      number: number;
+
+      /**
+       * The unit from the request's dimension filters when one was given (the value is
+       * converted to it); otherwise the unit the merchant stated.
+       */
+      unit: 'mg' | 'g' | 'kg' | 'oz' | 'lb';
+    }
+
+    /**
+     * A length measurement, in one of the supported length units.
+     */
+    export interface Width {
+      number: number;
+
+      /**
+       * The unit from the request's dimension filters when one was given (the value is
+       * converted to it); otherwise the unit the merchant stated.
+       */
+      unit: 'mm' | 'cm' | 'm' | 'in' | 'ft';
+    }
+  }
 }
 
 /**
@@ -596,6 +702,18 @@ export interface ProductRetrieveParams {
    * when country and currency are also unset.
    */
   language?: 'en' | 'de' | 'fr' | 'it' | 'es' | 'nl' | 'sv' | 'fi' | 'pt' | 'cs' | 'el' | 'ro' | null;
+
+  /**
+   * Preferred unit for length dimensions (length/width/height). When unset,
+   * dimensions are returned in the unit the merchant stated.
+   */
+  preferred_length_unit?: 'mm' | 'cm' | 'm' | 'in' | 'ft' | null;
+
+  /**
+   * Preferred unit for weight dimensions. When unset, weight is returned in the unit
+   * the merchant stated.
+   */
+  preferred_weight_unit?: 'mg' | 'g' | 'kg' | 'oz' | 'lb' | null;
 
   /**
    * Optional list of website IDs to constrain the buy URL to, relevant if multiple

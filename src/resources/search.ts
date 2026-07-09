@@ -77,6 +77,20 @@ export interface SearchConfig {
    * modes.
    */
   mode?: 'keyword' | 'default' | 'agentic';
+
+  /**
+   * Preferred unit for length dimensions (length/width/height) in responses. A
+   * request dimension filter's unit for the field takes precedence; when neither is
+   * set, the merchant's stated unit is returned.
+   */
+  preferred_length_unit?: 'mm' | 'cm' | 'm' | 'in' | 'ft' | null;
+
+  /**
+   * Preferred unit for weight dimensions in responses. A request dimension filter's
+   * weight unit takes precedence; when neither is set, the merchant's stated unit is
+   * returned.
+   */
+  preferred_weight_unit?: 'mg' | 'g' | 'kg' | 'oz' | 'lb' | null;
 }
 
 /**
@@ -143,6 +157,18 @@ export interface SearchFilters {
   condition?: 'new' | 'refurbished' | 'used' | null;
 
   /**
+   * Physical-dimension range filters, matched against the same offer.
+   *
+   * Matching products have at least one offer satisfying every provided range
+   * (alongside any locale/price/availability filters). Values are compared with a
+   * small relative tolerance. An offer with no dimension data for a filtered field
+   * does not match; note that when a single merchant on a product reports a
+   * dimension it is shared across that product's offers, so a matching offer may not
+   * itself surface that dimension in the response.
+   */
+  dimensions?: SearchFilters.Dimensions | null;
+
+  /**
    * If provided, products from these brands will be excluded from the results
    */
   exclude_brand_ids?: Array<string> | null;
@@ -205,6 +231,96 @@ export namespace SearchFilters {
        * Percentage of color, where 1.0 is 100%
        */
       percentage?: number | null;
+    }
+  }
+
+  /**
+   * Physical-dimension range filters, matched against the same offer.
+   *
+   * Matching products have at least one offer satisfying every provided range
+   * (alongside any locale/price/availability filters). Values are compared with a
+   * small relative tolerance. An offer with no dimension data for a filtered field
+   * does not match; note that when a single merchant on a product reports a
+   * dimension it is shared across that product's offers, so a matching offer may not
+   * itself surface that dimension in the response.
+   */
+  export interface Dimensions {
+    height?: Dimensions.Height | null;
+
+    length?: Dimensions.Length | null;
+
+    weight?: Dimensions.Weight | null;
+
+    width?: Dimensions.Width | null;
+  }
+
+  export namespace Dimensions {
+    export interface Height {
+      /**
+       * Unit that min/max are expressed in
+       */
+      unit: 'mm' | 'cm' | 'm' | 'in' | 'ft';
+
+      /**
+       * Maximum value, in `unit`. Inclusive.
+       */
+      max?: number | null;
+
+      /**
+       * Minimum value, in `unit`. Inclusive.
+       */
+      min?: number | null;
+    }
+
+    export interface Length {
+      /**
+       * Unit that min/max are expressed in
+       */
+      unit: 'mm' | 'cm' | 'm' | 'in' | 'ft';
+
+      /**
+       * Maximum value, in `unit`. Inclusive.
+       */
+      max?: number | null;
+
+      /**
+       * Minimum value, in `unit`. Inclusive.
+       */
+      min?: number | null;
+    }
+
+    export interface Weight {
+      /**
+       * Unit that min/max are expressed in
+       */
+      unit: 'mg' | 'g' | 'kg' | 'oz' | 'lb';
+
+      /**
+       * Maximum value, in `unit`. Inclusive.
+       */
+      max?: number | null;
+
+      /**
+       * Minimum value, in `unit`. Inclusive.
+       */
+      min?: number | null;
+    }
+
+    export interface Width {
+      /**
+       * Unit that min/max are expressed in
+       */
+      unit: 'mm' | 'cm' | 'm' | 'in' | 'ft';
+
+      /**
+       * Maximum value, in `unit`. Inclusive.
+       */
+      max?: number | null;
+
+      /**
+       * Minimum value, in `unit`. Inclusive.
+       */
+      min?: number | null;
     }
   }
 }
