@@ -30,6 +30,8 @@ describe('resource products', () => {
           country: 'US',
           currency: 'USD',
           language: 'en',
+          preferred_length_unit: 'mm',
+          preferred_weight_unit: 'mg',
           website_ids: ['string'],
         },
         { path: '/_stainless_unknown_path' },
@@ -69,6 +71,8 @@ describe('resource products', () => {
         country: 'US',
         currency: 'USD',
         language: 'en',
+        preferred_length_unit: 'mm',
+        preferred_weight_unit: 'mg',
       },
       filters: {
         age: ['newborn'],
@@ -78,6 +82,28 @@ describe('resource products', () => {
         category_ids: ['string'],
         colors: { palette: [{ hex: 'hex', percentage: 0 }] },
         condition: 'new',
+        dimensions: {
+          height: {
+            unit: 'mm',
+            max: 0,
+            min: 0,
+          },
+          length: {
+            unit: 'mm',
+            max: 0,
+            min: 0,
+          },
+          weight: {
+            unit: 'mg',
+            max: 0,
+            min: 0,
+          },
+          width: {
+            unit: 'mm',
+            max: 0,
+            min: 0,
+          },
+        },
         exclude_brand_ids: ['string'],
         exclude_category_ids: ['string'],
         exclude_website_ids: ['string'],
