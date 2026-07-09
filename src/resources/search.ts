@@ -70,6 +70,13 @@ export interface SearchConfig {
   language?: 'en' | 'de' | 'fr' | 'it' | 'es' | 'nl' | 'sv' | 'fi' | 'pt' | 'cs' | 'el' | 'ro' | null;
 
   /**
+   * Preferred unit for length dimensions (length/width/height) in responses. A
+   * request dimension filter's unit for the field takes precedence; when neither is
+   * set, the merchant's stated unit is returned.
+   */
+  length_unit?: 'mm' | 'cm' | 'm' | 'in' | 'ft' | null;
+
+  /**
    * Search strategy. `default` (recommended) combines lexical + semantic search and
    * is right for most use cases. `keyword` is lexical only — use it for real-time,
    * low-latency needs like ad targeting. `agentic` uses an LLM to plan multiple
@@ -79,18 +86,11 @@ export interface SearchConfig {
   mode?: 'keyword' | 'default' | 'agentic';
 
   /**
-   * Preferred unit for length dimensions (length/width/height) in responses. A
-   * request dimension filter's unit for the field takes precedence; when neither is
-   * set, the merchant's stated unit is returned.
-   */
-  preferred_length_unit?: 'mm' | 'cm' | 'm' | 'in' | 'ft' | null;
-
-  /**
    * Preferred unit for weight dimensions in responses. A request dimension filter's
    * weight unit takes precedence; when neither is set, the merchant's stated unit is
    * returned.
    */
-  preferred_weight_unit?: 'mg' | 'g' | 'kg' | 'oz' | 'lb' | null;
+  weight_unit?: 'mg' | 'g' | 'kg' | 'oz' | 'lb' | null;
 }
 
 /**
