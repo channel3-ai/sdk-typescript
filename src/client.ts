@@ -139,6 +139,16 @@ export interface ClientOptions {
   currency?: string | null | undefined;
 
   /**
+   * Default preferred unit for length dimensions in responses (one of mm, cm, m, in, ft). Per-call config.length_unit overrides this.
+   */
+  lengthUnit?: string | null | undefined;
+
+  /**
+   * Default preferred unit for weight dimensions in responses (one of mg, g, kg, oz, lb). Per-call config.weight_unit overrides this.
+   */
+  weightUnit?: string | null | undefined;
+
+  /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
    *
    * Defaults to process.env['CHANNEL3_BASE_URL'].
@@ -215,6 +225,8 @@ export class Channel3 {
   language: string | null;
   country: string | null;
   currency: string | null;
+  lengthUnit: string | null;
+  weightUnit: string | null;
 
   baseURL: string;
   maxRetries: number;
@@ -235,6 +247,8 @@ export class Channel3 {
    * @param {string | null | undefined} [opts.language=process.env['CHANNEL3_LANGUAGE'] ?? null]
    * @param {string | null | undefined} [opts.country=process.env['CHANNEL3_COUNTRY'] ?? null]
    * @param {string | null | undefined} [opts.currency=process.env['CHANNEL3_CURRENCY'] ?? null]
+   * @param {string | null | undefined} [opts.lengthUnit=process.env['CHANNEL3_LENGTH_UNIT'] ?? null]
+   * @param {string | null | undefined} [opts.weightUnit=process.env['CHANNEL3_WEIGHT_UNIT'] ?? null]
    * @param {string} [opts.baseURL=process.env['CHANNEL3_BASE_URL'] ?? https://api.trychannel3.com] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
@@ -249,6 +263,8 @@ export class Channel3 {
     language = readEnv('CHANNEL3_LANGUAGE') ?? null,
     country = readEnv('CHANNEL3_COUNTRY') ?? null,
     currency = readEnv('CHANNEL3_CURRENCY') ?? null,
+    lengthUnit = readEnv('CHANNEL3_LENGTH_UNIT') ?? null,
+    weightUnit = readEnv('CHANNEL3_WEIGHT_UNIT') ?? null,
     ...opts
   }: ClientOptions = {}) {
     if (apiKey === undefined) {
@@ -262,6 +278,8 @@ export class Channel3 {
       language,
       country,
       currency,
+      lengthUnit,
+      weightUnit,
       ...opts,
       baseURL: baseURL || `https://api.trychannel3.com`,
     };
@@ -299,6 +317,8 @@ export class Channel3 {
     this.language = language;
     this.country = country;
     this.currency = currency;
+    this.lengthUnit = lengthUnit;
+    this.weightUnit = weightUnit;
   }
 
   /**
@@ -318,6 +338,8 @@ export class Channel3 {
       language: this.language,
       country: this.country,
       currency: this.currency,
+      lengthUnit: this.lengthUnit,
+      weightUnit: this.weightUnit,
       ...options,
     });
     return client;
@@ -791,6 +813,8 @@ export class Channel3 {
         'X-Channel3-Language': this.language,
         'X-Channel3-Country': this.country,
         'X-Channel3-Currency': this.currency,
+        'X-Channel3-Length-Unit': this.lengthUnit,
+        'X-Channel3-Weight-Unit': this.weightUnit,
       },
       await this.authHeaders(options),
       this._options.defaultHeaders,
