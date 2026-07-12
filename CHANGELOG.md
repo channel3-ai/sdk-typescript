@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.5.1 (2026-07-11)
+
+Full Changelog: [v3.5.0...v3.5.1](https://github.com/channel3-ai/sdk-typescript/compare/v3.5.0...v3.5.1)
+
+### Bug Fixes
+
+* **ci:** bump @arethetypeswrong/cli to ^0.18.0 and run CI workflows on Node 24 ([8850c8b](https://github.com/channel3-ai/sdk-typescript/commit/8850c8b1bd375bea1164bdff777a04ff6fc0f5ea))
+
 ## 3.5.0 (2026-07-09)
 
 Full Changelog: [v3.4.1...v3.5.0](https://github.com/channel3-ai/sdk-typescript/compare/v3.4.1...v3.5.0)
