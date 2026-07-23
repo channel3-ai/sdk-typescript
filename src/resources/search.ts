@@ -144,8 +144,7 @@ export interface SearchFilters {
   category_ids?: Array<string> | null;
 
   /**
-   * [Beta] Color filter wrapper. Holds the list of required colors today; reserved
-   * for future filter-level options (e.g. match modes, tolerance overrides).
+   * [Beta] Color filter wrapper. Holds required colors and optional match mode.
    */
   colors?: SearchFilters.Colors | null;
 
@@ -207,14 +206,18 @@ export interface SearchFilters {
 
 export namespace SearchFilters {
   /**
-   * [Beta] Color filter wrapper. Holds the list of required colors today; reserved
-   * for future filter-level options (e.g. match modes, tolerance overrides).
+   * [Beta] Color filter wrapper. Holds required colors and optional match mode.
    */
   export interface Colors {
     /**
      * Colors required in matching products. Treated as an AND condition.
      */
     palette: Array<Colors.Palette>;
+
+    /**
+     * How tightly colors must match: 'strict', 'standard', or 'loose'.
+     */
+    match?: 'strict' | 'standard' | 'loose';
   }
 
   export namespace Colors {
