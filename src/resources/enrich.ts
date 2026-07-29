@@ -140,9 +140,8 @@ export namespace EnrichEnrichURLResponse {
     cleaned_url?: string | null;
 
     /**
-     * True when `url` itself points to a cleaned image (no separate `cleaned_url`).
-     * When both `url` and `cleaned_url` are set, `url` is the regular shot and this is
-     * false.
+     * @deprecated Deprecated: always `false`. Use `cleaned_url` for product grids when
+     * set; otherwise `url`.
      */
     is_cleaned_image?: boolean;
 
