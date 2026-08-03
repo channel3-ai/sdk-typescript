@@ -258,3 +258,59 @@ export class CategoryPage<Item> extends AbstractPage<Item> implements CategoryPa
     };
   }
 }
+
+export interface AnalyticsPageResponse<Item> {
+  items: Array<Item>;
+
+  page: number;
+
+  limit: number;
+
+  total_count: number;
+}
+
+export interface AnalyticsPageParams {
+  page?: number;
+
+  limit?: number;
+}
+
+export class AnalyticsPage<Item> extends AbstractPage<Item> implements AnalyticsPageResponse<Item> {
+  items: Array<Item>;
+
+  page: number;
+
+  limit: number;
+
+  total_count: number;
+
+  constructor(
+    client: Channel3,
+    response: Response,
+    body: AnalyticsPageResponse<Item>,
+    options: FinalRequestOptions,
+  ) {
+    super(client, response, body, options);
+
+    this.items = body.items || [];
+    this.page = body.page || 0;
+    this.limit = body.limit || 0;
+    this.total_count = body.total_count || 0;
+  }
+
+  getPaginatedItems(): Item[] {
+    return this.items ?? [];
+  }
+
+  nextPageRequestOptions(): PageRequestOptions | null {
+    const currentPage = this.page;
+
+    return {
+      ...this.options,
+      query: {
+        ...maybeObj(this.options.query),
+        page: currentPage + 1,
+      },
+    };
+  }
+}

@@ -34,6 +34,37 @@ Methods:
 - <code title="post /v1/search">client.products.<a href="./src/resources/products.ts">search</a>({ ...params }) -> ProductDetailsSearchPage</code>
 - <code title="post /v1/image-search">client.products.<a href="./src/resources/products.ts">searchByImage</a>({ ...params }) -> ProductDetailsSearchPage</code>
 
+# Reporting
+
+Types:
+
+- <code><a href="./src/resources/reporting/reporting.ts">AffiliateProduct</a></code>
+
+## Clicks
+
+Types:
+
+- <code><a href="./src/resources/reporting/clicks.ts">Click</a></code>
+- <code><a href="./src/resources/reporting/clicks.ts">ClicksResponse</a></code>
+- <code><a href="./src/resources/reporting/clicks.ts">ClicksSummary</a></code>
+
+Methods:
+
+- <code title="get /v1/reporting/clicks">client.reporting.clicks.<a href="./src/resources/reporting/clicks.ts">list</a>({ ...params }) -> ClicksAnalyticsPage</code>
+
+## Transactions
+
+Types:
+
+- <code><a href="./src/resources/reporting/transactions.ts">PublicTransactionStatus</a></code>
+- <code><a href="./src/resources/reporting/transactions.ts">Transaction</a></code>
+- <code><a href="./src/resources/reporting/transactions.ts">TransactionsResponse</a></code>
+- <code><a href="./src/resources/reporting/transactions.ts">TransactionsSummary</a></code>
+
+Methods:
+
+- <code title="get /v1/reporting/transactions">client.reporting.transactions.<a href="./src/resources/reporting/transactions.ts">list</a>({ ...params }) -> TransactionsAnalyticsPage</code>
+
 # Brands
 
 Types:
