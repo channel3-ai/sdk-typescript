@@ -38,7 +38,7 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/reporting/reporting.ts">AffiliateProduct</a></code>
+- <code><a href="./src/resources/reporting/reporting.ts">ReportingProduct</a></code>
 
 ## Clicks
 
