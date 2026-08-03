@@ -17,6 +17,8 @@ import * as Errors from './core/error';
 import * as Pagination from './core/pagination';
 import {
   AbstractPage,
+  type AnalyticsPageParams,
+  AnalyticsPageResponse,
   type CategoryPageParams,
   CategoryPageResponse,
   type CursorPageParams,
@@ -104,6 +106,7 @@ import {
   SearchResponse,
 } from './resources/search';
 import { Website, WebsiteFindParams, WebsiteRetrieveParams, Websites } from './resources/websites';
+import { AffiliateProduct, Reporting } from './resources/reporting/reporting';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -906,6 +909,7 @@ export class Channel3 {
   static toFile = Uploads.toFile;
 
   products: API.Products = new API.Products(this);
+  reporting: API.Reporting = new API.Reporting(this);
   brands: API.Brands = new API.Brands(this);
   categories: API.Categories = new API.Categories(this);
   websites: API.Websites = new API.Websites(this);
@@ -915,6 +919,7 @@ export class Channel3 {
 }
 
 Channel3.Products = Products;
+Channel3.Reporting = Reporting;
 Channel3.Brands = Brands;
 Channel3.Categories = Categories;
 Channel3.Websites = Websites;
@@ -933,6 +938,12 @@ export declare namespace Channel3 {
 
   export import CategoryPage = Pagination.CategoryPage;
   export { type CategoryPageParams as CategoryPageParams, type CategoryPageResponse as CategoryPageResponse };
+
+  export import AnalyticsPage = Pagination.AnalyticsPage;
+  export {
+    type AnalyticsPageParams as AnalyticsPageParams,
+    type AnalyticsPageResponse as AnalyticsPageResponse,
+  };
 
   export {
     Products as Products,
@@ -960,6 +971,8 @@ export declare namespace Channel3 {
     type ProductSearchParams as ProductSearchParams,
     type ProductSearchByImageParams as ProductSearchByImageParams,
   };
+
+  export { Reporting as Reporting, type AffiliateProduct as AffiliateProduct };
 
   export {
     Brands as Brands,

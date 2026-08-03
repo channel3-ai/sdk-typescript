@@ -73,6 +73,7 @@ export {
   type ProductSearchByImageParams,
   type ProductDetailsSearchPage,
 } from './products';
+export { Reporting, type AffiliateProduct } from './reporting/reporting';
 export {
   Search,
   type SearchConfig,
