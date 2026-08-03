@@ -8,7 +8,7 @@ export {
   type ClickListParams,
   type ClicksAnalyticsPage,
 } from './clicks';
-export { Reporting, type AffiliateProduct } from './reporting';
+export { Reporting, type ReportingProduct } from './reporting';
 export {
   Transactions,
   type PublicTransactionStatus,

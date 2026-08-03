@@ -106,7 +106,7 @@ import {
   SearchResponse,
 } from './resources/search';
 import { Website, WebsiteFindParams, WebsiteRetrieveParams, Websites } from './resources/websites';
-import { AffiliateProduct, Reporting } from './resources/reporting/reporting';
+import { Reporting, ReportingProduct } from './resources/reporting/reporting';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -972,7 +972,7 @@ export declare namespace Channel3 {
     type ProductSearchByImageParams as ProductSearchByImageParams,
   };
 
-  export { Reporting as Reporting, type AffiliateProduct as AffiliateProduct };
+  export { Reporting as Reporting, type ReportingProduct as ReportingProduct };
 
   export {
     Brands as Brands,
