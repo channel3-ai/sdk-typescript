@@ -30,6 +30,7 @@ describe('resource transactions', () => {
           limit: 1,
           page: 1,
           start_date: '2019-12-27T18:11:19.117Z',
+          user_id: 'user_id',
         },
         { path: '/_stainless_unknown_path' },
       ),

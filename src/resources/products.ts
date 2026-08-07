@@ -6,6 +6,7 @@ import * as CategoriesAPI from './categories';
 import * as SearchAPI from './search';
 import { APIPromise } from '../core/api-promise';
 import { PagePromise, SearchPage, type SearchPageParams } from '../core/pagination';
+import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
@@ -15,10 +16,18 @@ export class Products extends APIResource {
    */
   retrieve(
     productID: string,
-    query: ProductRetrieveParams | null | undefined = {},
+    params: ProductRetrieveParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<ProductDetail> {
-    return this._client.get(path`/v1/products/${productID}`, { query, ...options });
+    const { 'x-user-id': xUserID, ...query } = params ?? {};
+    return this._client.get(path`/v1/products/${productID}`, {
+      query,
+      ...options,
+      headers: buildHeaders([
+        { ...(xUserID != null ? { 'x-user-id': xUserID } : undefined) },
+        options?.headers,
+      ]),
+    });
   }
 
   /**
@@ -28,18 +37,20 @@ export class Products extends APIResource {
    *
    * At least one of `filters.brand_ids`, `filters.category_ids`, or
    * `filters.website_ids` must be provided.
-   *
-   * Access to this endpoint is restricted. If you think your use-case requires it,
-   * please contact us.
    */
   browse(
-    body: ProductBrowseParams,
+    params: ProductBrowseParams,
     options?: RequestOptions,
   ): PagePromise<ProductDetailsSearchPage, ProductDetail> {
+    const { 'x-user-id': xUserID, ...body } = params;
     return this._client.getAPIList('/v1/browse', SearchPage<ProductDetail>, {
       body,
       method: 'post',
       ...options,
+      headers: buildHeaders([
+        { ...(xUserID != null ? { 'x-user-id': xUserID } : undefined) },
+        options?.headers,
+      ]),
     });
   }
 
@@ -51,13 +62,18 @@ export class Products extends APIResource {
    * slice of the catalog.
    */
   findSimilar(
-    body: ProductFindSimilarParams,
+    params: ProductFindSimilarParams,
     options?: RequestOptions,
   ): PagePromise<ProductDetailsSearchPage, ProductDetail> {
+    const { 'x-user-id': xUserID, ...body } = params;
     return this._client.getAPIList('/v1/similar', SearchPage<ProductDetail>, {
       body,
       method: 'post',
       ...options,
+      headers: buildHeaders([
+        { ...(xUserID != null ? { 'x-user-id': xUserID } : undefined) },
+        options?.headers,
+      ]),
     });
   }
 
@@ -67,8 +83,16 @@ export class Products extends APIResource {
    * Returns the same Product model as GET /v1/products/{product_id}. The product_id
    * in the response can be used with the Product Detail endpoint.
    */
-  lookup(body: ProductLookupParams, options?: RequestOptions): APIPromise<LookupResponse> {
-    return this._client.post('/v1/lookup', { body, ...options });
+  lookup(params: ProductLookupParams, options?: RequestOptions): APIPromise<LookupResponse> {
+    const { 'x-user-id': xUserID, ...body } = params;
+    return this._client.post('/v1/lookup', {
+      body,
+      ...options,
+      headers: buildHeaders([
+        { ...(xUserID != null ? { 'x-user-id': xUserID } : undefined) },
+        options?.headers,
+      ]),
+    });
   }
 
   /**
@@ -78,8 +102,16 @@ export class Products extends APIResource {
    * please contact us. Usually, developers actually want search. This is helpful for
    * migrating to Channel3.
    */
-  monetize(body: ProductMonetizeParams, options?: RequestOptions): APIPromise<MonetizeResponse> {
-    return this._client.post('/v1/monetize', { body, ...options });
+  monetize(params: ProductMonetizeParams, options?: RequestOptions): APIPromise<MonetizeResponse> {
+    const { 'x-user-id': xUserID, ...body } = params;
+    return this._client.post('/v1/monetize', {
+      body,
+      ...options,
+      headers: buildHeaders([
+        { ...(xUserID != null ? { 'x-user-id': xUserID } : undefined) },
+        options?.headers,
+      ]),
+    });
   }
 
   /**
@@ -89,13 +121,18 @@ export class Products extends APIResource {
    * provided; requests with none of these will return 422.
    */
   search(
-    body: ProductSearchParams,
+    params: ProductSearchParams,
     options?: RequestOptions,
   ): PagePromise<ProductDetailsSearchPage, ProductDetail> {
+    const { 'x-user-id': xUserID, ...body } = params;
     return this._client.getAPIList('/v1/search', SearchPage<ProductDetail>, {
       body,
       method: 'post',
       ...options,
+      headers: buildHeaders([
+        { ...(xUserID != null ? { 'x-user-id': xUserID } : undefined) },
+        options?.headers,
+      ]),
     });
   }
 
@@ -106,13 +143,18 @@ export class Products extends APIResource {
    * search, use `POST /v1/search`.
    */
   searchByImage(
-    body: ProductSearchByImageParams,
+    params: ProductSearchByImageParams,
     options?: RequestOptions,
   ): PagePromise<ProductDetailsSearchPage, ProductDetail> {
+    const { 'x-user-id': xUserID, ...body } = params;
     return this._client.getAPIList('/v1/image-search', SearchPage<ProductDetail>, {
       body,
       method: 'post',
       ...options,
+      headers: buildHeaders([
+        { ...(xUserID != null ? { 'x-user-id': xUserID } : undefined) },
+        options?.headers,
+      ]),
     });
   }
 }
@@ -671,8 +713,8 @@ export interface SimilarProductsRequest {
 
 export interface ProductRetrieveParams {
   /**
-   * ISO 3166-1 alpha-2 country code. Matches any country when unset; defaults to
-   * 'US' only when language and currency are also unset.
+   * Query param: ISO 3166-1 alpha-2 country code. Matches any country when unset;
+   * defaults to 'US' only when language and currency are also unset.
    */
   country?:
     | 'US'
@@ -697,161 +739,203 @@ export interface ProductRetrieveParams {
     | null;
 
   /**
-   * ISO 4217 currency code. When unset, inferred from `country` (e.g. GB -> GBP);
-   * falls back to 'USD' only when all three locale fields are unset.
+   * Query param: ISO 4217 currency code. When unset, inferred from `country` (e.g.
+   * GB -> GBP); falls back to 'USD' only when all three locale fields are unset.
    */
   currency?: 'USD' | 'CAD' | 'AUD' | 'GBP' | 'EUR' | 'SEK' | 'CZK' | 'RON' | null;
 
   /**
-   * ISO 639-1 language code. Matches any language when unset; defaults to 'en' only
-   * when country and currency are also unset.
+   * Query param: ISO 639-1 language code. Matches any language when unset; defaults
+   * to 'en' only when country and currency are also unset.
    */
   language?: 'en' | 'de' | 'fr' | 'it' | 'es' | 'nl' | 'sv' | 'fi' | 'pt' | 'cs' | 'el' | 'ro' | null;
 
   /**
-   * Preferred unit for length dimensions (length/width/height). When unset,
-   * dimensions are returned in the unit the merchant stated.
+   * Query param: Preferred unit for length dimensions (length/width/height). When
+   * unset, dimensions are returned in the unit the merchant stated.
    */
   length_unit?: 'mm' | 'cm' | 'm' | 'in' | 'ft' | null;
 
   /**
-   * Optional list of website IDs to constrain the buy URL to, relevant if multiple
-   * merchants exist. Accepts website IDs or domains (e.g. "nike.com").
+   * Query param: Optional list of website IDs to constrain the buy URL to, relevant
+   * if multiple merchants exist. Accepts website IDs or domains (e.g. "nike.com").
    */
   website_ids?: Array<string> | null;
 
   /**
-   * Preferred unit for weight dimensions. When unset, weight is returned in the unit
-   * the merchant stated.
+   * Query param: Preferred unit for weight dimensions. When unset, weight is
+   * returned in the unit the merchant stated.
    */
   weight_unit?: 'mg' | 'g' | 'kg' | 'oz' | 'lb' | null;
+
+  /**
+   * Header param: Optional user identifier to attribute clicks and sales to a user
+   * in your system. Channel3 appends it to buy URLs in the response.
+   */
+  'x-user-id'?: string;
 }
 
 export interface ProductBrowseParams extends SearchPageParams {
   /**
-   * Filters to browse by. At least one of `brand_ids`, `category_ids`, or
-   * `website_ids` must be provided.
+   * Body param: Filters to browse by. At least one of `brand_ids`, `category_ids`,
+   * or `website_ids` must be provided.
    */
   filters?: SearchAPI.SearchFilters;
 
   /**
-   * Optional limit on the number of results. Default is 20, max is 30.
+   * Body param: Optional limit on the number of results. Default is 20, max is 30.
    */
   limit?: number | null;
+
+  /**
+   * Header param: Optional user identifier to attribute clicks and sales to a user
+   * in your system. Channel3 appends it to buy URLs in the response.
+   */
+  'x-user-id'?: string;
 }
 
 export interface ProductFindSimilarParams extends SearchPageParams {
   /**
-   * Canonical product ID to find similar products for.
+   * Body param: Canonical product ID to find similar products for.
    */
   product_id: string;
 
   /**
-   * Optional locale configuration.
+   * Body param: Optional locale configuration.
    */
   config?: LocaleConfig;
 
   /**
-   * Optional filters. Search will only consider products that match all of the
-   * filters.
+   * Body param: Optional filters. Search will only consider products that match all
+   * of the filters.
    */
   filters?: SearchAPI.SearchFilters;
 
   /**
-   * Optional limit on the number of results. Default is 20, max is 30.
+   * Body param: Optional limit on the number of results. Default is 20, max is 30.
    */
   limit?: number | null;
+
+  /**
+   * Header param: Optional user identifier to attribute clicks and sales to a user
+   * in your system. Channel3 appends it to buy URLs in the response.
+   */
+  'x-user-id'?: string;
 }
 
 export interface ProductLookupParams {
   /**
-   * The URL of the product to look up
+   * Body param: The URL of the product to look up
    */
   url: string;
 
   /**
-   * Maximum age (in hours) of cached product data before forcing a fresh lookup.
-   * Defaults to 3 hours.
+   * Body param: Maximum age (in hours) of cached product data before forcing a fresh
+   * lookup. Defaults to 3 hours.
    */
   max_staleness_hours?: number;
+
+  /**
+   * Header param: Optional user identifier to attribute clicks and sales to a user
+   * in your system. Channel3 appends it to buy URLs in the response.
+   */
+  'x-user-id'?: string;
 }
 
 export interface ProductMonetizeParams {
   /**
-   * The URL of the product to monetize
+   * Body param: The URL of the product to monetize
    */
   url: string;
+
+  /**
+   * Header param: Optional user identifier to attribute clicks and sales to a user
+   * in your system. Channel3 appends it to buy URLs in the response.
+   */
+  'x-user-id'?: string;
 }
 
 export interface ProductSearchParams extends SearchPageParams {
   /**
-   * Base64 encoded image. At least one of `query`, `image_url`, `base64_image`, or
-   * `page_token` must be provided.
+   * Body param: Base64 encoded image. At least one of `query`, `image_url`,
+   * `base64_image`, or `page_token` must be provided.
    */
   base64_image?: string | null;
 
   /**
-   * Optional configuration
+   * Body param: Optional configuration
    */
   config?: SearchAPI.SearchConfig;
 
   /**
-   * Optional filters. Search will only consider products that match all of the
-   * filters.
+   * Body param: Optional filters. Search will only consider products that match all
+   * of the filters.
    */
   filters?: SearchAPI.SearchFilters;
 
   /**
-   * Image URL. At least one of `query`, `image_url`, `base64_image`, or `page_token`
-   * must be provided.
+   * Body param: Image URL. At least one of `query`, `image_url`, `base64_image`, or
+   * `page_token` must be provided.
    */
   image_url?: string | null;
 
   /**
-   * Optional limit on the number of results. Default is 20, max is 30.
+   * Body param: Optional limit on the number of results. Default is 20, max is 30.
    */
   limit?: number | null;
 
   /**
-   * Search query. At least one of `query`, `image_url`, `base64_image`, or
-   * `page_token` must be provided.
+   * Body param: Search query. At least one of `query`, `image_url`, `base64_image`,
+   * or `page_token` must be provided.
    */
   query?: string | null;
+
+  /**
+   * Header param: Optional user identifier to attribute clicks and sales to a user
+   * in your system. Channel3 appends it to buy URLs in the response.
+   */
+  'x-user-id'?: string;
 }
 
 export interface ProductSearchByImageParams extends SearchPageParams {
   /**
-   * Base64 encoded image bytes (no data URI prefix).
+   * Body param: Base64 encoded image bytes (no data URI prefix).
    */
   base64_image?: string | null;
 
   /**
-   * Optional locale configuration.
+   * Body param: Optional locale configuration.
    */
   config?: LocaleConfig;
 
   /**
-   * Optional filters. Search will only consider products that match all of the
-   * filters.
+   * Body param: Optional filters. Search will only consider products that match all
+   * of the filters.
    */
   filters?: SearchAPI.SearchFilters;
 
   /**
-   * Publicly accessible URL of the image to search with.
+   * Body param: Publicly accessible URL of the image to search with.
    */
   image_url?: string | null;
 
   /**
-   * Optional limit on the number of results. Default is 20, max is 30.
+   * Body param: Optional limit on the number of results. Default is 20, max is 30.
    */
   limit?: number | null;
 
   /**
-   * Image segmentation mode. None (default) disables segmentation. "AUTO" segments
-   * and crops the main product automatically. A custom string (e.g. "shoe", "mug")
-   * segments the specified object.
+   * Body param: Image segmentation mode. None (default) disables segmentation.
+   * "AUTO" segments and crops the main product automatically. A custom string (e.g.
+   * "shoe", "mug") segments the specified object.
    */
   segment?: string | null;
+
+  /**
+   * Header param: Optional user identifier to attribute clicks and sales to a user
+   * in your system. Channel3 appends it to buy URLs in the response.
+   */
+  'x-user-id'?: string;
 }
 
 export declare namespace Products {

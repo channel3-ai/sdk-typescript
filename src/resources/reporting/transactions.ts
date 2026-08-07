@@ -81,6 +81,11 @@ export interface Transaction {
    * Compact product reference on click/transaction items.
    */
   product?: ReportingAPI.ReportingProduct | null;
+
+  /**
+   * Partner-supplied user identifier from the originating click, if provided.
+   */
+  user_id?: string | null;
 }
 
 /**
@@ -166,6 +171,11 @@ export interface TransactionListParams extends AnalyticsPageParams {
    * values are treated as UTC.
    */
   start_date?: string | null;
+
+  /**
+   * Filter results to clicks or transactions for this user.
+   */
+  user_id?: string | null;
 }
 
 export declare namespace Transactions {

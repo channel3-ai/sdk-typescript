@@ -3,6 +3,7 @@
 import { APIResource } from '../core/resource';
 import * as ProductsAPI from './products';
 import { APIPromise } from '../core/api-promise';
+import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 
 /**
@@ -17,8 +18,16 @@ export class Search extends APIResource {
    *
    * @deprecated use `products.search` instead, which auto-paginates; will be removed in the next major version
    */
-  perform(body: SearchPerformParams, options?: RequestOptions): APIPromise<SearchResponse> {
-    return this._client.post('/v1/search', { body, ...options });
+  perform(params: SearchPerformParams, options?: RequestOptions): APIPromise<SearchResponse> {
+    const { 'x-user-id': xUserID, ...body } = params;
+    return this._client.post('/v1/search', {
+      body,
+      ...options,
+      headers: buildHeaders([
+        { ...(xUserID != null ? { 'x-user-id': xUserID } : undefined) },
+        options?.headers,
+      ]),
+    });
   }
 }
 
@@ -149,11 +158,16 @@ export interface SearchFilters {
   colors?: SearchFilters.Colors | null;
 
   /**
-   * Filter by offer condition. Requires at least one offer matching the requested
-   * condition, locale, and any price filter. Offers without condition data are
-   * indexed as new.
+   * Filter by a single offer condition. Prefer `conditions` when multiple values
+   * should match (OR).
    */
   condition?: 'new' | 'refurbished' | 'used' | null;
+
+  /**
+   * Filter by any of these offer conditions (OR). Takes precedence over `condition`
+   * when set.
+   */
+  conditions?: Array<'new' | 'refurbished' | 'used'> | null;
 
   /**
    * Physical-dimension range filters, matched against the same offer.
@@ -386,43 +400,50 @@ export interface SearchResponse {
 
 export interface SearchPerformParams {
   /**
-   * Base64 encoded image. At least one of `query`, `image_url`, `base64_image`, or
-   * `page_token` must be provided.
+   * Body param: Base64 encoded image. At least one of `query`, `image_url`,
+   * `base64_image`, or `page_token` must be provided.
    */
   base64_image?: string | null;
 
   /**
-   * Optional configuration
+   * Body param: Optional configuration
    */
   config?: SearchConfig;
 
   /**
-   * Optional filters. Search will only consider products that match all of the
-   * filters.
+   * Body param: Optional filters. Search will only consider products that match all
+   * of the filters.
    */
   filters?: SearchFilters;
 
   /**
-   * Image URL. At least one of `query`, `image_url`, `base64_image`, or `page_token`
-   * must be provided.
+   * Body param: Image URL. At least one of `query`, `image_url`, `base64_image`, or
+   * `page_token` must be provided.
    */
   image_url?: string | null;
 
   /**
-   * Optional limit on the number of results. Default is 20, max is 30.
+   * Body param: Optional limit on the number of results. Default is 20, max is 30.
    */
   limit?: number | null;
 
   /**
-   * Opaque token from a previous search response to fetch the next page of results.
+   * Body param: Opaque token from a previous search response to fetch the next page
+   * of results.
    */
   page_token?: string | null;
 
   /**
-   * Search query. At least one of `query`, `image_url`, `base64_image`, or
-   * `page_token` must be provided.
+   * Body param: Search query. At least one of `query`, `image_url`, `base64_image`,
+   * or `page_token` must be provided.
    */
   query?: string | null;
+
+  /**
+   * Header param: Optional user identifier to attribute clicks and sales to a user
+   * in your system. Channel3 appends it to buy URLs in the response.
+   */
+  'x-user-id'?: string;
 }
 
 export declare namespace Search {
