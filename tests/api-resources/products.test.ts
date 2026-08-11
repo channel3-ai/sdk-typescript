@@ -82,7 +82,6 @@ describe('resource products', () => {
         brand_ids: ['string'],
         category_ids: ['string'],
         colors: { palette: [{ hex: 'hex', percentage: 0 }], match: 'strict' },
-        condition: 'new',
         conditions: ['new'],
         dimensions: {
           height: {

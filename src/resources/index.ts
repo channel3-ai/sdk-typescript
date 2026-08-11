@@ -7,7 +7,6 @@ export {
   type SearchBrandsResponse,
   type BrandRetrieveParams,
   type BrandListParams,
-  type BrandFindParams,
   type BrandSearchParams,
   type BrandsCursorPage,
 } from './brands';
@@ -29,12 +28,7 @@ export {
   type ConversationContext,
   type ConversationItemsResponse,
 } from './conversations/conversations';
-export {
-  Enrich,
-  type EnrichRequest,
-  type EnrichEnrichURLResponse,
-  type EnrichEnrichURLParams,
-} from './enrich';
+export { Enrich } from './enrich';
 export {
   PriceTracking,
   type PaginatedSubscriptionsResponse,
@@ -55,7 +49,6 @@ export {
 } from './price-tracking';
 export {
   Products,
-  type AvailabilityStatus,
   type BrowseRequest,
   type ImageSearchRequest,
   type LocaleConfig,

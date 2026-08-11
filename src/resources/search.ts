@@ -36,8 +36,7 @@ export class Search extends APIResource {
  */
 export interface SearchConfig {
   /**
-   * ISO 3166-1 alpha-2 country code. May stay unset for pan-region storefronts (e.g.
-   * `currency=EUR` with no specific country).
+   * ISO 3166-1 alpha-2 country code (plus the pan-region `EU`).
    */
   country?:
     | 'US'
@@ -62,19 +61,12 @@ export interface SearchConfig {
     | null;
 
   /**
-   * ISO 4217 currency code. When unset, inferred from `country` (e.g. `GB` → `GBP`),
-   * defaulting to `USD`.
+   * ISO 4217 currency code.
    */
   currency?: 'USD' | 'CAD' | 'AUD' | 'GBP' | 'EUR' | 'SEK' | 'CZK' | 'RON' | null;
 
   /**
-   * @deprecated Deprecated: use `mode`. `true` is equivalent to `mode=keyword`.
-   */
-  keyword_search_only?: boolean;
-
-  /**
-   * ISO 639-1 language code. When unset, inferred from `country` (preferred) then
-   * `currency`, defaulting to `en`.
+   * ISO 639-1 language code.
    */
   language?: 'en' | 'de' | 'fr' | 'it' | 'es' | 'nl' | 'sv' | 'fi' | 'pt' | 'cs' | 'el' | 'ro' | null;
 
@@ -137,9 +129,11 @@ export interface SearchFilters {
   attributes?: { [key: string]: Array<string> } | null;
 
   /**
-   * If provided, only products with these availability statuses will be returned
+   * Offer availability statuses to match (OR). Defaults to ['InStock']. An offer
+   * with no availability data counts as 'InStock'. Pass every value to disable
+   * availability filtering.
    */
-  availability?: Array<ProductsAPI.AvailabilityStatus> | null;
+  availability?: Array<'InStock' | 'OutOfStock'>;
 
   /**
    * If provided, only products from these brands will be returned
@@ -158,16 +152,10 @@ export interface SearchFilters {
   colors?: SearchFilters.Colors | null;
 
   /**
-   * Filter by a single offer condition. Prefer `conditions` when multiple values
-   * should match (OR).
+   * Offer conditions to match (OR). Defaults to ['new'], which also matches offers
+   * whose condition is unknown. Pass every value to disable condition filtering.
    */
-  condition?: 'new' | 'refurbished' | 'used' | null;
-
-  /**
-   * Filter by any of these offer conditions (OR). Takes precedence over `condition`
-   * when set.
-   */
-  conditions?: Array<'new' | 'refurbished' | 'used'> | null;
+  conditions?: Array<'new' | 'used'>;
 
   /**
    * Physical-dimension range filters, matched against the same offer.
@@ -198,6 +186,9 @@ export interface SearchFilters {
    */
   exclude_website_ids?: Array<string> | null;
 
+  /**
+   * Product gender. 'unisex' is deprecated: coerced to None on input, never emitted.
+   */
   gender?: 'male' | 'female' | null;
 
   /**

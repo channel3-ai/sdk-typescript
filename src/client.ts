@@ -31,7 +31,6 @@ import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import {
   Brand,
-  BrandFindParams,
   BrandListParams,
   BrandRetrieveParams,
   BrandSearchParams,
@@ -51,7 +50,7 @@ import {
   PaginatedListCategoriesResponse,
   SearchCategoriesResponse,
 } from './resources/categories';
-import { Enrich, EnrichEnrichURLParams, EnrichEnrichURLResponse, EnrichRequest } from './resources/enrich';
+import { Enrich } from './resources/enrich';
 import {
   History,
   PaginatedSubscriptionsResponse,
@@ -71,7 +70,6 @@ import {
   SubscriptionsCursorPage,
 } from './resources/price-tracking';
 import {
-  AvailabilityStatus,
   BrowseRequest,
   ImageSearchRequest,
   LocaleConfig,
@@ -958,7 +956,6 @@ export declare namespace Channel3 {
 
   export {
     Products as Products,
-    type AvailabilityStatus as AvailabilityStatus,
     type BrowseRequest as BrowseRequest,
     type ImageSearchRequest as ImageSearchRequest,
     type LocaleConfig as LocaleConfig,
@@ -992,7 +989,6 @@ export declare namespace Channel3 {
     type BrandsCursorPage as BrandsCursorPage,
     type BrandRetrieveParams as BrandRetrieveParams,
     type BrandListParams as BrandListParams,
-    type BrandFindParams as BrandFindParams,
     type BrandSearchParams as BrandSearchParams,
   };
 
@@ -1059,12 +1055,7 @@ export declare namespace Channel3 {
     type SearchPerformParams as SearchPerformParams,
   };
 
-  export {
-    Enrich as Enrich,
-    type EnrichRequest as EnrichRequest,
-    type EnrichEnrichURLResponse as EnrichEnrichURLResponse,
-    type EnrichEnrichURLParams as EnrichEnrichURLParams,
-  };
+  export { Enrich as Enrich };
 
   export type ErrorResponse = API.ErrorResponse;
 }

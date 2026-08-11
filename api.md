@@ -8,7 +8,6 @@ Types:
 
 Types:
 
-- <code><a href="./src/resources/products.ts">AvailabilityStatus</a></code>
 - <code><a href="./src/resources/products.ts">BrowseRequest</a></code>
 - <code><a href="./src/resources/products.ts">ImageSearchRequest</a></code>
 - <code><a href="./src/resources/products.ts">LocaleConfig</a></code>
@@ -76,7 +75,6 @@ Methods:
 
 - <code title="get /v1/brands/{brand_id}">client.brands.<a href="./src/resources/brands.ts">retrieve</a>(brandID, { ...params }) -> Brand</code>
 - <code title="get /v1/brands">client.brands.<a href="./src/resources/brands.ts">list</a>({ ...params }) -> BrandsCursorPage</code>
-- <code title="get /v0/brands">client.brands.<a href="./src/resources/brands.ts">find</a>({ ...params }) -> Brand</code>
 - <code title="get /v1/brands/search">client.brands.<a href="./src/resources/brands.ts">search</a>({ ...params }) -> SearchBrandsResponse</code>
 
 # Categories
@@ -171,12 +169,3 @@ Methods:
 - <code title="post /v1/search">client.search.<a href="./src/resources/search.ts">perform</a>({ ...params }) -> SearchResponse</code>
 
 # Enrich
-
-Types:
-
-- <code><a href="./src/resources/enrich.ts">EnrichRequest</a></code>
-- <code><a href="./src/resources/enrich.ts">EnrichEnrichURLResponse</a></code>
-
-Methods:
-
-- <code title="post /v0/enrich">client.enrich.<a href="./src/resources/enrich.ts">enrichURL</a>({ ...params }) -> EnrichEnrichURLResponse</code>

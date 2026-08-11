@@ -29,15 +29,6 @@ export class Brands extends APIResource {
   }
 
   /**
-   * Find a brand by name.
-   *
-   * @deprecated use `search` (returns a list) instead; will be removed in the next major version
-   */
-  find(query: BrandFindParams, options?: RequestOptions): APIPromise<Brand> {
-    return this._client.get('/v0/brands', { query, ...options });
-  }
-
-  /**
    * Search brands by free-text query.
    */
   search(query: BrandSearchParams, options?: RequestOptions): APIPromise<SearchBrandsResponse> {
@@ -126,10 +117,6 @@ export interface BrandListParams extends CursorPageParams {
     | null;
 }
 
-export interface BrandFindParams {
-  query: string;
-}
-
 export interface BrandSearchParams {
   /**
    * Free-text query (e.g. 'Nike', 'lululemon').
@@ -175,7 +162,6 @@ export declare namespace Brands {
     type BrandsCursorPage as BrandsCursorPage,
     type BrandRetrieveParams as BrandRetrieveParams,
     type BrandListParams as BrandListParams,
-    type BrandFindParams as BrandFindParams,
     type BrandSearchParams as BrandSearchParams,
   };
 }
