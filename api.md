@@ -127,6 +127,35 @@ Methods:
 - <code title="post /v0/price-tracking/start">client.priceTracking.<a href="./src/resources/price-tracking.ts">start</a>({ ...params }) -> Subscription</code>
 - <code title="post /v0/price-tracking/stop">client.priceTracking.<a href="./src/resources/price-tracking.ts">stop</a>({ ...params }) -> Subscription</code>
 
+# Responses
+
+Types:
+
+- <code><a href="./src/resources/responses.ts">ChatRequest</a></code>
+- <code><a href="./src/resources/responses.ts">ResponseCreateResponse</a></code>
+
+Methods:
+
+- <code title="post /v1/responses">client.responses.<a href="./src/resources/responses.ts">create</a>({ ...params }) -> string</code>
+
+# Conversations
+
+Types:
+
+- <code><a href="./src/resources/conversations/conversations.ts">Conversation</a></code>
+- <code><a href="./src/resources/conversations/conversations.ts">ConversationContext</a></code>
+- <code><a href="./src/resources/conversations/conversations.ts">ConversationItemsResponse</a></code>
+
+Methods:
+
+- <code title="get /v1/conversations/{conversation_id}">client.conversations.<a href="./src/resources/conversations/conversations.ts">retrieve</a>(conversationID) -> Conversation</code>
+
+## Items
+
+Methods:
+
+- <code title="get /v1/conversations/{conversation_id}/items">client.conversations.items.<a href="./src/resources/conversations/items.ts">list</a>(conversationID) -> ConversationItemsResponse</code>
+
 # Search
 
 Types:
