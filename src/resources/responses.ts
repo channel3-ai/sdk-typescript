@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
+import * as SearchAPI from './search';
 import * as ConversationsAPI from './conversations/conversations';
 import { APIPromise } from '../core/api-promise';
 import { Stream } from '../core/streaming';
@@ -36,6 +37,11 @@ export interface ChatRequest {
   conversation_id?: string | null;
 
   debug?: boolean;
+
+  /**
+   * Search filters for the search API.
+   */
+  filters?: SearchAPI.SearchFilters | null;
 
   image?: ChatRequest.Image | null;
 
@@ -144,6 +150,11 @@ export interface ResponseCreateParams {
    * Body param
    */
   debug?: boolean;
+
+  /**
+   * Body param: Search filters for the search API.
+   */
+  filters?: SearchAPI.SearchFilters | null;
 
   /**
    * Body param
