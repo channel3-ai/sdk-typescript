@@ -56,23 +56,6 @@ describe('resource brands', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('find: only required params', async () => {
-    const responsePromise = client.brands.find({ query: 'query' });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
-  test.skip('find: required and optional params', async () => {
-    const response = await client.brands.find({ query: 'query' });
-  });
-
-  // Mock server tests are disabled
   test.skip('search: only required params', async () => {
     const responsePromise = client.brands.search({ query: 'x' });
     const rawResponse = await responsePromise.asResponse();

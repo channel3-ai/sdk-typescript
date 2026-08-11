@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
-import * as ProductsAPI from './products';
 import * as CategoriesAPI from './categories';
 import * as SearchAPI from './search';
 import { APIPromise } from '../core/api-promise';
@@ -161,16 +160,6 @@ export class Products extends APIResource {
 
 export type ProductDetailsSearchPage = SearchPage<ProductDetail>;
 
-export type AvailabilityStatus =
-  | 'InStock'
-  | 'LimitedAvailability'
-  | 'PreOrder'
-  | 'BackOrder'
-  | 'SoldOut'
-  | 'OutOfStock'
-  | 'Discontinued'
-  | 'Unknown';
-
 /**
  * Filter-driven product listing with pagination (no free-text query).
  */
@@ -244,8 +233,7 @@ export interface ImageSearchRequest {
  */
 export interface LocaleConfig {
   /**
-   * ISO 3166-1 alpha-2 country code. May stay unset for pan-region storefronts (e.g.
-   * `currency=EUR` with no specific country).
+   * ISO 3166-1 alpha-2 country code (plus the pan-region `EU`).
    */
   country?:
     | 'US'
@@ -270,14 +258,12 @@ export interface LocaleConfig {
     | null;
 
   /**
-   * ISO 4217 currency code. When unset, inferred from `country` (e.g. `GB` → `GBP`),
-   * defaulting to `USD`.
+   * ISO 4217 currency code.
    */
   currency?: 'USD' | 'CAD' | 'AUD' | 'GBP' | 'EUR' | 'SEK' | 'CZK' | 'RON' | null;
 
   /**
-   * ISO 639-1 language code. When unset, inferred from `country` (preferred) then
-   * `currency`, defaulting to `en`.
+   * ISO 639-1 language code.
    */
   language?: 'en' | 'de' | 'fr' | 'it' | 'es' | 'nl' | 'sv' | 'fi' | 'pt' | 'cs' | 'el' | 'ro' | null;
 
@@ -397,18 +383,16 @@ export interface ProductDetail {
   brands?: Array<ProductBrand>;
 
   /**
-   * @deprecated
-   */
-  categories?: Array<string>;
-
-  /**
    * Lean category representation used in search hits and list rows.
    */
   category?: CategoriesAPI.CategorySummary | null;
 
   description?: string | null;
 
-  gender?: 'male' | 'female' | 'unisex' | null;
+  /**
+   * Product gender. 'unisex' is deprecated: coerced to None on input, never emitted.
+   */
+  gender?: 'male' | 'female' | null;
 
   images?: Array<ProductImage>;
 
@@ -486,10 +470,12 @@ export namespace ProductDetail {
         label: string;
 
         /**
-         * The availability status of the option value. None when returned on search
-         * results, hydrated only on get product detail requests.
+         * The two availability values the public API emits on offers.
+         *
+         * Internal `AvailabilityStatus` values are collapsed to these via
+         * `AvailabilityStatus.to_api()`.
          */
-        available?: ProductsAPI.AvailabilityStatus | null;
+        available?: 'InStock' | 'OutOfStock' | null;
 
         /**
          * The product id that represents this value. Variants that point to different
@@ -538,12 +524,6 @@ export interface ProductImage {
    */
   cleaned_url?: string | null;
 
-  /**
-   * @deprecated Deprecated: always `false`. Use `cleaned_url` for product grids when
-   * set; otherwise `url`.
-   */
-  is_cleaned_image?: boolean;
-
   is_main_image?: boolean;
 
   /**
@@ -566,6 +546,12 @@ export interface ProductImage {
 }
 
 export interface ProductOffer {
+  /**
+   * The two availability values the public API emits on offers.
+   *
+   * Internal `AvailabilityStatus` values are collapsed to these via
+   * `AvailabilityStatus.to_api()`.
+   */
   availability: 'InStock' | 'OutOfStock';
 
   domain: string;
@@ -575,10 +561,10 @@ export interface ProductOffer {
   url: string;
 
   /**
-   * Condition of this merchant offer (new, used, or refurbished). Null when
-   * condition is unknown.
+   * Offer condition. 'refurbished' is deprecated: rejected as a filter value,
+   * coerced to None on responses.
    */
-  condition?: 'new' | 'refurbished' | 'used' | null;
+  condition?: 'new' | 'used' | null;
 
   /**
    * Physical dimensions of a product offer. Members are null when unknown.
@@ -940,7 +926,6 @@ export interface ProductSearchByImageParams extends SearchPageParams {
 
 export declare namespace Products {
   export {
-    type AvailabilityStatus as AvailabilityStatus,
     type BrowseRequest as BrowseRequest,
     type ImageSearchRequest as ImageSearchRequest,
     type LocaleConfig as LocaleConfig,
