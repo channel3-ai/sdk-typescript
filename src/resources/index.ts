@@ -24,6 +24,12 @@ export {
   type CategorySummariesCategoryPage,
 } from './categories';
 export {
+  Conversations,
+  type Conversation,
+  type ConversationContext,
+  type ConversationItemsResponse,
+} from './conversations/conversations';
+export {
   Enrich,
   type EnrichRequest,
   type EnrichEnrichURLResponse,
@@ -74,6 +80,12 @@ export {
   type ProductDetailsSearchPage,
 } from './products';
 export { Reporting, type ReportingProduct } from './reporting/reporting';
+export {
+  Responses,
+  type ChatRequest,
+  type ResponseCreateResponse,
+  type ResponseCreateParams,
+} from './responses';
 export {
   Search,
   type SearchConfig,

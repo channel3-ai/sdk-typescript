@@ -96,6 +96,7 @@ import {
   Products,
   SimilarProductsRequest,
 } from './resources/products';
+import { ChatRequest, ResponseCreateParams, ResponseCreateResponse, Responses } from './resources/responses';
 import {
   Search,
   SearchConfig,
@@ -106,6 +107,12 @@ import {
   SearchResponse,
 } from './resources/search';
 import { Website, WebsiteFindParams, WebsiteRetrieveParams, Websites } from './resources/websites';
+import {
+  Conversation,
+  ConversationContext,
+  ConversationItemsResponse,
+  Conversations,
+} from './resources/conversations/conversations';
 import { Reporting, ReportingProduct } from './resources/reporting/reporting';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
@@ -914,6 +921,8 @@ export class Channel3 {
   categories: API.Categories = new API.Categories(this);
   websites: API.Websites = new API.Websites(this);
   priceTracking: API.PriceTracking = new API.PriceTracking(this);
+  responses: API.Responses = new API.Responses(this);
+  conversations: API.Conversations = new API.Conversations(this);
   search: API.Search = new API.Search(this);
   enrich: API.Enrich = new API.Enrich(this);
 }
@@ -924,6 +933,8 @@ Channel3.Brands = Brands;
 Channel3.Categories = Categories;
 Channel3.Websites = Websites;
 Channel3.PriceTracking = PriceTracking;
+Channel3.Responses = Responses;
+Channel3.Conversations = Conversations;
 Channel3.Search = Search;
 Channel3.Enrich = Enrich;
 
@@ -1022,6 +1033,20 @@ export declare namespace Channel3 {
     type PriceTrackingStartParams as PriceTrackingStartParams,
     type PriceTrackingStopParams as PriceTrackingStopParams,
     type PriceTrackingGetHistoryParams as PriceTrackingGetHistoryParams,
+  };
+
+  export {
+    Responses as Responses,
+    type ChatRequest as ChatRequest,
+    type ResponseCreateResponse as ResponseCreateResponse,
+    type ResponseCreateParams as ResponseCreateParams,
+  };
+
+  export {
+    Conversations as Conversations,
+    type Conversation as Conversation,
+    type ConversationContext as ConversationContext,
+    type ConversationItemsResponse as ConversationItemsResponse,
   };
 
   export {
