@@ -50,6 +50,37 @@ import {
   PaginatedListCategoriesResponse,
   SearchCategoriesResponse,
 } from './resources/categories';
+import {
+  AssistantMessage,
+  CatalogDisplayPayload,
+  CatalogToolError,
+  ConversationContext,
+  ConversationCreateParams,
+  ConversationDetail,
+  ConversationError,
+  ConversationErrorBody,
+  ConversationRetrieveParams,
+  Conversations,
+  CreateTurnRequest,
+  ImagePart,
+  ProductIDsInput,
+  SearchDiscussionEvent,
+  SearchProductsInput,
+  TextDeltaEvent,
+  TextEndEvent,
+  TextPart,
+  ToolCompletedEvent,
+  ToolPart,
+  ToolStartedEvent,
+  TurnCompletedEvent,
+  TurnErrorCode,
+  TurnErrorEvent,
+  TurnEvent,
+  TurnResult,
+  TurnStartedEvent,
+  TurnUsage,
+  UserMessage,
+} from './resources/conversations';
 import { Enrich } from './resources/enrich';
 import {
   History,
@@ -94,7 +125,6 @@ import {
   Products,
   SimilarProductsRequest,
 } from './resources/products';
-import { ChatRequest, ResponseCreateParams, ResponseCreateResponse, Responses } from './resources/responses';
 import {
   Search,
   SearchConfig,
@@ -105,12 +135,6 @@ import {
   SearchResponse,
 } from './resources/search';
 import { Website, WebsiteFindParams, WebsiteRetrieveParams, Websites } from './resources/websites';
-import {
-  Conversation,
-  ConversationContext,
-  ConversationItemsResponse,
-  Conversations,
-} from './resources/conversations/conversations';
 import { Reporting, ReportingProduct } from './resources/reporting/reporting';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
@@ -919,7 +943,6 @@ export class Channel3 {
   categories: API.Categories = new API.Categories(this);
   websites: API.Websites = new API.Websites(this);
   priceTracking: API.PriceTracking = new API.PriceTracking(this);
-  responses: API.Responses = new API.Responses(this);
   conversations: API.Conversations = new API.Conversations(this);
   search: API.Search = new API.Search(this);
   enrich: API.Enrich = new API.Enrich(this);
@@ -931,7 +954,6 @@ Channel3.Brands = Brands;
 Channel3.Categories = Categories;
 Channel3.Websites = Websites;
 Channel3.PriceTracking = PriceTracking;
-Channel3.Responses = Responses;
 Channel3.Conversations = Conversations;
 Channel3.Search = Search;
 Channel3.Enrich = Enrich;
@@ -1032,17 +1054,35 @@ export declare namespace Channel3 {
   };
 
   export {
-    Responses as Responses,
-    type ChatRequest as ChatRequest,
-    type ResponseCreateResponse as ResponseCreateResponse,
-    type ResponseCreateParams as ResponseCreateParams,
-  };
-
-  export {
     Conversations as Conversations,
-    type Conversation as Conversation,
+    type AssistantMessage as AssistantMessage,
+    type CatalogDisplayPayload as CatalogDisplayPayload,
+    type CatalogToolError as CatalogToolError,
     type ConversationContext as ConversationContext,
-    type ConversationItemsResponse as ConversationItemsResponse,
+    type ConversationDetail as ConversationDetail,
+    type ConversationError as ConversationError,
+    type ConversationErrorBody as ConversationErrorBody,
+    type CreateTurnRequest as CreateTurnRequest,
+    type ImagePart as ImagePart,
+    type ProductIDsInput as ProductIDsInput,
+    type SearchDiscussionEvent as SearchDiscussionEvent,
+    type SearchProductsInput as SearchProductsInput,
+    type TextDeltaEvent as TextDeltaEvent,
+    type TextEndEvent as TextEndEvent,
+    type TextPart as TextPart,
+    type ToolCompletedEvent as ToolCompletedEvent,
+    type ToolPart as ToolPart,
+    type ToolStartedEvent as ToolStartedEvent,
+    type TurnCompletedEvent as TurnCompletedEvent,
+    type TurnErrorCode as TurnErrorCode,
+    type TurnErrorEvent as TurnErrorEvent,
+    type TurnEvent as TurnEvent,
+    type TurnResult as TurnResult,
+    type TurnStartedEvent as TurnStartedEvent,
+    type TurnUsage as TurnUsage,
+    type UserMessage as UserMessage,
+    type ConversationCreateParams as ConversationCreateParams,
+    type ConversationRetrieveParams as ConversationRetrieveParams,
   };
 
   export {
