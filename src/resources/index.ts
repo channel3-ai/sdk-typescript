@@ -24,10 +24,35 @@ export {
 } from './categories';
 export {
   Conversations,
-  type Conversation,
+  type AssistantMessage,
+  type CatalogDisplayPayload,
+  type CatalogToolError,
   type ConversationContext,
-  type ConversationItemsResponse,
-} from './conversations/conversations';
+  type ConversationDetail,
+  type ConversationError,
+  type ConversationErrorBody,
+  type CreateTurnRequest,
+  type ImagePart,
+  type ProductIDsInput,
+  type SearchDiscussionEvent,
+  type SearchProductsInput,
+  type TextDeltaEvent,
+  type TextEndEvent,
+  type TextPart,
+  type ToolCompletedEvent,
+  type ToolPart,
+  type ToolStartedEvent,
+  type TurnCompletedEvent,
+  type TurnErrorCode,
+  type TurnErrorEvent,
+  type TurnEvent,
+  type TurnResult,
+  type TurnStartedEvent,
+  type TurnUsage,
+  type UserMessage,
+  type ConversationCreateParams,
+  type ConversationRetrieveParams,
+} from './conversations';
 export { Enrich } from './enrich';
 export {
   PriceTracking,
@@ -73,12 +98,6 @@ export {
   type ProductDetailsSearchPage,
 } from './products';
 export { Reporting, type ReportingProduct } from './reporting/reporting';
-export {
-  Responses,
-  type ChatRequest,
-  type ResponseCreateResponse,
-  type ResponseCreateParams,
-} from './responses';
 export {
   Search,
   type SearchConfig,
