@@ -7,10 +7,9 @@ import { RequestOptions } from '../../internal/request-options';
 
 export class ClientTokens extends APIResource {
   /**
-   * Mint a short-lived, browser-safe client token for the conversations API. Pass
-   * `session_id` for a session token that can create and continue conversations for
-   * that session, or `conversation_id` for a token bound to one existing
-   * conversation.
+   * Mint a short-lived, browser-safe token. With `conversation_id` the token
+   * continues and reads that thread; without it, the token's first turn creates the
+   * thread and binds the token to it.
    */
   create(body: ClientTokenCreateParams, options?: RequestOptions): APIPromise<ClientTokenResponse> {
     return this._client.post('/v1/conversations/client_tokens', { body, ...options });
@@ -34,13 +33,13 @@ export interface ClientTokenResponse {
 
   expires_at: number;
 
+  token_id: string;
+
   token_type?: 'Bearer';
 }
 
 export interface CreateClientTokenRequest {
   conversation_id?: string | null;
-
-  session_id?: string | null;
 
   ttl_seconds?: number;
 }
@@ -51,8 +50,6 @@ export interface RevokeClientTokenRequest {
 
 export interface ClientTokenCreateParams {
   conversation_id?: string | null;
-
-  session_id?: string | null;
 
   ttl_seconds?: number;
 }

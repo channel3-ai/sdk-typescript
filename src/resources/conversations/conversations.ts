@@ -74,7 +74,7 @@ export interface CatalogDisplayPayload {
 export interface CatalogToolError {
   error: string;
 
-  isError?: true;
+  is_error?: true;
 
   products?: Array<ProductsAPI.ProductDetail>;
 }
