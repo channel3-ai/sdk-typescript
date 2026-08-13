@@ -33,15 +33,13 @@ export {
   type ConversationErrorBody,
   type CreateTurnRequest,
   type ImagePart,
+  type PartCompletedEvent,
+  type PartDeltaEvent,
+  type PartStartedEvent,
   type ProductIDsInput,
-  type SearchDiscussionEvent,
   type SearchProductsInput,
-  type TextDeltaEvent,
-  type TextEndEvent,
   type TextPart,
-  type ToolCompletedEvent,
   type ToolPart,
-  type ToolStartedEvent,
   type TurnCompletedEvent,
   type TurnErrorCode,
   type TurnErrorEvent,
@@ -52,7 +50,7 @@ export {
   type UserMessage,
   type ConversationCreateParams,
   type ConversationRetrieveParams,
-} from './conversations';
+} from './conversations/conversations';
 export { Enrich } from './enrich';
 export {
   PriceTracking,
@@ -74,6 +72,7 @@ export {
 } from './price-tracking';
 export {
   Products,
+  type AvailabilityStatus,
   type BrowseRequest,
   type ImageSearchRequest,
   type LocaleConfig,

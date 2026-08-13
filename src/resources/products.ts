@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
+import * as ProductsAPI from './products';
 import * as CategoriesAPI from './categories';
 import * as SearchAPI from './search';
 import { APIPromise } from '../core/api-promise';
@@ -159,6 +160,14 @@ export class Products extends APIResource {
 }
 
 export type ProductDetailsSearchPage = SearchPage<ProductDetail>;
+
+/**
+ * The two availability values the public API emits on offers.
+ *
+ * Internal `AvailabilityStatus` values are collapsed to these via
+ * `AvailabilityStatus.to_api()`.
+ */
+export type AvailabilityStatus = 'InStock' | 'OutOfStock';
 
 /**
  * Filter-driven product listing with pagination (no free-text query).
@@ -475,7 +484,7 @@ export namespace ProductDetail {
          * Internal `AvailabilityStatus` values are collapsed to these via
          * `AvailabilityStatus.to_api()`.
          */
-        available?: 'InStock' | 'OutOfStock' | null;
+        available?: ProductsAPI.AvailabilityStatus | null;
 
         /**
          * The product id that represents this value. Variants that point to different
@@ -552,7 +561,7 @@ export interface ProductOffer {
    * Internal `AvailabilityStatus` values are collapsed to these via
    * `AvailabilityStatus.to_api()`.
    */
-  availability: 'InStock' | 'OutOfStock';
+  availability: AvailabilityStatus;
 
   domain: string;
 
@@ -926,6 +935,7 @@ export interface ProductSearchByImageParams extends SearchPageParams {
 
 export declare namespace Products {
   export {
+    type AvailabilityStatus as AvailabilityStatus,
     type BrowseRequest as BrowseRequest,
     type ImageSearchRequest as ImageSearchRequest,
     type LocaleConfig as LocaleConfig,
