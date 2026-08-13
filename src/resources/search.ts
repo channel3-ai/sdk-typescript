@@ -133,7 +133,7 @@ export interface SearchFilters {
    * with no availability data counts as 'InStock'. Pass every value to disable
    * availability filtering.
    */
-  availability?: Array<'InStock' | 'OutOfStock'>;
+  availability?: Array<ProductsAPI.AvailabilityStatus>;
 
   /**
    * If provided, only products from these brands will be returned

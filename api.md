@@ -8,6 +8,7 @@ Types:
 
 Types:
 
+- <code><a href="./src/resources/products.ts">AvailabilityStatus</a></code>
 - <code><a href="./src/resources/products.ts">BrowseRequest</a></code>
 - <code><a href="./src/resources/products.ts">ImageSearchRequest</a></code>
 - <code><a href="./src/resources/products.ts">LocaleConfig</a></code>
@@ -129,37 +130,48 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/conversations.ts">AssistantMessage</a></code>
-- <code><a href="./src/resources/conversations.ts">CatalogDisplayPayload</a></code>
-- <code><a href="./src/resources/conversations.ts">CatalogToolError</a></code>
-- <code><a href="./src/resources/conversations.ts">ConversationContext</a></code>
-- <code><a href="./src/resources/conversations.ts">ConversationDetail</a></code>
-- <code><a href="./src/resources/conversations.ts">ConversationError</a></code>
-- <code><a href="./src/resources/conversations.ts">ConversationErrorBody</a></code>
-- <code><a href="./src/resources/conversations.ts">CreateTurnRequest</a></code>
-- <code><a href="./src/resources/conversations.ts">ImagePart</a></code>
-- <code><a href="./src/resources/conversations.ts">ProductIDsInput</a></code>
-- <code><a href="./src/resources/conversations.ts">SearchDiscussionEvent</a></code>
-- <code><a href="./src/resources/conversations.ts">SearchProductsInput</a></code>
-- <code><a href="./src/resources/conversations.ts">TextDeltaEvent</a></code>
-- <code><a href="./src/resources/conversations.ts">TextEndEvent</a></code>
-- <code><a href="./src/resources/conversations.ts">TextPart</a></code>
-- <code><a href="./src/resources/conversations.ts">ToolCompletedEvent</a></code>
-- <code><a href="./src/resources/conversations.ts">ToolPart</a></code>
-- <code><a href="./src/resources/conversations.ts">ToolStartedEvent</a></code>
-- <code><a href="./src/resources/conversations.ts">TurnCompletedEvent</a></code>
-- <code><a href="./src/resources/conversations.ts">TurnErrorCode</a></code>
-- <code><a href="./src/resources/conversations.ts">TurnErrorEvent</a></code>
-- <code><a href="./src/resources/conversations.ts">TurnEvent</a></code>
-- <code><a href="./src/resources/conversations.ts">TurnResult</a></code>
-- <code><a href="./src/resources/conversations.ts">TurnStartedEvent</a></code>
-- <code><a href="./src/resources/conversations.ts">TurnUsage</a></code>
-- <code><a href="./src/resources/conversations.ts">UserMessage</a></code>
+- <code><a href="./src/resources/conversations/conversations.ts">AssistantMessage</a></code>
+- <code><a href="./src/resources/conversations/conversations.ts">CatalogDisplayPayload</a></code>
+- <code><a href="./src/resources/conversations/conversations.ts">CatalogToolError</a></code>
+- <code><a href="./src/resources/conversations/conversations.ts">ConversationContext</a></code>
+- <code><a href="./src/resources/conversations/conversations.ts">ConversationDetail</a></code>
+- <code><a href="./src/resources/conversations/conversations.ts">ConversationError</a></code>
+- <code><a href="./src/resources/conversations/conversations.ts">ConversationErrorBody</a></code>
+- <code><a href="./src/resources/conversations/conversations.ts">CreateTurnRequest</a></code>
+- <code><a href="./src/resources/conversations/conversations.ts">ImagePart</a></code>
+- <code><a href="./src/resources/conversations/conversations.ts">PartCompletedEvent</a></code>
+- <code><a href="./src/resources/conversations/conversations.ts">PartDeltaEvent</a></code>
+- <code><a href="./src/resources/conversations/conversations.ts">PartStartedEvent</a></code>
+- <code><a href="./src/resources/conversations/conversations.ts">ProductIDsInput</a></code>
+- <code><a href="./src/resources/conversations/conversations.ts">SearchProductsInput</a></code>
+- <code><a href="./src/resources/conversations/conversations.ts">TextPart</a></code>
+- <code><a href="./src/resources/conversations/conversations.ts">ToolPart</a></code>
+- <code><a href="./src/resources/conversations/conversations.ts">TurnCompletedEvent</a></code>
+- <code><a href="./src/resources/conversations/conversations.ts">TurnErrorCode</a></code>
+- <code><a href="./src/resources/conversations/conversations.ts">TurnErrorEvent</a></code>
+- <code><a href="./src/resources/conversations/conversations.ts">TurnEvent</a></code>
+- <code><a href="./src/resources/conversations/conversations.ts">TurnResult</a></code>
+- <code><a href="./src/resources/conversations/conversations.ts">TurnStartedEvent</a></code>
+- <code><a href="./src/resources/conversations/conversations.ts">TurnUsage</a></code>
+- <code><a href="./src/resources/conversations/conversations.ts">UserMessage</a></code>
 
 Methods:
 
-- <code title="post /v1/conversations">client.conversations.<a href="./src/resources/conversations.ts">create</a>({ ...params }) -> TurnResult</code>
-- <code title="get /v1/conversations/{conversation_id}">client.conversations.<a href="./src/resources/conversations.ts">retrieve</a>(conversationID, { ...params }) -> ConversationDetail</code>
+- <code title="post /v1/conversations">client.conversations.<a href="./src/resources/conversations/conversations.ts">create</a>({ ...params }) -> TurnResult</code>
+- <code title="get /v1/conversations/{conversation_id}">client.conversations.<a href="./src/resources/conversations/conversations.ts">retrieve</a>(conversationID, { ...params }) -> ConversationDetail</code>
+
+## ClientTokens
+
+Types:
+
+- <code><a href="./src/resources/conversations/client-tokens.ts">ClientTokenResponse</a></code>
+- <code><a href="./src/resources/conversations/client-tokens.ts">CreateClientTokenRequest</a></code>
+- <code><a href="./src/resources/conversations/client-tokens.ts">RevokeClientTokenRequest</a></code>
+
+Methods:
+
+- <code title="post /v1/conversations/client_tokens">client.conversations.clientTokens.<a href="./src/resources/conversations/client-tokens.ts">create</a>({ ...params }) -> ClientTokenResponse</code>
+- <code title="post /v1/conversations/client_tokens/revoke">client.conversations.clientTokens.<a href="./src/resources/conversations/client-tokens.ts">revoke</a>({ ...params }) -> void</code>
 
 # Search
 

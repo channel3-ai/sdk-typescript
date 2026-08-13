@@ -50,37 +50,6 @@ import {
   PaginatedListCategoriesResponse,
   SearchCategoriesResponse,
 } from './resources/categories';
-import {
-  AssistantMessage,
-  CatalogDisplayPayload,
-  CatalogToolError,
-  ConversationContext,
-  ConversationCreateParams,
-  ConversationDetail,
-  ConversationError,
-  ConversationErrorBody,
-  ConversationRetrieveParams,
-  Conversations,
-  CreateTurnRequest,
-  ImagePart,
-  ProductIDsInput,
-  SearchDiscussionEvent,
-  SearchProductsInput,
-  TextDeltaEvent,
-  TextEndEvent,
-  TextPart,
-  ToolCompletedEvent,
-  ToolPart,
-  ToolStartedEvent,
-  TurnCompletedEvent,
-  TurnErrorCode,
-  TurnErrorEvent,
-  TurnEvent,
-  TurnResult,
-  TurnStartedEvent,
-  TurnUsage,
-  UserMessage,
-} from './resources/conversations';
 import { Enrich } from './resources/enrich';
 import {
   History,
@@ -101,6 +70,7 @@ import {
   SubscriptionsCursorPage,
 } from './resources/price-tracking';
 import {
+  AvailabilityStatus,
   BrowseRequest,
   ImageSearchRequest,
   LocaleConfig,
@@ -135,6 +105,35 @@ import {
   SearchResponse,
 } from './resources/search';
 import { Website, WebsiteFindParams, WebsiteRetrieveParams, Websites } from './resources/websites';
+import {
+  AssistantMessage,
+  CatalogDisplayPayload,
+  CatalogToolError,
+  ConversationContext,
+  ConversationCreateParams,
+  ConversationDetail,
+  ConversationError,
+  ConversationErrorBody,
+  ConversationRetrieveParams,
+  Conversations,
+  CreateTurnRequest,
+  ImagePart,
+  PartCompletedEvent,
+  PartDeltaEvent,
+  PartStartedEvent,
+  ProductIDsInput,
+  SearchProductsInput,
+  TextPart,
+  ToolPart,
+  TurnCompletedEvent,
+  TurnErrorCode,
+  TurnErrorEvent,
+  TurnEvent,
+  TurnResult,
+  TurnStartedEvent,
+  TurnUsage,
+  UserMessage,
+} from './resources/conversations/conversations';
 import { Reporting, ReportingProduct } from './resources/reporting/reporting';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
@@ -978,6 +977,7 @@ export declare namespace Channel3 {
 
   export {
     Products as Products,
+    type AvailabilityStatus as AvailabilityStatus,
     type BrowseRequest as BrowseRequest,
     type ImageSearchRequest as ImageSearchRequest,
     type LocaleConfig as LocaleConfig,
@@ -1064,15 +1064,13 @@ export declare namespace Channel3 {
     type ConversationErrorBody as ConversationErrorBody,
     type CreateTurnRequest as CreateTurnRequest,
     type ImagePart as ImagePart,
+    type PartCompletedEvent as PartCompletedEvent,
+    type PartDeltaEvent as PartDeltaEvent,
+    type PartStartedEvent as PartStartedEvent,
     type ProductIDsInput as ProductIDsInput,
-    type SearchDiscussionEvent as SearchDiscussionEvent,
     type SearchProductsInput as SearchProductsInput,
-    type TextDeltaEvent as TextDeltaEvent,
-    type TextEndEvent as TextEndEvent,
     type TextPart as TextPart,
-    type ToolCompletedEvent as ToolCompletedEvent,
     type ToolPart as ToolPart,
-    type ToolStartedEvent as ToolStartedEvent,
     type TurnCompletedEvent as TurnCompletedEvent,
     type TurnErrorCode as TurnErrorCode,
     type TurnErrorEvent as TurnErrorEvent,
