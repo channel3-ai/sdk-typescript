@@ -38,7 +38,7 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/reporting/reporting.ts">AffiliateProduct</a></code>
+- <code><a href="./src/resources/reporting/reporting.ts">ReportingProduct</a></code>
 
 ## Clicks
 
@@ -76,7 +76,6 @@ Methods:
 
 - <code title="get /v1/brands/{brand_id}">client.brands.<a href="./src/resources/brands.ts">retrieve</a>(brandID, { ...params }) -> Brand</code>
 - <code title="get /v1/brands">client.brands.<a href="./src/resources/brands.ts">list</a>({ ...params }) -> BrandsCursorPage</code>
-- <code title="get /v0/brands">client.brands.<a href="./src/resources/brands.ts">find</a>({ ...params }) -> Brand</code>
 - <code title="get /v1/brands/search">client.brands.<a href="./src/resources/brands.ts">search</a>({ ...params }) -> SearchBrandsResponse</code>
 
 # Categories
@@ -127,6 +126,53 @@ Methods:
 - <code title="post /v0/price-tracking/start">client.priceTracking.<a href="./src/resources/price-tracking.ts">start</a>({ ...params }) -> Subscription</code>
 - <code title="post /v0/price-tracking/stop">client.priceTracking.<a href="./src/resources/price-tracking.ts">stop</a>({ ...params }) -> Subscription</code>
 
+# Conversations
+
+Types:
+
+- <code><a href="./src/resources/conversations/conversations.ts">AssistantMessage</a></code>
+- <code><a href="./src/resources/conversations/conversations.ts">CatalogDisplayPayload</a></code>
+- <code><a href="./src/resources/conversations/conversations.ts">CatalogToolError</a></code>
+- <code><a href="./src/resources/conversations/conversations.ts">ConversationContext</a></code>
+- <code><a href="./src/resources/conversations/conversations.ts">ConversationDetail</a></code>
+- <code><a href="./src/resources/conversations/conversations.ts">ConversationError</a></code>
+- <code><a href="./src/resources/conversations/conversations.ts">ConversationErrorBody</a></code>
+- <code><a href="./src/resources/conversations/conversations.ts">CreateTurnRequest</a></code>
+- <code><a href="./src/resources/conversations/conversations.ts">ImagePart</a></code>
+- <code><a href="./src/resources/conversations/conversations.ts">PartCompletedEvent</a></code>
+- <code><a href="./src/resources/conversations/conversations.ts">PartDeltaEvent</a></code>
+- <code><a href="./src/resources/conversations/conversations.ts">PartStartedEvent</a></code>
+- <code><a href="./src/resources/conversations/conversations.ts">ProductIDsInput</a></code>
+- <code><a href="./src/resources/conversations/conversations.ts">SearchProductsInput</a></code>
+- <code><a href="./src/resources/conversations/conversations.ts">TextPart</a></code>
+- <code><a href="./src/resources/conversations/conversations.ts">ToolPart</a></code>
+- <code><a href="./src/resources/conversations/conversations.ts">TurnCompletedEvent</a></code>
+- <code><a href="./src/resources/conversations/conversations.ts">TurnErrorCode</a></code>
+- <code><a href="./src/resources/conversations/conversations.ts">TurnErrorEvent</a></code>
+- <code><a href="./src/resources/conversations/conversations.ts">TurnEvent</a></code>
+- <code><a href="./src/resources/conversations/conversations.ts">TurnResult</a></code>
+- <code><a href="./src/resources/conversations/conversations.ts">TurnStartedEvent</a></code>
+- <code><a href="./src/resources/conversations/conversations.ts">TurnUsage</a></code>
+- <code><a href="./src/resources/conversations/conversations.ts">UserMessage</a></code>
+
+Methods:
+
+- <code title="post /v1/conversations">client.conversations.<a href="./src/resources/conversations/conversations.ts">create</a>({ ...params }) -> TurnResult</code>
+- <code title="get /v1/conversations/{conversation_id}">client.conversations.<a href="./src/resources/conversations/conversations.ts">retrieve</a>(conversationID, { ...params }) -> ConversationDetail</code>
+
+## ClientTokens
+
+Types:
+
+- <code><a href="./src/resources/conversations/client-tokens.ts">ClientTokenResponse</a></code>
+- <code><a href="./src/resources/conversations/client-tokens.ts">CreateClientTokenRequest</a></code>
+- <code><a href="./src/resources/conversations/client-tokens.ts">RevokeClientTokenRequest</a></code>
+
+Methods:
+
+- <code title="post /v1/conversations/client_tokens">client.conversations.clientTokens.<a href="./src/resources/conversations/client-tokens.ts">create</a>({ ...params }) -> ClientTokenResponse</code>
+- <code title="post /v1/conversations/client_tokens/revoke">client.conversations.clientTokens.<a href="./src/resources/conversations/client-tokens.ts">revoke</a>({ ...params }) -> void</code>
+
 # Search
 
 Types:
@@ -142,12 +188,3 @@ Methods:
 - <code title="post /v1/search">client.search.<a href="./src/resources/search.ts">perform</a>({ ...params }) -> SearchResponse</code>
 
 # Enrich
-
-Types:
-
-- <code><a href="./src/resources/enrich.ts">EnrichRequest</a></code>
-- <code><a href="./src/resources/enrich.ts">EnrichEnrichURLResponse</a></code>
-
-Methods:
-
-- <code title="post /v0/enrich">client.enrich.<a href="./src/resources/enrich.ts">enrichURL</a>({ ...params }) -> EnrichEnrichURLResponse</code>

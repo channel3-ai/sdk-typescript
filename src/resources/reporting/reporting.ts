@@ -22,7 +22,7 @@ export class Reporting extends APIResource {
 /**
  * Compact product reference on click/transaction items.
  */
-export interface AffiliateProduct {
+export interface ReportingProduct {
   /**
    * Canonical product ID.
    */
@@ -43,7 +43,7 @@ Reporting.Clicks = Clicks;
 Reporting.Transactions = Transactions;
 
 export declare namespace Reporting {
-  export { type AffiliateProduct as AffiliateProduct };
+  export { type ReportingProduct as ReportingProduct };
 
   export {
     Clicks as Clicks,

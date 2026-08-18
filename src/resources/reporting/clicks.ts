@@ -7,7 +7,7 @@ import { RequestOptions } from '../../internal/request-options';
 
 export class Clicks extends APIResource {
   /**
-   * List affiliate clicks for your account over a datetime window.
+   * List clicks for your account over a datetime window.
    *
    * Defaults to the last 30 days ending now. Maximum window is 90 days. Pass an
    * offset-aware ISO datetime to express local time (e.g. last 6 hours). Returns a
@@ -24,7 +24,7 @@ export class Clicks extends APIResource {
 export type ClicksAnalyticsPage = AnalyticsPage<Click>;
 
 /**
- * A single affiliate click event.
+ * A single click event.
  */
 export interface Click {
   /**
@@ -50,7 +50,12 @@ export interface Click {
   /**
    * Compact product reference on click/transaction items.
    */
-  product?: ReportingAPI.AffiliateProduct | null;
+  product?: ReportingAPI.ReportingProduct | null;
+
+  /**
+   * Partner-supplied user identifier from the buy URL, if provided.
+   */
+  user_id?: string | null;
 }
 
 /**
@@ -119,6 +124,11 @@ export interface ClickListParams extends AnalyticsPageParams {
    * values are treated as UTC.
    */
   start_date?: string | null;
+
+  /**
+   * Filter results to clicks or transactions for this user.
+   */
+  user_id?: string | null;
 }
 
 export declare namespace Clicks {

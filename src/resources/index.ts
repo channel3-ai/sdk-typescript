@@ -7,7 +7,6 @@ export {
   type SearchBrandsResponse,
   type BrandRetrieveParams,
   type BrandListParams,
-  type BrandFindParams,
   type BrandSearchParams,
   type BrandsCursorPage,
 } from './brands';
@@ -24,11 +23,35 @@ export {
   type CategorySummariesCategoryPage,
 } from './categories';
 export {
-  Enrich,
-  type EnrichRequest,
-  type EnrichEnrichURLResponse,
-  type EnrichEnrichURLParams,
-} from './enrich';
+  Conversations,
+  type AssistantMessage,
+  type CatalogDisplayPayload,
+  type CatalogToolError,
+  type ConversationContext,
+  type ConversationDetail,
+  type ConversationError,
+  type ConversationErrorBody,
+  type CreateTurnRequest,
+  type ImagePart,
+  type PartCompletedEvent,
+  type PartDeltaEvent,
+  type PartStartedEvent,
+  type ProductIDsInput,
+  type SearchProductsInput,
+  type TextPart,
+  type ToolPart,
+  type TurnCompletedEvent,
+  type TurnErrorCode,
+  type TurnErrorEvent,
+  type TurnEvent,
+  type TurnResult,
+  type TurnStartedEvent,
+  type TurnUsage,
+  type UserMessage,
+  type ConversationCreateParams,
+  type ConversationRetrieveParams,
+} from './conversations/conversations';
+export { Enrich } from './enrich';
 export {
   PriceTracking,
   type PaginatedSubscriptionsResponse,
@@ -73,7 +96,7 @@ export {
   type ProductSearchByImageParams,
   type ProductDetailsSearchPage,
 } from './products';
-export { Reporting, type AffiliateProduct } from './reporting/reporting';
+export { Reporting, type ReportingProduct } from './reporting/reporting';
 export {
   Search,
   type SearchConfig,

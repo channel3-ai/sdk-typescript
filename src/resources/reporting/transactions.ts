@@ -7,7 +7,7 @@ import { RequestOptions } from '../../internal/request-options';
 
 export class Transactions extends APIResource {
   /**
-   * List affiliate transactions for your account over a datetime window.
+   * List transactions for your account over a datetime window.
    *
    * Defaults to the last 30 days ending now. Maximum window is 90 days. Pass an
    * offset-aware ISO datetime to express local time (e.g. last 6 hours). Returns a
@@ -34,7 +34,7 @@ export type TransactionsAnalyticsPage = AnalyticsPage<Transaction>;
 export type PublicTransactionStatus = 'pending' | 'paid';
 
 /**
- * A single affiliate CPA transaction.
+ * A single CPA transaction.
  */
 export interface Transaction {
   /**
@@ -80,7 +80,12 @@ export interface Transaction {
   /**
    * Compact product reference on click/transaction items.
    */
-  product?: ReportingAPI.AffiliateProduct | null;
+  product?: ReportingAPI.ReportingProduct | null;
+
+  /**
+   * Partner-supplied user identifier from the originating click, if provided.
+   */
+  user_id?: string | null;
 }
 
 /**
@@ -166,6 +171,11 @@ export interface TransactionListParams extends AnalyticsPageParams {
    * values are treated as UTC.
    */
   start_date?: string | null;
+
+  /**
+   * Filter results to clicks or transactions for this user.
+   */
+  user_id?: string | null;
 }
 
 export declare namespace Transactions {

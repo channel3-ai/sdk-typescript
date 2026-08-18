@@ -1,5 +1,33 @@
 # Changelog
 
+## 3.2.0 (2026-08-18)
+
+Full Changelog: [v3.1.0...v3.2.0](https://github.com/channel3-ai/sdk-typescript/compare/v3.1.0...v3.2.0)
+
+### Features
+
+* **api:** add client_tokens endpoints, refactor streaming to parts, update availability types ([0e7dd4c](https://github.com/channel3-ai/sdk-typescript/commit/0e7dd4c9555d3c80ad2f87e6e65f2355220279ce))
+* **api:** add filters parameter to responses ([462eae6](https://github.com/channel3-ai/sdk-typescript/commit/462eae672768169a43b7516b6e4005f6a2a4a5c2))
+* **api:** add responses and conversations resources ([4baaf14](https://github.com/channel3-ai/sdk-typescript/commit/4baaf141e52f719327e81c95c46c662efa9debee))
+* **api:** add sort parameter to products browse method ([d6f7697](https://github.com/channel3-ai/sdk-typescript/commit/d6f769709bf841244387ae59b35a8abc41d5eca2))
+* **api:** remove responses endpoint, add conversations pagination, fix item types ([8ae3c56](https://github.com/channel3-ai/sdk-typescript/commit/8ae3c563cd8055df0cac0a0cd52874ab30bacfab))
+
+
+### Bug Fixes
+
+* **types:** rename AffiliateProduct to ReportingProduct in reporting ([793a332](https://github.com/channel3-ai/sdk-typescript/commit/793a3322a1d8a7002a2ccd41d103d0d6b943d8ab))
+* **types:** rename isError to is_error in CatalogToolError ([4eadd43](https://github.com/channel3-ai/sdk-typescript/commit/4eadd435f976104083dc47e155707ca26a33e2cc))
+
+
+### Chores
+
+* **api:** remove deprecated brands.find and enrich methods ([44e0cee](https://github.com/channel3-ai/sdk-typescript/commit/44e0cee88c76161cffef1f32b48707bd0cbc181e))
+
+
+### Documentation
+
+* **api:** update attributes field documentation in search filters ([ea9af0f](https://github.com/channel3-ai/sdk-typescript/commit/ea9af0f7cce51edf46e29004d149bde547eacb6e))
+
 ## 3.1.0 (2026-08-03)
 
 Full Changelog: [v3.5.1...v3.1.0](https://github.com/channel3-ai/sdk-typescript/compare/v3.5.1...v3.1.0)

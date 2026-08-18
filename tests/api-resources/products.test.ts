@@ -33,6 +33,7 @@ describe('resource products', () => {
           length_unit: 'mm',
           website_ids: ['string'],
           weight_unit: 'mg',
+          'x-user-id': 'x-user-id',
         },
         { path: '/_stainless_unknown_path' },
       ),
@@ -81,7 +82,7 @@ describe('resource products', () => {
         brand_ids: ['string'],
         category_ids: ['string'],
         colors: { palette: [{ hex: 'hex', percentage: 0 }], match: 'strict' },
-        condition: 'new',
+        conditions: ['new'],
         dimensions: {
           height: {
             unit: 'mm',
@@ -114,6 +115,7 @@ describe('resource products', () => {
       },
       limit: 1,
       page_token: 'page_token',
+      'x-user-id': 'x-user-id',
     });
   });
 
@@ -131,7 +133,11 @@ describe('resource products', () => {
 
   // Mock server tests are disabled
   test.skip('lookup: required and optional params', async () => {
-    const response = await client.products.lookup({ url: 'url', max_staleness_hours: 1 });
+    const response = await client.products.lookup({
+      url: 'url',
+      max_staleness_hours: 1,
+      'x-user-id': 'x-user-id',
+    });
   });
 
   // Mock server tests are disabled
@@ -148,7 +154,7 @@ describe('resource products', () => {
 
   // Mock server tests are disabled
   test.skip('monetize: required and optional params', async () => {
-    const response = await client.products.monetize({ url: 'url' });
+    const response = await client.products.monetize({ url: 'url', 'x-user-id': 'x-user-id' });
   });
 
   // Mock server tests are disabled

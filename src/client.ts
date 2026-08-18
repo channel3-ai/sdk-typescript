@@ -31,7 +31,6 @@ import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import {
   Brand,
-  BrandFindParams,
   BrandListParams,
   BrandRetrieveParams,
   BrandSearchParams,
@@ -51,7 +50,7 @@ import {
   PaginatedListCategoriesResponse,
   SearchCategoriesResponse,
 } from './resources/categories';
-import { Enrich, EnrichEnrichURLParams, EnrichEnrichURLResponse, EnrichRequest } from './resources/enrich';
+import { Enrich } from './resources/enrich';
 import {
   History,
   PaginatedSubscriptionsResponse,
@@ -106,7 +105,36 @@ import {
   SearchResponse,
 } from './resources/search';
 import { Website, WebsiteFindParams, WebsiteRetrieveParams, Websites } from './resources/websites';
-import { AffiliateProduct, Reporting } from './resources/reporting/reporting';
+import {
+  AssistantMessage,
+  CatalogDisplayPayload,
+  CatalogToolError,
+  ConversationContext,
+  ConversationCreateParams,
+  ConversationDetail,
+  ConversationError,
+  ConversationErrorBody,
+  ConversationRetrieveParams,
+  Conversations,
+  CreateTurnRequest,
+  ImagePart,
+  PartCompletedEvent,
+  PartDeltaEvent,
+  PartStartedEvent,
+  ProductIDsInput,
+  SearchProductsInput,
+  TextPart,
+  ToolPart,
+  TurnCompletedEvent,
+  TurnErrorCode,
+  TurnErrorEvent,
+  TurnEvent,
+  TurnResult,
+  TurnStartedEvent,
+  TurnUsage,
+  UserMessage,
+} from './resources/conversations/conversations';
+import { Reporting, ReportingProduct } from './resources/reporting/reporting';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -914,6 +942,7 @@ export class Channel3 {
   categories: API.Categories = new API.Categories(this);
   websites: API.Websites = new API.Websites(this);
   priceTracking: API.PriceTracking = new API.PriceTracking(this);
+  conversations: API.Conversations = new API.Conversations(this);
   search: API.Search = new API.Search(this);
   enrich: API.Enrich = new API.Enrich(this);
 }
@@ -924,6 +953,7 @@ Channel3.Brands = Brands;
 Channel3.Categories = Categories;
 Channel3.Websites = Websites;
 Channel3.PriceTracking = PriceTracking;
+Channel3.Conversations = Conversations;
 Channel3.Search = Search;
 Channel3.Enrich = Enrich;
 
@@ -972,7 +1002,7 @@ export declare namespace Channel3 {
     type ProductSearchByImageParams as ProductSearchByImageParams,
   };
 
-  export { Reporting as Reporting, type AffiliateProduct as AffiliateProduct };
+  export { Reporting as Reporting, type ReportingProduct as ReportingProduct };
 
   export {
     Brands as Brands,
@@ -981,7 +1011,6 @@ export declare namespace Channel3 {
     type BrandsCursorPage as BrandsCursorPage,
     type BrandRetrieveParams as BrandRetrieveParams,
     type BrandListParams as BrandListParams,
-    type BrandFindParams as BrandFindParams,
     type BrandSearchParams as BrandSearchParams,
   };
 
@@ -1025,6 +1054,36 @@ export declare namespace Channel3 {
   };
 
   export {
+    Conversations as Conversations,
+    type AssistantMessage as AssistantMessage,
+    type CatalogDisplayPayload as CatalogDisplayPayload,
+    type CatalogToolError as CatalogToolError,
+    type ConversationContext as ConversationContext,
+    type ConversationDetail as ConversationDetail,
+    type ConversationError as ConversationError,
+    type ConversationErrorBody as ConversationErrorBody,
+    type CreateTurnRequest as CreateTurnRequest,
+    type ImagePart as ImagePart,
+    type PartCompletedEvent as PartCompletedEvent,
+    type PartDeltaEvent as PartDeltaEvent,
+    type PartStartedEvent as PartStartedEvent,
+    type ProductIDsInput as ProductIDsInput,
+    type SearchProductsInput as SearchProductsInput,
+    type TextPart as TextPart,
+    type ToolPart as ToolPart,
+    type TurnCompletedEvent as TurnCompletedEvent,
+    type TurnErrorCode as TurnErrorCode,
+    type TurnErrorEvent as TurnErrorEvent,
+    type TurnEvent as TurnEvent,
+    type TurnResult as TurnResult,
+    type TurnStartedEvent as TurnStartedEvent,
+    type TurnUsage as TurnUsage,
+    type UserMessage as UserMessage,
+    type ConversationCreateParams as ConversationCreateParams,
+    type ConversationRetrieveParams as ConversationRetrieveParams,
+  };
+
+  export {
     Search as Search,
     type SearchConfig as SearchConfig,
     type SearchFilterPrice as SearchFilterPrice,
@@ -1034,12 +1093,7 @@ export declare namespace Channel3 {
     type SearchPerformParams as SearchPerformParams,
   };
 
-  export {
-    Enrich as Enrich,
-    type EnrichRequest as EnrichRequest,
-    type EnrichEnrichURLResponse as EnrichEnrichURLResponse,
-    type EnrichEnrichURLParams as EnrichEnrichURLParams,
-  };
+  export { Enrich as Enrich };
 
   export type ErrorResponse = API.ErrorResponse;
 }

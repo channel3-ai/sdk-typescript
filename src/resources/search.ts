@@ -3,6 +3,7 @@
 import { APIResource } from '../core/resource';
 import * as ProductsAPI from './products';
 import { APIPromise } from '../core/api-promise';
+import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 
 /**
@@ -17,8 +18,16 @@ export class Search extends APIResource {
    *
    * @deprecated use `products.search` instead, which auto-paginates; will be removed in the next major version
    */
-  perform(body: SearchPerformParams, options?: RequestOptions): APIPromise<SearchResponse> {
-    return this._client.post('/v1/search', { body, ...options });
+  perform(params: SearchPerformParams, options?: RequestOptions): APIPromise<SearchResponse> {
+    const { 'x-user-id': xUserID, ...body } = params;
+    return this._client.post('/v1/search', {
+      body,
+      ...options,
+      headers: buildHeaders([
+        { ...(xUserID != null ? { 'x-user-id': xUserID } : undefined) },
+        options?.headers,
+      ]),
+    });
   }
 }
 
@@ -27,8 +36,7 @@ export class Search extends APIResource {
  */
 export interface SearchConfig {
   /**
-   * ISO 3166-1 alpha-2 country code. May stay unset for pan-region storefronts (e.g.
-   * `currency=EUR` with no specific country).
+   * ISO 3166-1 alpha-2 country code (plus the pan-region `EU`).
    */
   country?:
     | 'US'
@@ -53,19 +61,12 @@ export interface SearchConfig {
     | null;
 
   /**
-   * ISO 4217 currency code. When unset, inferred from `country` (e.g. `GB` → `GBP`),
-   * defaulting to `USD`.
+   * ISO 4217 currency code.
    */
   currency?: 'USD' | 'CAD' | 'AUD' | 'GBP' | 'EUR' | 'SEK' | 'CZK' | 'RON' | null;
 
   /**
-   * @deprecated Deprecated: use `mode`. `true` is equivalent to `mode=keyword`.
-   */
-  keyword_search_only?: boolean;
-
-  /**
-   * ISO 639-1 language code. When unset, inferred from `country` (preferred) then
-   * `currency`, defaulting to `en`.
+   * ISO 639-1 language code.
    */
   language?: 'en' | 'de' | 'fr' | 'it' | 'es' | 'nl' | 'sv' | 'fi' | 'pt' | 'cs' | 'el' | 'ro' | null;
 
@@ -118,19 +119,21 @@ export interface SearchFilters {
   age?: Array<'newborn' | 'infant' | 'toddler' | 'kids' | 'adult'> | null;
 
   /**
-   * If provided, only products whose extracted attributes match these key/value
-   * constraints will be returned. Keys are attribute handles (e.g. 'color',
-   * 'material') and values are lists of allowed values (OR within a key, AND across
-   * keys). When a category filter is also supplied, all keys must be valid
-   * attributes of at least one of the requested categories. See
-   * `Category.attributes` for the valid keys/values per category.
+   * If provided, only products matching these key/value constraints will be
+   * returned. Keys are attribute handles (e.g. 'color', 'material') and values are
+   * lists of allowed values (OR within a key, AND across keys). When a category
+   * filter is also supplied, all keys must be valid attributes of at least one of
+   * the requested categories. See `Category.attributes` for the valid keys and
+   * values per category.
    */
   attributes?: { [key: string]: Array<string> } | null;
 
   /**
-   * If provided, only products with these availability statuses will be returned
+   * Offer availability statuses to match (OR). Defaults to ['InStock']. An offer
+   * with no availability data counts as 'InStock'. Pass every value to disable
+   * availability filtering.
    */
-  availability?: Array<ProductsAPI.AvailabilityStatus> | null;
+  availability?: Array<ProductsAPI.AvailabilityStatus>;
 
   /**
    * If provided, only products from these brands will be returned
@@ -149,11 +152,10 @@ export interface SearchFilters {
   colors?: SearchFilters.Colors | null;
 
   /**
-   * Filter by offer condition. Requires at least one offer matching the requested
-   * condition, locale, and any price filter. Offers without condition data are
-   * indexed as new.
+   * Offer conditions to match (OR). Defaults to ['new'], which also matches offers
+   * whose condition is unknown. Pass every value to disable condition filtering.
    */
-  condition?: 'new' | 'refurbished' | 'used' | null;
+  conditions?: Array<'new' | 'used'>;
 
   /**
    * Physical-dimension range filters, matched against the same offer.
@@ -184,6 +186,9 @@ export interface SearchFilters {
    */
   exclude_website_ids?: Array<string> | null;
 
+  /**
+   * Product gender. 'unisex' is deprecated: coerced to None on input, never emitted.
+   */
   gender?: 'male' | 'female' | null;
 
   /**
@@ -386,43 +391,50 @@ export interface SearchResponse {
 
 export interface SearchPerformParams {
   /**
-   * Base64 encoded image. At least one of `query`, `image_url`, `base64_image`, or
-   * `page_token` must be provided.
+   * Body param: Base64 encoded image. At least one of `query`, `image_url`,
+   * `base64_image`, or `page_token` must be provided.
    */
   base64_image?: string | null;
 
   /**
-   * Optional configuration
+   * Body param: Optional configuration
    */
   config?: SearchConfig;
 
   /**
-   * Optional filters. Search will only consider products that match all of the
-   * filters.
+   * Body param: Optional filters. Search will only consider products that match all
+   * of the filters.
    */
   filters?: SearchFilters;
 
   /**
-   * Image URL. At least one of `query`, `image_url`, `base64_image`, or `page_token`
-   * must be provided.
+   * Body param: Image URL. At least one of `query`, `image_url`, `base64_image`, or
+   * `page_token` must be provided.
    */
   image_url?: string | null;
 
   /**
-   * Optional limit on the number of results. Default is 20, max is 30.
+   * Body param: Optional limit on the number of results. Default is 20, max is 30.
    */
   limit?: number | null;
 
   /**
-   * Opaque token from a previous search response to fetch the next page of results.
+   * Body param: Opaque token from a previous search response to fetch the next page
+   * of results.
    */
   page_token?: string | null;
 
   /**
-   * Search query. At least one of `query`, `image_url`, `base64_image`, or
-   * `page_token` must be provided.
+   * Body param: Search query. At least one of `query`, `image_url`, `base64_image`,
+   * or `page_token` must be provided.
    */
   query?: string | null;
+
+  /**
+   * Header param: Optional user identifier to attribute clicks and sales to a user
+   * in your system. Channel3 appends it to buy URLs in the response.
+   */
+  'x-user-id'?: string;
 }
 
 export declare namespace Search {
